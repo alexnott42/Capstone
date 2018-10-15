@@ -1,0 +1,6 @@
+C:\Users\Alex\source\repos\ElderScrollsOnlineCraftingOrders\DAL\bin\Debug\DAL.dll
+C:\Users\Alex\source\repos\ElderScrollsOnlineCraftingOrders\DAL\bin\Debug\DAL.pdb
+C:\Users\Alex\source\repos\ElderScrollsOnlineCraftingOrders\DAL\obj\Debug\DAL.csprojAssemblyReference.cache
+C:\Users\Alex\source\repos\ElderScrollsOnlineCraftingOrders\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
+C:\Users\Alex\source\repos\ElderScrollsOnlineCraftingOrders\DAL\obj\Debug\DAL.dll
+C:\Users\Alex\source\repos\ElderScrollsOnlineCraftingOrders\DAL\obj\Debug\DAL.pdb
