@@ -237,9 +237,9 @@ namespace DAL
         }
 
         //Retrieving orders by a specific user
-        public OrdersDO ViewOrderByUserID(int UserID)
+        public List<OrdersDO> ViewOrderByUserID(int UserID)
         {
-            OrdersDO orderData = new OrdersDO();
+            List<OrdersDO> orderData = new List<OrdersDO>();
             try
             {
                 //defining commands to access the database
@@ -259,7 +259,7 @@ namespace DAL
                     {
                         if (reader.Read())
                         {
-                            orderData = MapperDAL.ReaderToOrder(reader);
+                            orderData.Add(MapperDAL.ReaderToOrder(reader));
                         }
                     }
                 }
@@ -282,9 +282,9 @@ namespace DAL
         }
 
         //Retrieving orders by a specific user
-        public OrdersDO ViewOrderByCrafterID(int CrafterID)
+        public List<OrdersDO> ViewOrderByCrafterID(int CrafterID)
         {
-            OrdersDO orderData = new OrdersDO();
+            List<OrdersDO> orderData = new List<OrdersDO>();
             try
             {
                 //defining commands to access the database
@@ -304,7 +304,7 @@ namespace DAL
                     {
                         if (reader.Read())
                         {
-                            orderData = MapperDAL.ReaderToOrder(reader);
+                            orderData.Add(MapperDAL.ReaderToOrder(reader));
                         }
                     }
                 }
@@ -323,6 +323,51 @@ namespace DAL
                 throw ex;
             }
             //returning information
+            return orderData;
+        }
+
+        //Retrieving orders by a specific user
+        public List<OrdersDO> ViewOrderByStatus(byte status)
+        {
+            List<OrdersDO> orderData = new List<OrdersDO>();
+            try
+            {
+                //defining commands to access the database
+                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlCommand viewByStatus = new SqlCommand("ORDERS_SELECT_BY_STATUS", sqlConnection))
+                {
+                    //giving up after 60 seconds
+                    viewByStatus.CommandType = CommandType.StoredProcedure;
+                    viewByStatus.CommandTimeout = 60;
+
+                    //inserting the UserID to sort entries
+                    viewByStatus.Parameters.AddWithValue("Status", status);
+
+                    //reading the data and using Mapper to store it
+                    sqlConnection.Open();
+                    using (SqlDataReader reader = viewByStatus.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            orderData.Add(MapperDAL.ReaderToOrder(reader));
+                        }
+                    }
+                }
+            }
+            //logging errors
+            catch (SqlException sqlEx)
+            {
+                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.SqlErrorLog(sqlEx);
+                throw sqlEx;
+            }
+            catch (Exception ex)
+            {
+                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLog(ex);
+                throw ex;
+            }
+            //returning order
             return orderData;
         }
     }

@@ -15,44 +15,33 @@ using ElderScrollsOnlineCraftingOrders.Security;
 
 namespace ElderScrollsOnlineCraftingOrders.Controllers
 {
-    public class UsersController : Controller
+    public class OrdersController : Controller
     {
         //establishing connections, file locations, Data Access Objects, etc
         private readonly string filePath;
         private readonly string errorLogPath;
         private readonly string connectionString;
-        private UsersDAO _UsersDAO;
-        private List<UsersPO> userList = new List<UsersPO>();
+        private OrdersDAO _OrdersDAO;
+        private List<OrdersDO> _Orders = new List<OrdersDO>();
+        private List<OrdersPO> Orders = new List<OrdersPO>();
 
         //constructor
-        public UsersController()
+        public OrdersController()
         {
             filePath = Path.GetDirectoryName(System.Web.HttpContext.Current.Server.MapPath("~"));
             errorLogPath = filePath + @"\ErrorLog.txt";
             connectionString = ConfigurationManager.ConnectionStrings["dataSource"].ConnectionString;
-            _UsersDAO = new UsersDAO(connectionString, errorLogPath);
+            _OrdersDAO = new OrdersDAO(connectionString, errorLogPath);
         }
-        // GET: Users
-
-
-        //show only one user's information
-        [SecurityFilter(3)]
+        //view all orders
+        [SecurityFilter(4)]
         [HttpGet]
-        public ActionResult Users(int UserID)
-        {
-            UsersPO userDetails = Mapper.UsersDOtoUsersPO(_UsersDAO.ViewUserByID(UserID));
-            return View(userDetails);
-        }
-
-        //List of all users
-        [SecurityFilter(5)]
-        [HttpGet]
-        public PartialViewResult _Users()
+        public ActionResult ViewAllOrders()
         {
             try
             {
-                List<UsersDO> allUsers = _UsersDAO.ViewAllUsers();
-                userList = Mapper.UsersListDOtoPO(allUsers);
+                _Orders = _OrdersDAO.ViewAllOrders();
+                Orders = Mapper.OrdersListDOtoPO(_Orders);
             }
             //logging errors
             catch (SqlException sqlEx)
@@ -67,90 +56,45 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 Logger.ErrorLog(ex);
                 throw ex;
             }
-            return PartialView("_Users", userList);
+            return View();
         }
-
-        //login
+        //View order by status
+        [SecurityFilter(4)]
         [HttpGet]
-        public ActionResult Login()
+        public ActionResult ViewByStatus(byte status)
         {
+            try
+            {
+                //mapping to presentation layer
+                _Orders = _OrdersDAO.ViewOrderByStatus(status);
+                Orders = Mapper.OrdersListDOtoPO(_Orders);
+            }
+            //logging errors
+            catch (SqlException sqlEx)
+            {
+                Logger.errorLogPath = errorLogPath;
+                Logger.SqlErrorLog(sqlEx);
+                throw sqlEx;
+            }
+            catch (Exception ex)
+            {
+                Logger.errorLogPath = errorLogPath;
+                Logger.ErrorLog(ex);
+                throw ex;
+            }
             return View();
         }
 
-        //login continued
-        [HttpPost]
-        public ActionResult Login(LoginPO form)
-            //todo: implement password hashing
-        {
-            ActionResult response = new ViewResult();
-            try
-            {
-                //checks if model is valid
-                if (ModelState.IsValid)
-                {
-                    //checking if valid user
-                    UsersDO user = _UsersDAO.ViewUserByUsername(form.Username);
-                    if (!(user.UserID == 0))
-                    {
-                        //checking if password is correct
-                        if (form.Password.Equals(user.Password))
-                        {
-                            //setting session data
-                            Session["UserID"] = user.UserID;
-                            Session["Username"] = user.Username;
-                            Session["ESOname"] = user.ESOname;
-                            Session["RoleID"] = user.RoleID;
-
-                            //setting response to redirect to home page
-                            response = RedirectToAction("Index", "Home");
-                        }
-                        else
-                        {
-                            //informing user that information was incorrect and returning to form view
-                            ModelState.AddModelError("Password", "Username or password was incorrect");
-                            response = View(form);
-                        }
-                    }
-                    else
-                    {
-                        //informing user that information was incorrect and returning to form view
-                        ModelState.AddModelError("Password", "Username or password was incorrect");
-                        response = View(form);
-                    }
-                }
-                else
-                {
-                    //returning to form view if model state is invalid
-                    response = View(form);
-                }
-
-            }
-            //logging errors
-            catch (SqlException sqlEx)
-            {
-                Logger.errorLogPath = errorLogPath;
-                Logger.SqlErrorLog(sqlEx);
-                throw sqlEx;
-            }
-            catch (Exception ex)
-            {
-                Logger.errorLogPath = errorLogPath;
-                Logger.ErrorLog(ex);
-                throw ex;
-            }
-            //returning response view
-            return response;
-        }
-
-        //logout
+        //view order by ID
+        [SecurityFilter(3)]
         [HttpGet]
-        public ActionResult Logout()
+        public ActionResult ViewOrderByID(int OrderID)
         {
             try
             {
-                //clearing session data and redirecting to home page
-                Session.Abandon();
-                return RedirectToAction("Index", "Home");
+                //Mapping data to presentation layer
+                OrdersPO orderDetails = Mapper.OrdersDOtoOrdersPO(_OrdersDAO.ViewOrderByID(OrderID));
+                return View(orderDetails);
             }
             //logging errors
             catch (SqlException sqlEx)
@@ -167,9 +111,65 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             }
         }
 
-        //create new account
+        //view order by user
+        [SecurityFilter(3)]
         [HttpGet]
-        public ActionResult CreateNewAccount()
+        public ActionResult ViewOrderByUserID(int UserID)
+        {
+            try
+            {
+                //Mapping all the data from database, to data access, to presentation layer
+                _Orders = _OrdersDAO.ViewOrderByUserID(UserID);
+                Orders = Mapper.OrdersListDOtoPO(_Orders);
+                return View(Orders);
+            }
+            //logging errors
+            catch (SqlException sqlEx)
+            {
+                Logger.errorLogPath = errorLogPath;
+                Logger.SqlErrorLog(sqlEx);
+                throw sqlEx;
+            }
+            catch (Exception ex)
+            {
+                Logger.errorLogPath = errorLogPath;
+                Logger.ErrorLog(ex);
+                throw ex;
+            }
+        }
+
+        //view order by crafter
+        [SecurityFilter(4)]
+        [HttpGet]
+        public ActionResult ViewOrderByCrafterID(int CrafterID)
+        {
+            try
+            {
+                //Mapping all the data from database, to data access, to presentation layer
+                _Orders = _OrdersDAO.ViewOrderByCrafterID(CrafterID);
+                Orders = Mapper.OrdersListDOtoPO(_Orders);
+                //returning form view
+                return View(Orders);
+            }
+            //logging errors
+            catch (SqlException sqlEx)
+            {
+                Logger.errorLogPath = errorLogPath;
+                Logger.SqlErrorLog(sqlEx);
+                throw sqlEx;
+            }
+            catch (Exception ex)
+            {
+                Logger.errorLogPath = errorLogPath;
+                Logger.ErrorLog(ex);
+                throw ex;
+            }
+        }
+
+        //Create order
+        [SecurityFilter(3)]
+        [HttpGet]
+        public ActionResult CreateNewOrder()
         {
             try
             {
@@ -190,19 +190,20 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             }
         }
 
-        //create new account continued
+        //create order continued
+        [SecurityFilter(3)]
         [HttpPost]
-        public ActionResult CreateNewAccount(UsersPO form)
+        public ActionResult CreateNewOrder(OrdersPO form)
         {
             ActionResult response;
             try
             {
-                //taking user input and mapping it to the database
-                UsersDO newUser = Mapper.UsersPOtoUsersDO(form);
-                _UsersDAO.CreateNewUserEntry(newUser);
-                //setting response view
+                //taking in user input and saving it to the database
+                OrdersDO newOrder = Mapper.OrdersPOtoOrdersDO(form);
+                _OrdersDAO.CreateNewOrder(newOrder);
+                //redirecting to home page when finished
                 response = RedirectToAction("Index", "Home");
-                //todo: make create new account log user in immediately after creation
+                //TODO: make CreateNewOrder return user to orders screen
             }
             //logging errors
             catch (SqlException sqlEx)
@@ -217,24 +218,22 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 Logger.ErrorLog(ex);
                 throw ex;
             }
-            //return view page
+            //returning to home page
             return response;
         }
 
-        //update user
-        [SecurityFilter(5)]
+        //update order
+        [SecurityFilter(3)]
         [HttpGet]
-        public ActionResult UpdateUser(int UserID)
+        public ActionResult UpdateOrder(int UserID)
         {
             ActionResult response;
             try
             {
-                //retrieving data and displaying to user
-                UsersDO UserDO = _UsersDAO.ViewUserByID(UserID);
-                UsersPO UserPO = Mapper.UsersDOtoUsersPO(UserDO);
-                response = View(UserPO);
+                OrdersDO OrderDO = _OrdersDAO.ViewOrderByID(UserID);
+                OrdersPO OrderPO = Mapper.OrdersDOtoOrdersPO(OrderDO);
+                response = View(OrderPO);
             }
-            //logging errors
             catch (SqlException sqlEx)
             {
                 Logger.errorLogPath = errorLogPath;
@@ -247,25 +246,23 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 Logger.ErrorLog(ex);
                 throw ex;
             }
-            //return view
             return response;
         }
 
-        //update user continued
-        [SecurityFilter(5)]
+        //update order continued
+        [SecurityFilter(3)]
         [HttpPost]
-        public ActionResult UpdateUser(UsersPO form)
+        public ActionResult UpdateOrder(OrdersPO form)
         {
             ActionResult response;
             try
             {
-                //storing data to database
-                UsersDO UserDO = Mapper.UsersPOtoUsersDO(form);
-                _UsersDAO.UpdateUserInformation(UserDO);
-                //setting response page
-                response = RedirectToAction("Users", "Users");
+                OrdersDO OrderDO = Mapper.OrdersPOtoOrdersDO(form);
+                _OrdersDAO.UpdateOrder(OrderDO);
+                response = RedirectToAction("Index", "Home");
+                //todo: make updateorder return to order view
+
             }
-            //logging errors
             catch (SqlException sqlEx)
             {
                 Logger.errorLogPath = errorLogPath;
@@ -278,22 +275,22 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 Logger.ErrorLog(ex);
                 throw ex;
             }
-            //returning to user page
             return response;
         }
 
-        //delete user
-        [SecurityFilter(6)]
+        //delete order
+        [SecurityFilter(3)]
         [HttpGet]
-        public ActionResult DeleteUser(int UserID)
+        public ActionResult DeleteOrder(int OrderID)
         {
             ActionResult response;
             try
             {
-                //executing procedure
-                _UsersDAO.DeleteUserEntry(UserID);
-                //setting response view
-                response = RedirectToAction("Users", "Users");
+                //running the stored procedure
+                _OrdersDAO.DeleteOrder(OrderID);
+                //setting response page
+                response = RedirectToAction("Index", "Home");
+                //todo: make deleteorder return to order view
             }
             //logging errors
             catch (SqlException sqlEx)
@@ -308,7 +305,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 Logger.ErrorLog(ex);
                 throw ex;
             }
-            //returning view
+            //returning response page
             return response;
         }
     }
