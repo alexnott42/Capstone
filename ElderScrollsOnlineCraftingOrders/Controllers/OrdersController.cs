@@ -18,7 +18,6 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
     public class OrdersController : Controller
     {
         //establishing connections, file locations, Data Access Objects, etc
-        private readonly string filePath;
         private readonly string errorLogPath;
         private readonly string connectionString;
         private OrdersDAO _OrdersDAO;
@@ -27,44 +26,43 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         //constructor
         public OrdersController()
         {
-            //todo: place file path in config
-            filePath = Path.GetDirectoryName(System.Web.HttpContext.Current.Server.MapPath("~"));
-            errorLogPath = filePath + @"\ErrorLog.txt";
+            errorLogPath = ConfigurationManager.AppSettings["errorLogPath"];
             connectionString = ConfigurationManager.ConnectionStrings["dataSource"].ConnectionString;
             _OrdersDAO = new OrdersDAO(connectionString, errorLogPath);
+            Logger.errorLogPath = errorLogPath;
         }
         //view all orders
         [SecurityFilter(4)]
-        [HttpGet]
         public ActionResult ViewAllOrders()
         {
+            ActionResult response;
             List<OrdersDO> _Orders = new List<OrdersDO>();
             List<OrdersPO> Orders = new List<OrdersPO>();
             try
             {
                 _Orders = _OrdersDAO.ViewAllOrders();
                 Orders = Mapper.OrdersListDOtoPO(_Orders);
+                response = View(Orders);
             }
             //logging errors
             catch (SqlException sqlEx)
             {
-                Logger.errorLogPath = errorLogPath;
                 Logger.SqlErrorLog(sqlEx);
-                throw sqlEx;
+                response = View(Orders);
             }
             catch (Exception ex)
             {
-                Logger.errorLogPath = errorLogPath;
                 Logger.ErrorLog(ex);
-                throw ex;
+                response = View(Orders);
             }
-            return View();
+            return response;
         }
         //View order by status
         [SecurityFilter(4)]
         [HttpGet]
         public ActionResult ViewByStatus(byte status)
         {
+            ActionResult response;
             List<OrdersDO> _Orders = new List<OrdersDO>();
             List<OrdersPO> Orders = new List<OrdersPO>();
             try
@@ -72,21 +70,20 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 //mapping to presentation layer
                 _Orders = _OrdersDAO.ViewOrderByStatus(status);
                 Orders = Mapper.OrdersListDOtoPO(_Orders);
+                response = View(Orders);
             }
             //logging errors
             catch (SqlException sqlEx)
             {
-                Logger.errorLogPath = errorLogPath;
                 Logger.SqlErrorLog(sqlEx);
-                throw sqlEx;
+                response = View(Orders);
             }
             catch (Exception ex)
             {
-                Logger.errorLogPath = errorLogPath;
                 Logger.ErrorLog(ex);
-                throw ex;
+                response = View(Orders);
             }
-            return View();
+            return response;
         }
 
         //view order by ID
@@ -94,25 +91,26 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         [HttpGet]
         public ActionResult ViewOrderByID(int OrderID)
         {
+            ActionResult response;
+            OrdersPO orderDetails = new OrdersPO();
             try
             {
                 //Mapping data to presentation layer
-                OrdersPO orderDetails = Mapper.OrdersDOtoOrdersPO(_OrdersDAO.ViewOrderByID(OrderID));
-                return View(orderDetails);
+                orderDetails = Mapper.OrdersDOtoOrdersPO(_OrdersDAO.ViewOrderByID(OrderID));
+                response = View(orderDetails);
             }
             //logging errors
             catch (SqlException sqlEx)
             {
-                Logger.errorLogPath = errorLogPath;
                 Logger.SqlErrorLog(sqlEx);
-                throw sqlEx;
+                response = View(orderDetails);
             }
             catch (Exception ex)
             {
-                Logger.errorLogPath = errorLogPath;
                 Logger.ErrorLog(ex);
-                throw ex;
+                response = View(orderDetails);
             }
+            return response;
         }
 
         //view order by user
@@ -122,26 +120,26 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         {
             List<OrdersDO> _Orders = new List<OrdersDO>();
             List<OrdersPO> Orders = new List<OrdersPO>();
+            ActionResult response;
             try
             {
                 //Mapping all the data from database, to data access, to presentation layer
                 _Orders = _OrdersDAO.ViewOrderByUserID(UserID);
                 Orders = Mapper.OrdersListDOtoPO(_Orders);
-                return View(Orders);
+                response = View(Orders);
             }
             //logging errors
             catch (SqlException sqlEx)
             {
-                Logger.errorLogPath = errorLogPath;
                 Logger.SqlErrorLog(sqlEx);
-                throw sqlEx;
+                response = View(Orders);
             }
             catch (Exception ex)
             {
-                Logger.errorLogPath = errorLogPath;
                 Logger.ErrorLog(ex);
-                throw ex;
+                response = View(Orders);
             }
+            return response;
         }
 
         //view order by crafter
@@ -149,6 +147,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         [HttpGet]
         public ActionResult ViewOrderByCrafterID(int CrafterID)
         {
+            ActionResult response;
             List<OrdersDO> _Orders = new List<OrdersDO>();
             List<OrdersPO> Orders = new List<OrdersPO>();
             try
@@ -157,21 +156,20 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 _Orders = _OrdersDAO.ViewOrderByCrafterID(CrafterID);
                 Orders = Mapper.OrdersListDOtoPO(_Orders);
                 //returning form view
-                return View(Orders);
+                response = View(Orders);
             }
             //logging errors
             catch (SqlException sqlEx)
             {
-                Logger.errorLogPath = errorLogPath;
                 Logger.SqlErrorLog(sqlEx);
-                throw sqlEx;
+                response = View(Orders);
             }
             catch (Exception ex)
             {
-                Logger.errorLogPath = errorLogPath;
                 Logger.ErrorLog(ex);
-                throw ex;
+                response = View(Orders);
             }
+            return response;
         }
 
         //Create order
@@ -179,23 +177,23 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         [HttpGet]
         public ActionResult CreateNewOrder()
         {
+            ActionResult response;
             try
             {
-                return View();
+               response = View();
             }
             //logging errors
             catch (SqlException sqlEx)
             {
-                Logger.errorLogPath = errorLogPath;
                 Logger.SqlErrorLog(sqlEx);
-                throw sqlEx;
+                response = View();
             }
             catch (Exception ex)
             {
-                Logger.errorLogPath = errorLogPath;
                 Logger.ErrorLog(ex);
-                throw ex;
+                response = View();
             }
+            return response;
         }
 
         //create order continued
@@ -213,21 +211,18 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                     OrdersDO newOrder = Mapper.OrdersPOtoOrdersDO(form);
                     _OrdersDAO.CreateNewOrder(newOrder);
                     //redirecting to home page when finished
-                    response = RedirectToAction("Index", "Home");
-                    //TODO: make CreateNewOrder return user to orders screen
+                    response = RedirectToAction("ViewOrderByUserID", "Orders");
                 }
                 //logging errors
                 catch (SqlException sqlEx)
                 {
-                    Logger.errorLogPath = errorLogPath;
                     Logger.SqlErrorLog(sqlEx);
-                    throw sqlEx;
+                    response = View(form);
                 }
                 catch (Exception ex)
                 {
-                    Logger.errorLogPath = errorLogPath;
                     Logger.ErrorLog(ex);
-                    throw ex;
+                    response = View(form);
                 }
             }
             else
@@ -244,24 +239,23 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         [HttpGet]
         public ActionResult UpdateOrder(int UserID)
         {
+            OrdersPO orderPO = new OrdersPO(); 
             ActionResult response;
             try
             {
-                OrdersDO OrderDO = _OrdersDAO.ViewOrderByID(UserID);
-                OrdersPO OrderPO = Mapper.OrdersDOtoOrdersPO(OrderDO);
-                response = View(OrderPO);
+                OrdersDO orderDO = _OrdersDAO.ViewOrderByID(UserID);
+                orderPO = Mapper.OrdersDOtoOrdersPO(orderDO);
+                response = View(orderPO);
             }
             catch (SqlException sqlEx)
             {
-                Logger.errorLogPath = errorLogPath;
                 Logger.SqlErrorLog(sqlEx);
-                throw sqlEx;
+                response = View(orderPO);
             }
             catch (Exception ex)
             {
-                Logger.errorLogPath = errorLogPath;
                 Logger.ErrorLog(ex);
-                throw ex;
+                response = View(orderPO);
             }
             return response;
         }
@@ -279,21 +273,18 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 {
                     OrdersDO OrderDO = Mapper.OrdersPOtoOrdersDO(form);
                     _OrdersDAO.UpdateOrder(OrderDO);
-                    response = RedirectToAction("Index", "Home");
-                    //todo: make updateorder return to order view
+                    response = RedirectToAction("ViewOrderByID", "Orders");
 
                 }
                 catch (SqlException sqlEx)
                 {
-                    Logger.errorLogPath = errorLogPath;
                     Logger.SqlErrorLog(sqlEx);
-                    throw sqlEx;
+                    response = View(form);
                 }
                 catch (Exception ex)
                 {
-                    Logger.errorLogPath = errorLogPath;
                     Logger.ErrorLog(ex);
-                    throw ex;
+                    response = View(form);
                 }
             }
             else
@@ -315,21 +306,18 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 //running the stored procedure
                 _OrdersDAO.DeleteOrder(OrderID);
                 //setting response page
-                response = RedirectToAction("Index", "Home");
-                //todo: make deleteorder return to order view
+                response = RedirectToAction("ViewOrderByUserID", "Orders");
             }
             //logging errors
             catch (SqlException sqlEx)
             {
-                Logger.errorLogPath = errorLogPath;
                 Logger.SqlErrorLog(sqlEx);
-                throw sqlEx;
+                response = RedirectToAction("ViewOrderByUserID", "Orders");
             }
             catch (Exception ex)
             {
-                Logger.errorLogPath = errorLogPath;
                 Logger.ErrorLog(ex);
-                throw ex;
+                response = RedirectToAction("ViewOrderByUserID", "Orders");
             }
             //returning response page
             return response;

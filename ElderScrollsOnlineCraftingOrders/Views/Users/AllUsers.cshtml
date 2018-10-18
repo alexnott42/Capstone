@@ -23,25 +23,46 @@
             <th>
                 Server
             </th>
+            <th>
+                Role
+            </th>
+            @if ((byte)Session["RoleID"] == 6)
+            {
+                <th>
+                    Actions
+                </th>
+            }
         </tr>
     </thead>
     <tbody>
         @foreach (UsersPO user in Model)
         {
-            <tr>
+        <tr>
+            <td>
+                <text>@user.Username</text>
+            </td>
+            <td>
+                <text>@user.Email</text>
+            </td>
+            <td>
+                <text>@user.ESOname</text>
+            </td>
+            <td>
+                <text>@user.Server</text>
+            </td>
+            <td>
+                <text>@user.RoleID</text>
+            </td>
+            @if ((byte)Session["RoleID"] == 6)
+            {
                 <td>
-                    <text>@user.Username</text>
+                    @Html.ActionLink("Update", "UpdateUser", "Users", new { UserID = user.UserID }, new { @class = "btn btn-info" })
                 </td>
                 <td>
-                    <text>@user.Email</text>
+                    @Html.ActionLink("Delete", "DeleteUser", "Users", new { UserID = user.UserID }, new { @class = "btn btn-danger" })
                 </td>
-                <td>
-                    <text>@user.ESOname</text>
-                </td>
-                <td>
-                    <text>@user.Server</text>
-                </td>
-            </tr>
+            }
+        </tr>
         }
     </tbody>
 </table>

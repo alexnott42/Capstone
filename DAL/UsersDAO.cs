@@ -58,14 +58,11 @@ namespace DAL
             //logging errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                //TODO: ASSIGN ERROR PATHS IN CONSTRUCTOR AND REMOVE FROM CATCHES
-                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
@@ -104,13 +101,11 @@ namespace DAL
             //logging errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
@@ -149,13 +144,11 @@ namespace DAL
             //logging errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
@@ -194,13 +187,11 @@ namespace DAL
             //logging errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
@@ -233,13 +224,11 @@ namespace DAL
             //logging errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
@@ -278,13 +267,11 @@ namespace DAL
             //logging errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
@@ -323,13 +310,11 @@ namespace DAL
             //logging errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }

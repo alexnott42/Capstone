@@ -1,0 +1,37 @@
+﻿@using ElderScrollsOnlineCraftingOrders.Models
+@model UsersPO
+@{
+    ViewBag.Title = "CreateNewAccount";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Register</h2>
+
+@using (Html.BeginForm("CreateNewAccount", "Users", FormMethod.Post))
+{
+    @Html.LabelFor(model => Model.Username)
+    <div class="form-group">
+        @Html.TextBoxFor(model => Model.Username, new { @class = "form-control", placeholder = "Example: UncleSheo3E433" })
+    </div>
+    @Html.LabelFor(model => Model.Email)
+    <div class="form-group">
+        @Html.TextBoxFor(model => Model.Email, new { @class = "form-control", placeholder = "Example: Sheogorath@Palace.Sheoth" })
+    </div>
+    @Html.LabelFor(model => Model.Password)
+    <div class="form-group">
+        @Html.TextBoxFor(model => Model.Password, new { @class = "form-control", placeholder = "Example: *******" })
+    </div>
+    @Html.LabelFor(model => Model.ESOname)
+    <div class="form-group">
+        @Html.TextBoxFor(model => Model.ESOname, new { @class = "form-control", placeholder = "Example: @therealmadgod" })
+    </div>
+    @Html.LabelFor(model => Model.RoleID)
+    <div class="form-group">
+        @Html.TextBoxFor(model => Model.RoleID, new { @class = "form-control" })
+    </div>
+    @Html.LabelFor(model => Model.Server)
+    <div class="form-group">
+        @Html.TextBoxFor(model => Model.Server, new { @class = "form-control", placeholder = "Example: EU" })
+    </div>
+    <input type="submit" value="Create" class="btn" />
+}

@@ -25,13 +25,11 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         //constructor
         public UsersController()
         {
-            //TODO: figure out relative log paths
-            //filePath = Path.GetDirectoryName(System.Web.HttpContext.Current.Server.MapPath("~"));
-            //errorLogPath = filePath + @"\ErrorLog.txt";
-            //this.filePath = ConfigurationManager.AppSettings["filePath"];
             errorLogPath = ConfigurationManager.AppSettings["errorLogPath"];
             connectionString = ConfigurationManager.ConnectionStrings["dataSource"].ConnectionString;
             _UsersDAO = new UsersDAO(connectionString, errorLogPath);
+            Logger.errorLogPath = errorLogPath;
+
         }
 
         //show only one user's information
@@ -39,25 +37,25 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         [HttpGet]
         public ActionResult Users(int UserID)
         {
+            ActionResult response;
             UsersPO userDetails = new UsersPO();
             try
             {
                 UsersDO userDO = _UsersDAO.ViewUserByID(UserID);
                 userDetails = Mapper.UsersDOtoUsersPO(userDO);
+                response = View(userDetails);
             }
             catch (SqlException sqlEx)
             {
-                Logger.errorLogPath = errorLogPath;
                 Logger.SqlErrorLog(sqlEx);
-                throw sqlEx;
+                response = View(userDetails);
             }
             catch (Exception ex)
             {
-                Logger.errorLogPath = errorLogPath;
                 Logger.ErrorLog(ex);
-                throw ex;
+                response = View(userDetails);
             }
-            return View(userDetails);
+            return response;
         }
 
         //List of all users
@@ -73,19 +71,16 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 List<UsersDO> allUsers = _UsersDAO.ViewAllUsers();
                 userList = Mapper.UsersListDOtoPO(allUsers);
                 //todo: confirmations on deletes
-                //todo: 
                 result = View(userList);
             }
             //logging errors
             catch (SqlException sqlEx)
             {
-                Logger.errorLogPath = errorLogPath;
                 Logger.SqlErrorLog(sqlEx);
                 result = View(userList);
             }
             catch (Exception ex)
             {
-                Logger.errorLogPath = errorLogPath;
                 Logger.ErrorLog(ex);
                 result = View(userList);
             }
@@ -134,16 +129,13 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 //logging errors
                 catch (SqlException sqlEx)
                 {
-                    Logger.errorLogPath = errorLogPath;
                     Logger.SqlErrorLog(sqlEx);
-                    //todo: redirect instead of throw
-                    throw sqlEx;
+                    response = View(form);
                 }
                 catch (Exception ex)
                 {
-                    Logger.errorLogPath = errorLogPath;
                     Logger.ErrorLog(ex);
-                    throw ex;
+                    response = View(form);
                 }
             }
             else
@@ -185,18 +177,15 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                     _UsersDAO.CreateNewUserEntry(newUser);
                     //setting response view
                     response = RedirectToAction("Index", "Home");
-                    //todo: make create new account log user in immediately after creation
                 }
                 //logging errors
                 catch (SqlException sqlEx)
                 {
-                    Logger.errorLogPath = errorLogPath;
                     Logger.SqlErrorLog(sqlEx);
                     throw sqlEx;
                 }
                 catch (Exception ex)
                 {
-                    Logger.errorLogPath = errorLogPath;
                     Logger.ErrorLog(ex);
                     throw ex;
                 } 
@@ -226,13 +215,11 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             //logging errors
             catch (SqlException sqlEx)
             {
-                Logger.errorLogPath = errorLogPath;
                 Logger.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                Logger.errorLogPath = errorLogPath;
                 Logger.ErrorLog(ex);
                 throw ex;
             }
@@ -260,13 +247,11 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 //logging errors
                 catch (SqlException sqlEx)
                 {
-                    Logger.errorLogPath = errorLogPath;
                     Logger.SqlErrorLog(sqlEx);
                     throw sqlEx;
                 }
                 catch (Exception ex)
                 {
-                    Logger.errorLogPath = errorLogPath;
                     Logger.ErrorLog(ex);
                     throw ex;
                 }
@@ -296,13 +281,11 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             //logging errors
             catch (SqlException sqlEx)
             {
-                Logger.errorLogPath = errorLogPath;
                 Logger.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                Logger.errorLogPath = errorLogPath;
                 Logger.ErrorLog(ex);
                 throw ex;
             }
