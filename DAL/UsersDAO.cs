@@ -15,14 +15,15 @@ namespace DAL
     public class UsersDAO
     {
         //Establishing connections and file locations
-        public readonly string connectionString;
-        public readonly string errorLogPath;
+        private readonly string _ConnectionString;
+        private readonly string _ErrorLogPath;
 
         //constructor
-        public UsersDAO(string _connectionString, string _errorLogPath)
+        public UsersDAO(string connectionString, string errorLogPath)
         {
-            this.connectionString = _connectionString;
-            this.errorLogPath = _errorLogPath;
+            this._ConnectionString = connectionString;
+            this._ErrorLogPath = errorLogPath;
+            LoggerDAL.ErrorLogPath = errorLogPath;
         }
 
         //Retrieving User Data from the Database
@@ -33,14 +34,12 @@ namespace DAL
             try
             {
                 //defining commands to access the database
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
                 using (SqlCommand viewUserTable = new SqlCommand("USERS_SELECT_ALL", sqlConnection))
                 {
                     //giving up after 60 seconds
                     viewUserTable.CommandType = CommandType.StoredProcedure;
                     viewUserTable.CommandTimeout = 60;
-
-                    sqlConnection.Open();
 
                     //Reading the data and using Mapper to store it
                     sqlConnection.Open();
@@ -59,13 +58,14 @@ namespace DAL
             //logging errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                //TODO: ASSIGN ERROR PATHS IN CONSTRUCTOR AND REMOVE FROM CATCHES
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
@@ -80,7 +80,7 @@ namespace DAL
             try
             {
                 //defining commands to access the database
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
                 using (SqlCommand viewByID = new SqlCommand("USERS_SELECT_BY_ID", sqlConnection))
                 {
                     //give up after 60 seconds
@@ -104,13 +104,13 @@ namespace DAL
             //logging errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
@@ -126,7 +126,7 @@ namespace DAL
             try
             {
                 //defining commands
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
                 using (SqlCommand createUser = new SqlCommand("USERS_CREATE_NEW", sqlConnection))
                 {
                     //timing out after 60 seconds
@@ -149,13 +149,13 @@ namespace DAL
             //logging errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
@@ -170,7 +170,7 @@ namespace DAL
             try
             {
                 //defining some commands
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
                 using (SqlCommand updateUser = new SqlCommand("USERS_UPDATE_ACCOUNT", sqlConnection))
                 {
                     //timing out after 60 seconds
@@ -178,6 +178,7 @@ namespace DAL
                     updateUser.CommandTimeout = 60;
 
                     //inserting information
+                    updateUser.Parameters.AddWithValue("UserID", userInfo.UserID);
                     updateUser.Parameters.AddWithValue("Username", userInfo.Username);
                     updateUser.Parameters.AddWithValue("Email", userInfo.Email);
                     updateUser.Parameters.AddWithValue("Password", userInfo.Password);
@@ -193,13 +194,13 @@ namespace DAL
             //logging errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
@@ -214,12 +215,14 @@ namespace DAL
             try
             {
                 //defining connections
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
                 using (SqlCommand deleteUser = new SqlCommand("USERS_DELETE_ACCOUNT", sqlConnection))
                 {
                     //giving up after 60 seconds
                     deleteUser.CommandType = CommandType.StoredProcedure;
                     deleteUser.CommandTimeout = 60;
+
+                    //assigning parameters
                     deleteUser.Parameters.AddWithValue("UserID", UserID);
 
                     //opening connection and executing procedure
@@ -230,13 +233,13 @@ namespace DAL
             //logging errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
@@ -244,13 +247,13 @@ namespace DAL
         }
 
         //retrieve a single user entry from database
-        public UsersDO ViewUserByRole(Int16 RoleID)
+        public List<UsersDO> ViewUserByRole(byte RoleID)
         {
-            UsersDO userData = new UsersDO();
+            List<UsersDO> userData = new List<UsersDO>();
             try
             {
                 //defining commands to access the database
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
                 using (SqlCommand viewByRole = new SqlCommand("USERS_SELECT_BY_ROLE", sqlConnection))
                 {
                     //giving up after 60 seconds
@@ -266,7 +269,8 @@ namespace DAL
                     {
                         if (reader.Read())
                         {
-                            userData = MapperDAL.ReaderToUser(reader);
+                            //creating a list and mapping objects
+                            userData.Add(MapperDAL.ReaderToUser(reader));
                         }
                     }
                 }
@@ -274,13 +278,13 @@ namespace DAL
             //logging errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
@@ -295,7 +299,7 @@ namespace DAL
             try
             {
                 //defining commands to access the database
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
                 using (SqlCommand viewByUsername = new SqlCommand("USERS_SELECT_BY_USERNAME", sqlConnection))
                 {
                     //time out after 60 seconds
@@ -319,13 +323,13 @@ namespace DAL
             //logging errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }

@@ -64,8 +64,7 @@ namespace ElderScrollsOnlineCraftingOrders.Mapping
                 Requested = from.Requested,
                 Due = from.Due,
                 CrafterID = from.CrafterID,
-                Status = from.Status,
-                PriceTotal = from.PriceTotal
+                Status = from.Status
             };
             //making it usable in future
             return to;
@@ -82,8 +81,7 @@ namespace ElderScrollsOnlineCraftingOrders.Mapping
                 Requested = from.Requested,
                 Due = from.Due,
                 CrafterID = from.CrafterID,
-                Status = from.Status,
-                PriceTotal = from.PriceTotal
+                Status = from.Status
             };
             //making it usable in future
             return to;

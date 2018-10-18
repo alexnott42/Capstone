@@ -5,15 +5,36 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Users</h2>
+<h2 class="text-center">Account details</h2>
 
 <div class="row">
-    <div>
-        <h5>
-            Account
-        </h5>
+    <div class="col-md-1 col-md-offset-5">
+        <text>
+            @Html.LabelFor(model => Model.Username)
+        </text>
+        <text>
+            @Html.LabelFor(model => Model.Email)
+        </text>
+        <text>
+            @Html.LabelFor(model => Model.Server)
+        </text>
+        <text>
+            @Html.LabelFor(model => Model.ESOname)
+        </text>
     </div>
-    <div class="col-md-12">
 
+    <div class="col-md-1">
+        <text>
+            @Model.Username
+        </text>
+        <text>
+            @Model.Email
+        </text>
+        <text>
+            @Model.Server
+        </text>
+        <text>
+            @Model.ESOname
+        </text>
     </div>
 </div>

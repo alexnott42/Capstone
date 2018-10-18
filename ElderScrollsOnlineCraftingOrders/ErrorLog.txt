@@ -1,0 +1,91 @@
+-----
+Time: 10/17/2018 10:35:50 AM
+Error:System.InvalidOperationException: The connection was not closed. The connection's current state is open.
+   at System.Data.ProviderBase.DbConnectionInternal.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at DAL.UsersDAO.ViewAllUsers() in C:\Users\Alex\Documents\GitHub\Capstone\DAL\UsersDAO.cs:line 46
+-----
+Time: 10/17/2018 10:35:50 AM
+Error:System.InvalidOperationException: The connection was not closed. The connection's current state is open.
+   at DAL.UsersDAO.ViewAllUsers() in C:\Users\Alex\Documents\GitHub\Capstone\DAL\UsersDAO.cs:line 70
+   at ElderScrollsOnlineCraftingOrders.Controllers.UsersController.AllUsers() in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\UsersController.cs:line 54
+-----
+Time: 10/17/2018 3:59:28 PM
+Error:System.InvalidOperationException: The connection was not closed. The connection's current state is open.
+   at System.Data.ProviderBase.DbConnectionInternal.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at DAL.UsersDAO.ViewAllUsers() in C:\Users\Alex\Documents\GitHub\Capstone\DAL\UsersDAO.cs:line 47
+-----
+Time: 10/17/2018 3:59:28 PM
+Error:System.InvalidOperationException: The connection was not closed. The connection's current state is open.
+   at DAL.UsersDAO.ViewAllUsers() in C:\Users\Alex\Documents\GitHub\Capstone\DAL\UsersDAO.cs:line 72
+   at ElderScrollsOnlineCraftingOrders.Controllers.UsersController.AllUsers() in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\UsersController.cs:line 72
+-----
+Time: 10/17/2018 4:00:25 PM
+Error:System.InvalidOperationException: The connection was not closed. The connection's current state is open.
+   at System.Data.ProviderBase.DbConnectionInternal.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at DAL.UsersDAO.ViewAllUsers() in C:\Users\Alex\Documents\GitHub\Capstone\DAL\UsersDAO.cs:line 47
+-----
+Time: 10/17/2018 4:00:25 PM
+Error:System.InvalidOperationException: The connection was not closed. The connection's current state is open.
+   at DAL.UsersDAO.ViewAllUsers() in C:\Users\Alex\Documents\GitHub\Capstone\DAL\UsersDAO.cs:line 72
+   at ElderScrollsOnlineCraftingOrders.Controllers.UsersController.AllUsers() in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\UsersController.cs:line 72
+-----
+Time: 10/17/2018 4:10:38 PM
+Error:System.InvalidOperationException: The connection was not closed. The connection's current state is open.
+   at System.Data.ProviderBase.DbConnectionInternal.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at DAL.UsersDAO.ViewAllUsers() in C:\Users\Alex\Documents\GitHub\Capstone\DAL\UsersDAO.cs:line 47
+-----
+Time: 10/17/2018 4:10:38 PM
+Error:System.InvalidOperationException: The connection was not closed. The connection's current state is open.
+   at DAL.UsersDAO.ViewAllUsers() in C:\Users\Alex\Documents\GitHub\Capstone\DAL\UsersDAO.cs:line 72
+   at ElderScrollsOnlineCraftingOrders.Controllers.UsersController.AllUsers() in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\UsersController.cs:line 72
+-----
+Time: 10/17/2018 4:36:52 PM
+Error:System.InvalidOperationException: The connection was not closed. The connection's current state is open.
+   at System.Data.ProviderBase.DbConnectionInternal.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at DAL.UsersDAO.ViewAllUsers() in C:\Users\Alex\Documents\GitHub\Capstone\DAL\UsersDAO.cs:line 47
+-----
+Time: 10/17/2018 4:36:52 PM
+Error:System.InvalidOperationException: The connection was not closed. The connection's current state is open.
+   at DAL.UsersDAO.ViewAllUsers() in C:\Users\Alex\Documents\GitHub\Capstone\DAL\UsersDAO.cs:line 72
+   at ElderScrollsOnlineCraftingOrders.Controllers.UsersController.AllUsers() in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\UsersController.cs:line 72
+-----
+Time: 10/17/2018 4:37:32 PM
+Error:System.InvalidOperationException: The connection was not closed. The connection's current state is open.
+   at System.Data.ProviderBase.DbConnectionInternal.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at DAL.UsersDAO.ViewAllUsers() in C:\Users\Alex\Documents\GitHub\Capstone\DAL\UsersDAO.cs:line 47
+-----
+Time: 10/17/2018 4:37:32 PM
+Error:System.InvalidOperationException: The connection was not closed. The connection's current state is open.
+   at DAL.UsersDAO.ViewAllUsers() in C:\Users\Alex\Documents\GitHub\Capstone\DAL\UsersDAO.cs:line 72
+   at ElderScrollsOnlineCraftingOrders.Controllers.UsersController.AllUsers() in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\UsersController.cs:line 72
+-----
+Time: 10/17/2018 4:37:37 PM
+Error:System.InvalidOperationException: The connection was not closed. The connection's current state is open.
+   at System.Data.ProviderBase.DbConnectionInternal.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at System.Data.SqlClient.SqlConnection.TryOpenInner(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at DAL.UsersDAO.ViewAllUsers() in C:\Users\Alex\Documents\GitHub\Capstone\DAL\UsersDAO.cs:line 47
+-----
+Time: 10/17/2018 4:37:37 PM
+Error:System.InvalidOperationException: The connection was not closed. The connection's current state is open.
+   at DAL.UsersDAO.ViewAllUsers() in C:\Users\Alex\Documents\GitHub\Capstone\DAL\UsersDAO.cs:line 72
+   at ElderScrollsOnlineCraftingOrders.Controllers.UsersController.AllUsers() in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\UsersController.cs:line 72

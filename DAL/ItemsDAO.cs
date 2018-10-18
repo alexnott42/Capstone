@@ -14,14 +14,14 @@ namespace DAL
     public class ItemsDAO
     {
         //Establishing connection and file location
-        public readonly string connectionString;
-        public readonly string errorLogPath;
+        private readonly string _ConnectionString;
+        private readonly string _ErrorLogPath;
 
         //constructor
-        public ItemsDAO(string _connectionString, string _errorLogPath)
+        public ItemsDAO(string connectionString, string errorLogPath)
         {
-            this.connectionString = _connectionString;
-            this.errorLogPath = _errorLogPath;
+            this._ConnectionString = connectionString;
+            this._ErrorLogPath = errorLogPath;
         }
 
         //retrieving Item data from the database
@@ -32,7 +32,7 @@ namespace DAL
             try
             {
                 //defining some commands to access the database
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
                 using (SqlCommand viewItemTable = new SqlCommand("ITEMS_SELECT_ALL", sqlConnection))
                 {
                     //time out after 60 seconds
@@ -54,13 +54,13 @@ namespace DAL
             //Logging any exceptions
             catch (SqlException sqlEx)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
@@ -74,7 +74,7 @@ namespace DAL
             try
             {
                 //defining commands to access the database
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
                 using (SqlCommand viewItemByID = new SqlCommand("ITEMS_SELECT_BY_ID", sqlConnection))
                 {
                     //telling it to time out after 60 seconds
@@ -99,13 +99,13 @@ namespace DAL
             //Logging any errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
@@ -121,7 +121,7 @@ namespace DAL
             try
             {
                 //Defining some commands again
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
                 using (SqlCommand viewByOrder = new SqlCommand("ITEMS_SELECT_BY_ORDER_ID", sqlConnection))
                 {
                     //after 60 seconds, it stops trying to complete
@@ -148,13 +148,13 @@ namespace DAL
             //keeping a log of any errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
@@ -170,7 +170,7 @@ namespace DAL
             try
             {
                 //defining commands
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
                 using (SqlCommand createItem = new SqlCommand("ITEMS_CREATE_NEW", sqlConnection))
                 {
 
@@ -197,13 +197,13 @@ namespace DAL
             //logging errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
@@ -217,7 +217,7 @@ namespace DAL
             try
             {
                 //defining some commands
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
                 using (SqlCommand updateItem = new SqlCommand("ITEMS_UPDATE", sqlConnection))
                 {
                     //timing out after 60 seconds
@@ -244,13 +244,13 @@ namespace DAL
             //Logging errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
@@ -264,7 +264,7 @@ namespace DAL
 
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
                 using (SqlCommand deleteItem = new SqlCommand("ITEMS_DELETE", sqlConnection))
                 {
                     //Defining procedure and timing out after 60 seconds 
@@ -280,13 +280,13 @@ namespace DAL
             // logging errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }

@@ -10,7 +10,7 @@ namespace ElderScrollsOnlineCraftingOrders.Security
     {
         //this allows us to pass in a RoleID to check it
         private readonly int _Role;
-        public SecurityFilter(int Role)
+        public SecurityFilter(byte Role)
         {
             _Role = Role;
         }
@@ -19,9 +19,9 @@ namespace ElderScrollsOnlineCraftingOrders.Security
         {
             HttpSessionStateBase session = filterContext.HttpContext.Session;
 
-            if (session["Role"] is null || (session["Role"] != null && (int)session["Role"] < _Role))
+            if (session["RoleID"] is null || (session["RoleID"] != null && (byte)session["RoleID"] < _Role))
             {
-                filterContext.Result = new RedirectResult("/Account/Login", false);
+                filterContext.Result = new RedirectResult("/Users/Login", false);
             }
 
             base.OnActionExecuted(filterContext);

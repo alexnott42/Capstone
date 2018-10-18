@@ -8,6 +8,7 @@ namespace ElderScrollsOnlineCraftingOrders.Models
     public class UsersPO
     {
         public int UserID { get; set; }
+        //todo: annotations
 
         public string Username { get; set; }
 

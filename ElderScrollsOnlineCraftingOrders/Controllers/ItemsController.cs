@@ -22,8 +22,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         private readonly string errorLogPath;
         private readonly string connectionString;
         private ItemsDAO _ItemsDAO;
-        private List<ItemsDO> _Items = new List<ItemsDO>();
-        private List<ItemsPO> Items = new List<ItemsPO>();
+
 
         //constructor
         public ItemsController()
@@ -65,6 +64,8 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         [HttpGet]
         public ActionResult ViewItemByOrder(int OrderID)
         {
+            List<ItemsDO> _Items = new List<ItemsDO>();
+            List<ItemsPO> Items = new List<ItemsPO>();
             try
             {
                 //mapping to presentation layer
@@ -116,27 +117,36 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         public ActionResult CreateNewItem(ItemsPO form)
         {
             ActionResult response;
-            try
+            if (ModelState.IsValid)
             {
-                //taking user input and mapping it to the database
-                ItemsDO newItem = Mapper.ItemsPOtoItemsDO(form);
-                _ItemsDAO.CreateNewItemEntry(newItem);
-                //setting response view
-                response = RedirectToAction("Index", "Home");
-                //todo: make createnewitem redirect to order page
+
+                try
+                {
+                    //taking user input and mapping it to the database
+                    ItemsDO newItem = Mapper.ItemsPOtoItemsDO(form);
+                    _ItemsDAO.CreateNewItemEntry(newItem);
+                    //setting response view
+                    response = RedirectToAction("Index", "Home");
+                    //todo: make createnewitem redirect to order page
+                }
+                //logging errors
+                catch (SqlException sqlEx)
+                {
+                    Logger.errorLogPath = errorLogPath;
+                    Logger.SqlErrorLog(sqlEx);
+                    throw sqlEx;
+                }
+                catch (Exception ex)
+                {
+                    Logger.errorLogPath = errorLogPath;
+                    Logger.ErrorLog(ex);
+                    throw ex;
+                }
             }
-            //logging errors
-            catch (SqlException sqlEx)
+            else
             {
-                Logger.errorLogPath = errorLogPath;
-                Logger.SqlErrorLog(sqlEx);
-                throw sqlEx;
-            }
-            catch (Exception ex)
-            {
-                Logger.errorLogPath = errorLogPath;
-                Logger.ErrorLog(ex);
-                throw ex;
+                //returning to form view if model state is invalid
+                response = View(form);
             }
             //return view page
             return response;
@@ -179,29 +189,38 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         public ActionResult UpdateItem(ItemsPO form)
         {
             ActionResult response;
-            try
+            if (ModelState.IsValid)
             {
+
+                try
                 {
-                    //storing data to database
-                    ItemsDO ItemDO = Mapper.ItemsPOtoItemsDO(form);
-                    _ItemsDAO.UpdateItemEntryInformation(ItemDO);
-                    //setting response page
-                    response = RedirectToAction("Index", "Home");
-                    //TODO: set update item to redirect to order page
+                    {
+                        //storing data to database
+                        ItemsDO ItemDO = Mapper.ItemsPOtoItemsDO(form);
+                        _ItemsDAO.UpdateItemEntryInformation(ItemDO);
+                        //setting response page
+                        response = RedirectToAction("Index", "Home");
+                        //TODO: set update item to redirect to order page
+                    }
+                }
+                //logging errors
+                catch (SqlException sqlEx)
+                {
+                    Logger.errorLogPath = errorLogPath;
+                    Logger.SqlErrorLog(sqlEx);
+                    throw sqlEx;
+                }
+                catch (Exception ex)
+                {
+                    Logger.errorLogPath = errorLogPath;
+                    Logger.ErrorLog(ex);
+                    throw ex;
                 }
             }
-            //logging errors
-            catch (SqlException sqlEx)
+            else
             {
-                Logger.errorLogPath = errorLogPath;
-                Logger.SqlErrorLog(sqlEx);
-                throw sqlEx;
-            }
-            catch (Exception ex)
-            {
-                Logger.errorLogPath = errorLogPath;
-                Logger.ErrorLog(ex);
-                throw ex;
+                //returning to form view if model state is invalid
+                response = View(form);
             }
             return response;
         }

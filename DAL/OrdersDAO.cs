@@ -15,14 +15,14 @@ namespace DAL
     public class OrdersDAO
     {
         //Establishing connections and file locations
-        public readonly string connectionString;
-        public readonly string errorLogPath;
+        private readonly string _ConnectionString;
+        private readonly string _ErrorLogPath;
 
         //constructor
-        public OrdersDAO(string _connectionString, string _errorLogPath)
+        public OrdersDAO(string connectionString, string errorLogPath)
         {
-            this.connectionString = _connectionString;
-            this.errorLogPath = _errorLogPath;
+            this._ConnectionString = connectionString;
+            this._ErrorLogPath = errorLogPath;
         }
 
         //creating a new order
@@ -31,7 +31,7 @@ namespace DAL
             try
             {
                 //defining commands
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
                 using (SqlCommand createOrder = new SqlCommand("ORDERS_CREATE_NEW", sqlConnection))
                 {
                     //timing out after 60 seconds
@@ -44,7 +44,6 @@ namespace DAL
                     createOrder.Parameters.AddWithValue("Due", orderInfo.Due);
                     createOrder.Parameters.AddWithValue("CrafterID", orderInfo.CrafterID);
                     createOrder.Parameters.AddWithValue("Status", orderInfo.Status);
-                    createOrder.Parameters.AddWithValue("PriceTotal", orderInfo.PriceTotal);
 
                     //Saving information to database
                     sqlConnection.Open();
@@ -54,13 +53,13 @@ namespace DAL
             //logging errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
@@ -75,7 +74,7 @@ namespace DAL
             try
             {
                 //defining commands and accessing the database
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
                 using (SqlCommand viewAllOrders = new SqlCommand("ORDERS_SELECT_ALL", sqlConnection))
                 {
                     // gives up after 60 seconds
@@ -97,13 +96,13 @@ namespace DAL
             //logging any errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
@@ -117,7 +116,7 @@ namespace DAL
             try
             {
                 //defining commands to access the database
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
                 using (SqlCommand viewByID = new SqlCommand("ORDERS_SELECT_BY_ID", sqlConnection))
                 {
                     //give up after 60 seconds
@@ -141,13 +140,13 @@ namespace DAL
             //logging any errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
@@ -163,7 +162,7 @@ namespace DAL
             try
             {
                 //defining some commands
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
                 using (SqlCommand updateOrder = new SqlCommand("ORDERS_UPDATE", sqlConnection))
                 {
                     //timing out after 60 seconds
@@ -176,7 +175,6 @@ namespace DAL
                     updateOrder.Parameters.AddWithValue("Due", orderInfo.Due);
                     updateOrder.Parameters.AddWithValue("CrafterID", orderInfo.CrafterID);
                     updateOrder.Parameters.AddWithValue("Status", orderInfo.Status);
-                    updateOrder.Parameters.AddWithValue("PriceTotal", orderInfo.PriceTotal);
 
                     //Saving information to database
                     sqlConnection.Open();
@@ -186,13 +184,13 @@ namespace DAL
             //logging errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
@@ -206,7 +204,7 @@ namespace DAL
 
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
                 using (SqlCommand deleteOrder = new SqlCommand("ORDERS_DELETE", sqlConnection))
                 {
                     //giving up after 60 seconds and adding the ID to sort by
@@ -222,13 +220,13 @@ namespace DAL
             //logging errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
@@ -243,7 +241,7 @@ namespace DAL
             try
             {
                 //defining commands to access the database
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
                 using (SqlCommand viewByUserID = new SqlCommand("ORDERS_SELECT_BY_USER_ID", sqlConnection))
                 {
                     //giving up after 60 seconds
@@ -267,13 +265,13 @@ namespace DAL
             //logging errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
@@ -288,7 +286,7 @@ namespace DAL
             try
             {
                 //defining commands to access the database
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
                 using (SqlCommand viewByCrafterID = new SqlCommand("ORDERS_SELECT_BY_CRAFTER_ID", sqlConnection))
                 {
                     //giving up after 60 seconds
@@ -312,13 +310,13 @@ namespace DAL
             //logging errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
@@ -333,7 +331,7 @@ namespace DAL
             try
             {
                 //defining commands to access the database
-                using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+                using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
                 using (SqlCommand viewByStatus = new SqlCommand("ORDERS_SELECT_BY_STATUS", sqlConnection))
                 {
                     //giving up after 60 seconds
@@ -357,13 +355,13 @@ namespace DAL
             //logging errors
             catch (SqlException sqlEx)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.SqlErrorLog(sqlEx);
                 throw sqlEx;
             }
             catch (Exception ex)
             {
-                LoggerDAL.errorLogPath = errorLogPath;
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }

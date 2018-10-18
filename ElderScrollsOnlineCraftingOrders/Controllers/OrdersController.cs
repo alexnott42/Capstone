@@ -22,12 +22,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         private readonly string errorLogPath;
         private readonly string connectionString;
         private OrdersDAO _OrdersDAO;
-        private List<OrdersDO> _Orders = new List<OrdersDO>();
-        private List<OrdersPO> Orders = new List<OrdersPO>();
+
 
         //constructor
         public OrdersController()
         {
+            //todo: place file path in config
             filePath = Path.GetDirectoryName(System.Web.HttpContext.Current.Server.MapPath("~"));
             errorLogPath = filePath + @"\ErrorLog.txt";
             connectionString = ConfigurationManager.ConnectionStrings["dataSource"].ConnectionString;
@@ -38,6 +38,8 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         [HttpGet]
         public ActionResult ViewAllOrders()
         {
+            List<OrdersDO> _Orders = new List<OrdersDO>();
+            List<OrdersPO> Orders = new List<OrdersPO>();
             try
             {
                 _Orders = _OrdersDAO.ViewAllOrders();
@@ -63,6 +65,8 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         [HttpGet]
         public ActionResult ViewByStatus(byte status)
         {
+            List<OrdersDO> _Orders = new List<OrdersDO>();
+            List<OrdersPO> Orders = new List<OrdersPO>();
             try
             {
                 //mapping to presentation layer
@@ -116,6 +120,8 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         [HttpGet]
         public ActionResult ViewOrderByUserID(int UserID)
         {
+            List<OrdersDO> _Orders = new List<OrdersDO>();
+            List<OrdersPO> Orders = new List<OrdersPO>();
             try
             {
                 //Mapping all the data from database, to data access, to presentation layer
@@ -143,6 +149,8 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         [HttpGet]
         public ActionResult ViewOrderByCrafterID(int CrafterID)
         {
+            List<OrdersDO> _Orders = new List<OrdersDO>();
+            List<OrdersPO> Orders = new List<OrdersPO>();
             try
             {
                 //Mapping all the data from database, to data access, to presentation layer
@@ -196,27 +204,36 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         public ActionResult CreateNewOrder(OrdersPO form)
         {
             ActionResult response;
-            try
+            if (ModelState.IsValid)
             {
-                //taking in user input and saving it to the database
-                OrdersDO newOrder = Mapper.OrdersPOtoOrdersDO(form);
-                _OrdersDAO.CreateNewOrder(newOrder);
-                //redirecting to home page when finished
-                response = RedirectToAction("Index", "Home");
-                //TODO: make CreateNewOrder return user to orders screen
+
+                try
+                {
+                    //taking in user input and saving it to the database
+                    OrdersDO newOrder = Mapper.OrdersPOtoOrdersDO(form);
+                    _OrdersDAO.CreateNewOrder(newOrder);
+                    //redirecting to home page when finished
+                    response = RedirectToAction("Index", "Home");
+                    //TODO: make CreateNewOrder return user to orders screen
+                }
+                //logging errors
+                catch (SqlException sqlEx)
+                {
+                    Logger.errorLogPath = errorLogPath;
+                    Logger.SqlErrorLog(sqlEx);
+                    throw sqlEx;
+                }
+                catch (Exception ex)
+                {
+                    Logger.errorLogPath = errorLogPath;
+                    Logger.ErrorLog(ex);
+                    throw ex;
+                }
             }
-            //logging errors
-            catch (SqlException sqlEx)
+            else
             {
-                Logger.errorLogPath = errorLogPath;
-                Logger.SqlErrorLog(sqlEx);
-                throw sqlEx;
-            }
-            catch (Exception ex)
-            {
-                Logger.errorLogPath = errorLogPath;
-                Logger.ErrorLog(ex);
-                throw ex;
+                //returning to form view if model state is invalid
+                response = View(form);
             }
             //returning to home page
             return response;
@@ -255,25 +272,34 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         public ActionResult UpdateOrder(OrdersPO form)
         {
             ActionResult response;
-            try
-            {
-                OrdersDO OrderDO = Mapper.OrdersPOtoOrdersDO(form);
-                _OrdersDAO.UpdateOrder(OrderDO);
-                response = RedirectToAction("Index", "Home");
-                //todo: make updateorder return to order view
 
-            }
-            catch (SqlException sqlEx)
+            if (ModelState.IsValid)
             {
-                Logger.errorLogPath = errorLogPath;
-                Logger.SqlErrorLog(sqlEx);
-                throw sqlEx;
+                try
+                {
+                    OrdersDO OrderDO = Mapper.OrdersPOtoOrdersDO(form);
+                    _OrdersDAO.UpdateOrder(OrderDO);
+                    response = RedirectToAction("Index", "Home");
+                    //todo: make updateorder return to order view
+
+                }
+                catch (SqlException sqlEx)
+                {
+                    Logger.errorLogPath = errorLogPath;
+                    Logger.SqlErrorLog(sqlEx);
+                    throw sqlEx;
+                }
+                catch (Exception ex)
+                {
+                    Logger.errorLogPath = errorLogPath;
+                    Logger.ErrorLog(ex);
+                    throw ex;
+                }
             }
-            catch (Exception ex)
+            else
             {
-                Logger.errorLogPath = errorLogPath;
-                Logger.ErrorLog(ex);
-                throw ex;
+                //returning to form view if model state is invalid
+                response = View(form);
             }
             return response;
         }

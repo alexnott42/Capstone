@@ -61,8 +61,7 @@ namespace DAL.dalMappers
                 Requested = from.GetDateTime(2),
                 Due = from.GetDateTime(3),
                 CrafterID = from.GetInt32(4),
-                Status = from.GetByte(5),
-                PriceTotal = from.GetInt32(6)
+                Status = from.GetByte(5)
             };
 
             //Returning Order Data

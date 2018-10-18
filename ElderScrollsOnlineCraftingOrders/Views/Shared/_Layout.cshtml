@@ -21,13 +21,17 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li></li>
+
+                    @if (!(Session["RoleID"] is null) && (byte)Session["RoleID"] >= 5)
+                    {
+                    <li>@Html.ActionLink("Account", "AllUsers", "Users")</li>
+                    }
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @if (!(Session["Username"] is null))
                     {
                         <li>
-                            @Html.ActionLink(Session["Username"].ToString(), "", "")
+                            @Html.ActionLink(Session["Username"].ToString(), "Users", "Users", new { UserID = Session["UserID"] }, null)
                         </li>
                         <li>
                             @Html.ActionLink("Logout", "Logout", "Users")

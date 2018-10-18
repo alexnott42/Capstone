@@ -1,0 +1,48 @@
+﻿@using ElderScrollsOnlineCraftingOrders.Models
+@model List<UsersPO>
+@{
+    ViewBag.Title = "AllUsers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<h2 class="text-center">All Users</h2>
+
+<table class="table table-striped" style="background-color: azure">
+    <thead>
+        <tr>
+            <th>
+                Username
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                ESO Name
+            </th>
+            <th>
+                Server
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (UsersPO user in Model)
+        {
+            <tr>
+                <td>
+                    <text>@user.Username</text>
+                </td>
+                <td>
+                    <text>@user.Email</text>
+                </td>
+                <td>
+                    <text>@user.ESOname</text>
+                </td>
+                <td>
+                    <text>@user.Server</text>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

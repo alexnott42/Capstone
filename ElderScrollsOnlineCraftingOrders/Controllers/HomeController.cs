@@ -19,9 +19,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
 
     }
 }
-//TODO: create logout view
-//TODO: create login view
 //TODO: create register view
-//TODO: create Users view
-//TODO: CREATE orders view
-//TODO: create items view
+//TODO: create Users views
+//TODO: CREATE orders views
+//TODO: create items views
