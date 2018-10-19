@@ -1,12 +1,11 @@
 ﻿@using ElderScrollsOnlineCraftingOrders.Models
 @model List<UsersPO>
 @{
-    ViewBag.Title = "AllUsers";
+    ViewBag.Title = "UsersByRole";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
 }
 
-<h2 class="text-center">All Users</h2>
+<h2 class="text-center">Users sorted by role</h2>
 
 <table class="table table-striped" style="background-color: azure">
     <thead>
@@ -57,7 +56,7 @@
                     <text>@user.Server </text>@Html.ActionLink("Sort", "UsersByServer", "Users", new { Server = user.Server }, new { @class = "btn-sm btn-info" })
                 </td>
                 <td>
-                    <text>@user.RoleID </text>@Html.ActionLink("Sort", "UsersByRole", "Users", new { RoleID = user.RoleID }, new { @class = "btn-sm btn-info" })
+                    <text>@user.RoleID</text>
                 </td>
                 <td>
                     @Html.ActionLink("Orders", "ViewOrderByUserID", "Orders", new { UserID = user.UserID }, new { @class = "btn" })
@@ -70,9 +69,9 @@
                     <td style="text-align: center">
                         @Html.ActionLink("Update", "UpdateUser", "Users", new { UserID = user.UserID }, new { @class = "btn btn-info" })
                         @*@Ajax.ActionLink("Delete", "DeleteUser", "Users", new { UserID = user.UserID },
-                       new AjaxOptions() { OnSuccess = "DisplayModal", OnFailure = "FailedToLoadModal",
-                       HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "Confirmation" },
-                       new {@class = "btn btn-danger"})*@
+                            new AjaxOptions() { OnSuccess = "DisplayModal", OnFailure = "FailedToLoadModal",
+                            HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "Confirmation" },
+                            new {@class = "btn btn-danger"})*@
 
                         @Html.ActionLink("Delete", "DeleteUser", "Users", new { UserID = user.UserID }, new { @class = "btn btn-danger" })
                     </td>

@@ -48,12 +48,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
-                response = View(userDetails);
+                response = RedirectToAction("Error", "Shared");
             }
             catch (Exception ex)
             {
                 Logger.ErrorLog(ex);
-                response = View(userDetails);
+                response = RedirectToAction("Error", "Shared");
             }
             return response;
         }
@@ -63,7 +63,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         [HttpGet]
         public ActionResult AllUsers()
         {
-            ActionResult result;
+            ActionResult response;
             List<UsersPO> userList = new List<UsersPO>();
 
             try
@@ -71,18 +71,18 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 List<UsersDO> allUsers = _UsersDAO.ViewAllUsers();
                 userList = Mapper.UsersListDOtoPO(allUsers);
                 //todo: confirmations on deletes
-                result = View(userList);
+                response = RedirectToAction("Error", "Shared");
             }
             //logging errors
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
-                result = View(userList);
+                response = RedirectToAction("Error", "Shared");
             }
             catch (Exception ex)
             {
                 Logger.ErrorLog(ex);
-                result = View(userList);
+                response = RedirectToAction("Error", "Shared");
             }
             return View(userList);
         }
@@ -130,12 +130,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 catch (SqlException sqlEx)
                 {
                     Logger.SqlErrorLog(sqlEx);
-                    response = View(form);
+                    response = RedirectToAction("Error", "Shared");
                 }
                 catch (Exception ex)
                 {
                     Logger.ErrorLog(ex);
-                    response = View(form);
+                    response = RedirectToAction("Error", "Shared");
                 }
             }
             else
@@ -173,6 +173,8 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 try
                 {
                     //taking user input and mapping it to the database
+                    form.RoleID = 3;
+
                     UsersDO newUser = Mapper.UsersPOtoUsersDO(form);
                     _UsersDAO.CreateNewUserEntry(newUser);
                     //setting response view
@@ -182,13 +184,13 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 catch (SqlException sqlEx)
                 {
                     Logger.SqlErrorLog(sqlEx);
-                    response = RedirectToAction("CreateNewAccount");
+                    response = RedirectToAction("Error", "Shared");
                 }
                 catch (Exception ex)
                 {
                     Logger.ErrorLog(ex);
-                    throw ex;
-                } 
+                    response = RedirectToAction("Error", "Shared");
+                }
             }
             else
             {
@@ -217,12 +219,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
-                response = View(UserPO);
+                response = RedirectToAction("Error", "Shared");
             }
             catch (Exception ex)
             {
                 Logger.ErrorLog(ex);
-                response = View(UserPO);
+                response = RedirectToAction("Error", "Shared");
             }
             //return view
             return response;
@@ -249,12 +251,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 catch (SqlException sqlEx)
                 {
                     Logger.SqlErrorLog(sqlEx);
-                    response = View(form);
+                    response = RedirectToAction("Error", "Shared");
                 }
                 catch (Exception ex)
                 {
                     Logger.ErrorLog(ex);
-                    response = View(form);
+                    response = RedirectToAction("Error", "Shared");
                 }
             }
             else
@@ -283,14 +285,72 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
-                response = RedirectToAction("AllUsers", "Users");
+                response = RedirectToAction("Error", "Shared");
             }
             catch (Exception ex)
             {
                 Logger.ErrorLog(ex);
-                response = RedirectToAction("AllUsers", "Users");
+                response = RedirectToAction("Error", "Shared");
             }
             //returning view
+            return response;
+        }
+
+        //view users by role
+        [SecurityFilter(5)]
+        [HttpGet]
+        public ActionResult UsersByRole (byte RoleID)
+        {
+            ActionResult response;
+            List<UsersPO> userList = new List<UsersPO>();
+            List<UsersDO> allUsers = new List<UsersDO>();
+
+            try
+            {
+                allUsers = _UsersDAO.ViewUserByRole(RoleID);
+                userList = Mapper.UsersListDOtoPO(allUsers);
+                //todo: confirmations on deletes
+                response = View(userList);
+            }
+            //logging errors
+            catch (SqlException sqlEx)
+            {
+                Logger.SqlErrorLog(sqlEx);
+                response = RedirectToAction("Error", "Shared");
+            }
+            catch (Exception ex)
+            {
+                Logger.ErrorLog(ex);
+                response = RedirectToAction("Error", "Shared");
+            }
+            return response;
+        }
+        [SecurityFilter(5)]
+        [HttpGet]
+        public ActionResult UsersByServer(string server)
+        {
+            ActionResult response;
+            List<UsersPO> userList = new List<UsersPO>();
+            List<UsersDO> allUsers = new List<UsersDO>();
+
+            try
+            {
+                allUsers = _UsersDAO.ViewUserByServer(server);
+                userList = Mapper.UsersListDOtoPO(allUsers);
+                //todo: confirmations on deletes
+                response = View(userList);
+            }
+            //logging errors
+            catch (SqlException sqlEx)
+            {
+                Logger.SqlErrorLog(sqlEx);
+                response = RedirectToAction("Error", "Shared");
+            }
+            catch (Exception ex)
+            {
+                Logger.ErrorLog(ex);
+                response = RedirectToAction("Error", "Shared");
+            }
             return response;
         }
     }

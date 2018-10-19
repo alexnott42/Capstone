@@ -49,12 +49,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
-                response = View(Orders);
+                response = RedirectToAction("Error", "Shared");
             }
             catch (Exception ex)
             {
                 Logger.ErrorLog(ex);
-                response = View(Orders);
+                response = RedirectToAction("Error", "Shared");
             }
             return response;
         }
@@ -79,12 +79,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
-                response = View(Orders);
+                response = RedirectToAction("Error", "Shared");
             }
             catch (Exception ex)
             {
                 Logger.ErrorLog(ex);
-                response = View(Orders);
+                response = RedirectToAction("Error", "Shared");
             }
             return response;
         }
@@ -108,12 +108,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
-                response = View(orderDetails);
+                response = RedirectToAction("Error", "Shared");
             }
             catch (Exception ex)
             {
                 Logger.ErrorLog(ex);
-                response = View(orderDetails);
+                response = RedirectToAction("Error", "Shared");
             }
             return response;
         }
@@ -139,12 +139,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
-                response = View(Orders);
+                response = RedirectToAction("Error", "Shared");
             }
             catch (Exception ex)
             {
                 Logger.ErrorLog(ex);
-                response = View(Orders);
+                response = RedirectToAction("Error", "Shared");
             }
             return response;
         }
@@ -171,12 +171,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
-                response = View(Orders);
+                response = RedirectToAction("Error", "Shared");
             }
             catch (Exception ex)
             {
                 Logger.ErrorLog(ex);
-                response = View(Orders);
+                response = RedirectToAction("Error", "Shared");
             }
             return response;
         }
@@ -195,12 +195,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
-                response = View();
+                response = RedirectToAction("Error", "Shared");
             }
             catch (Exception ex)
             {
                 Logger.ErrorLog(ex);
-                response = View();
+                response = RedirectToAction("Error", "Shared");
             }
             return response;
         }
@@ -226,12 +226,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 catch (SqlException sqlEx)
                 {
                     Logger.SqlErrorLog(sqlEx);
-                    response = View(form);
+                    response = RedirectToAction("Error", "Shared");
                 }
                 catch (Exception ex)
                 {
                     Logger.ErrorLog(ex);
-                    response = View(form);
+                    response = RedirectToAction("Error", "Shared");
                 }
             }
             else
@@ -259,12 +259,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
-                response = View(orderPO);
+                response = RedirectToAction("Error", "Shared");
             }
             catch (Exception ex)
             {
                 Logger.ErrorLog(ex);
-                response = View(orderPO);
+                response = RedirectToAction("Error", "Shared");
             }
             return response;
         }
@@ -288,12 +288,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 catch (SqlException sqlEx)
                 {
                     Logger.SqlErrorLog(sqlEx);
-                    response = View(form);
+                    response = RedirectToAction("Error", "Shared");
                 }
                 catch (Exception ex)
                 {
                     Logger.ErrorLog(ex);
-                    response = View(form);
+                    response = RedirectToAction("Error", "Shared");
                 }
             }
             else
@@ -321,12 +321,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
-                response = RedirectToAction("ViewOrderByUserID", "Orders");
+                response = RedirectToAction("Error", "Shared");
             }
             catch (Exception ex)
             {
                 Logger.ErrorLog(ex);
-                response = RedirectToAction("ViewOrderByUserID", "Orders");
+                response = RedirectToAction("Error", "Shared");
             }
             //returning response page
             return response;

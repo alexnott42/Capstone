@@ -21,7 +21,6 @@ namespace ElderScrollsOnlineCraftingOrders.Models
         [Required]
         public DateTime Due { get; set; }
 
-        [Required]
         public int CrafterID { get; set; }
 
         [Required]

@@ -209,11 +209,13 @@
     <Content Include="Views\Users\AllUsers.cshtml" />
     <Content Include="Views\Users\CreateNewAccount.cshtml" />
     <Content Include="Views\Users\UpdateUser.cshtml" />
+    <Content Include="Views\Users\UsersByRole.cshtml" />
+    <Content Include="Views\Users\UsersByServer.cshtml" />
+    <Content Include="Views\Orders\ViewAllOrders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Items\" />
-    <Folder Include="Views\Orders\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

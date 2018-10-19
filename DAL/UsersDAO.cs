@@ -317,6 +317,50 @@ namespace DAL
             }
             //returning data
             return userData;
+        }   
+        //retrieve a single user entry from database
+    public List<UsersDO> ViewUserByServer(string server)
+    {
+        List<UsersDO> userData = new List<UsersDO>();
+        try
+        {
+            //defining commands to access the database
+            using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
+            using (SqlCommand viewByRole = new SqlCommand("USERS_SELECT_BY_SERVER", sqlConnection))
+            {
+                //giving up after 60 seconds
+                viewByRole.CommandType = CommandType.StoredProcedure;
+                viewByRole.CommandTimeout = 60;
+
+                //inserting the UserID to sort through entries
+                viewByRole.Parameters.AddWithValue("Server", server);
+
+                //reading the data and using Mapper to store it
+                sqlConnection.Open();
+                using (SqlDataReader reader = viewByRole.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        //creating a list and mapping objects
+                        userData.Add(MapperDAL.ReaderToUser(reader));
+                    }
+                }
+            }
         }
+        //logging errors
+        catch (SqlException sqlEx)
+        {
+            LoggerDAL.SqlErrorLog(sqlEx);
+            throw sqlEx;
+        }
+        catch (Exception ex)
+        {
+            LoggerDAL.ErrorLog(ex);
+            throw ex;
+        }
+        //returning data
+        return userData;
     }
+    }
+
 }

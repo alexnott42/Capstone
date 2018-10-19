@@ -1,0 +1,78 @@
+﻿@using ElderScrollsOnlineCraftingOrders.Models
+@model List<OrdersPO>
+@{
+    ViewBag.Title = "ViewAllOrders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<h2 class="text-capitalize">All Orders</h2>
+
+<table class="table table-striped" style=" background-color: azure">
+    <thead>
+        <tr>
+            <th>
+                User
+            </th>
+            <th>
+                Requested
+            </th>
+            <th>
+                Due
+            </th>
+            <th>
+                Crafter
+            </th>
+            <th>
+                Status
+            </th>
+            @if ((byte)Session["RoleID"] >= 5)
+            {
+                <th style="text-align: center">
+                    Actions
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(OrdersPO order in Model)
+        {
+        <tr>
+            <td>
+                <text> @order.UserID</text>@Html.ActionLink("Orders", "ViewOrderByUserID", "Orders", new { UserID = order.UserID }, new { @class = "btn" })
+            </td>
+            <td>
+                <text>@order.Requested</text>
+            </td>
+            <td>
+                <text>@order.Due</text>
+            </td>
+            @if (!(order.CrafterID == 0))
+            {
+                <td>
+                    @* For some reason this needs the empty quotes, even though none of the other
+                        identical procedures do, don't remove them*@
+                    @Html.ActionLink(order.CrafterID + "", "ViewOrderByCrafterID", "Orders", new { CrafterID = order.CrafterID }, new { @class = "btn" })
+                </td>
+            }
+            else
+            {
+                order.OrderID = 0;
+            }
+            <td>
+                @Html.ActionLink(order.Status + "/5", "ViewByStatus", "Orders", new { Status = order.Status }, new { @class = "btn" })
+            </td>
+
+            @if ((byte)Session["RoleID"] >= 5)
+            {
+                <td style="text-align: center">
+                    @Html.ActionLink("Update", "UpdateOrder", "Orders", new { OrderID = order.OrderID }, new { @class = "btn" })
+                </td>
+                <td style="text-align: center">
+                    @Html.ActionLink("Delete", "DeleteOrder", "Orders", new { OrderID = order.OrderID }, new { @class = "btn" })
+                </td>
+            }
+        </tr>
+        }
+    </tbody>
+</table>
