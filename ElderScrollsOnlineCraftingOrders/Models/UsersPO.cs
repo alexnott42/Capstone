@@ -8,7 +8,6 @@ namespace ElderScrollsOnlineCraftingOrders.Models
 {
     public class UsersPO
     {
-        [Required]
         public int UserID { get; set; }
 
         [Required]
@@ -27,7 +26,6 @@ namespace ElderScrollsOnlineCraftingOrders.Models
         [StringLength(50)]
         public string ESOname { get; set; }
 
-        [Required]
         [Range(1,6)]
         public byte RoleID { get; set; }
 

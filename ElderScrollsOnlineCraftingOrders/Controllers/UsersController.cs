@@ -176,13 +176,13 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                     UsersDO newUser = Mapper.UsersPOtoUsersDO(form);
                     _UsersDAO.CreateNewUserEntry(newUser);
                     //setting response view
-                    response = RedirectToAction("Index", "Home");
+                    response = RedirectToAction("Login", "Users");
                 }
                 //logging errors
                 catch (SqlException sqlEx)
                 {
                     Logger.SqlErrorLog(sqlEx);
-                    throw sqlEx;
+                    response = RedirectToAction("CreateNewAccount");
                 }
                 catch (Exception ex)
                 {
@@ -204,24 +204,25 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         [HttpGet]
         public ActionResult UpdateUser(int UserID)
         {
+            UsersPO UserPO = new UsersPO();
             ActionResult response;
             try
             {
                 //retrieving data and displaying to user
                 UsersDO UserDO = _UsersDAO.ViewUserByID(UserID);
-                UsersPO UserPO = Mapper.UsersDOtoUsersPO(UserDO);
+                UserPO = Mapper.UsersDOtoUsersPO(UserDO);
                 response = View(UserPO);
             }
             //logging errors
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
-                throw sqlEx;
+                response = View(UserPO);
             }
             catch (Exception ex)
             {
                 Logger.ErrorLog(ex);
-                throw ex;
+                response = View(UserPO);
             }
             //return view
             return response;
@@ -248,12 +249,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 catch (SqlException sqlEx)
                 {
                     Logger.SqlErrorLog(sqlEx);
-                    throw sqlEx;
+                    response = View(form);
                 }
                 catch (Exception ex)
                 {
                     Logger.ErrorLog(ex);
-                    throw ex;
+                    response = View(form);
                 }
             }
             else
@@ -282,12 +283,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
-                throw sqlEx;
+                response = RedirectToAction("AllUsers", "Users");
             }
             catch (Exception ex)
             {
                 Logger.ErrorLog(ex);
-                throw ex;
+                response = RedirectToAction("AllUsers", "Users");
             }
             //returning view
             return response;

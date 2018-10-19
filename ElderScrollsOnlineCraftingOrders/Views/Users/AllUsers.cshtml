@@ -28,7 +28,7 @@
             </th>
             @if ((byte)Session["RoleID"] == 6)
             {
-                <th>
+                <th style="text-align: center">
                     Actions
                 </th>
             }
@@ -37,33 +37,35 @@
     <tbody>
         @foreach (UsersPO user in Model)
         {
-        <tr>
-            <td>
-                <text>@user.Username</text>
-            </td>
-            <td>
-                <text>@user.Email</text>
-            </td>
-            <td>
-                <text>@user.ESOname</text>
-            </td>
-            <td>
-                <text>@user.Server</text>
-            </td>
-            <td>
-                <text>@user.RoleID</text>
-            </td>
-            @if ((byte)Session["RoleID"] == 6)
-            {
+            <tr>
                 <td>
-                    @Html.ActionLink("Update", "UpdateUser", "Users", new { UserID = user.UserID }, new { @class = "btn btn-info" })
+                    @Html.ActionLink(user.Username, "ViewOrderByUserID", "Orders", new { UserID = user.UserID })
                 </td>
                 <td>
-                    @Html.ActionLink("Delete", "DeleteUser", "Users", new { UserID = user.UserID }, new { @class = "btn btn-danger" })
+                    <text>@user.Email</text>
                 </td>
-            }
-        </tr>
+                <td>
+                    <text>@user.ESOname</text>
+                </td>
+                <td>
+                    <text>@user.Server</text>
+                </td>
+                <td>
+                    <text>@user.RoleID</text>
+                </td>
+                @if ((byte)Session["RoleID"] == 6)
+                {
+                    <td style="text-align: center">
+                        @Html.ActionLink("Update", "UpdateUser", "Users", new { UserID = user.UserID }, new { @class = "btn btn-info" })
+                        @*@Ajax.ActionLink("Delete", "DeleteUser", "Users", new { UserID = user.UserID },
+                       new AjaxOptions() { OnSuccess = "DisplayModal", OnFailure = "FailedToLoadModal",
+                       HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "Confirmation" },
+                       new {@class = "btn btn-danger"})*@
+
+                        @Html.ActionLink("Delete", "DeleteUser", "Users", new { UserID = user.UserID }, new { @class = "btn btn-danger" })
+                    </td>
+                }
+            </tr>
         }
     </tbody>
 </table>
-

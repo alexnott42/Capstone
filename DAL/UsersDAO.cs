@@ -156,9 +156,8 @@ namespace DAL
         }
 
         //Updating an existing user
-        public int UpdateUserInformation(UsersDO userInfo)
+        public void UpdateUserInformation(UsersDO userInfo)
         {
-            int rowsAffected = 0;
 
             try
             {
@@ -176,12 +175,11 @@ namespace DAL
                     updateUser.Parameters.AddWithValue("Email", userInfo.Email);
                     updateUser.Parameters.AddWithValue("Password", userInfo.Password);
                     updateUser.Parameters.AddWithValue("ESOname", userInfo.ESOname);
-                    updateUser.Parameters.AddWithValue("RoleID", userInfo.RoleID);
                     updateUser.Parameters.AddWithValue("Server", userInfo.Server);
 
                     //Saving information to database
                     sqlConnection.Open();
-                    rowsAffected = updateUser.ExecuteNonQuery();
+                    updateUser.ExecuteNonQuery();
                 }
             }
             //logging errors
@@ -195,7 +193,6 @@ namespace DAL
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
-            return rowsAffected;
         }
 
         //deleting a user entry

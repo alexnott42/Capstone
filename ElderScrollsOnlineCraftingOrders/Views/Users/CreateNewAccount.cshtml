@@ -25,10 +25,13 @@
     <div class="form-group">
         @Html.TextBoxFor(model => Model.ESOname, new { @class = "form-control", placeholder = "Example: @therealmadgod" })
     </div>
+    if ((byte)Session["RoleID"] == 6)
+    {
     @Html.LabelFor(model => Model.RoleID)
     <div class="form-group">
         @Html.TextBoxFor(model => Model.RoleID, new { @class = "form-control" })
     </div>
+    }
     @Html.LabelFor(model => Model.Server)
     <div class="form-group">
         @Html.TextBoxFor(model => Model.Server, new { @class = "form-control", placeholder = "Example: EU" })

@@ -208,6 +208,7 @@
     <Content Include="Views\Users\Users.cshtml" />
     <Content Include="Views\Users\AllUsers.cshtml" />
     <Content Include="Views\Users\CreateNewAccount.cshtml" />
+    <Content Include="Views\Users\UpdateUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

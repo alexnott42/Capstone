@@ -33,6 +33,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         }
         //view all orders
         [SecurityFilter(4)]
+        //todo: create view
         public ActionResult ViewAllOrders()
         {
             ActionResult response;
@@ -59,6 +60,8 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         }
         //View order by status
         [SecurityFilter(4)]
+        //todo: create view
+
         [HttpGet]
         public ActionResult ViewByStatus(byte status)
         {
@@ -88,6 +91,8 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
 
         //view order by ID
         [SecurityFilter(3)]
+        //todo: create view
+
         [HttpGet]
         public ActionResult ViewOrderByID(int OrderID)
         {
@@ -115,6 +120,8 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
 
         //view order by user
         [SecurityFilter(3)]
+        //todo: create view
+
         [HttpGet]
         public ActionResult ViewOrderByUserID(int UserID)
         {
@@ -144,6 +151,8 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
 
         //view order by crafter
         [SecurityFilter(4)]
+        //todo: create view
+
         [HttpGet]
         public ActionResult ViewOrderByCrafterID(int CrafterID)
         {
