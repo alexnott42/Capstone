@@ -212,6 +212,7 @@
     <Content Include="Views\Users\UsersByRole.cshtml" />
     <Content Include="Views\Users\UsersByServer.cshtml" />
     <Content Include="Views\Orders\ViewAllOrders.cshtml" />
+    <Content Include="Views\Orders\ViewByStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

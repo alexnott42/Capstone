@@ -1,0 +1,41 @@
+﻿@using ElderScrollsOnlineCraftingOrders.Models
+@model List<OrdersPO>
+@{
+    ViewBag.Title = "ViewByStatus";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<h2 class="text-center">ViewByStatus</h2>
+
+<table class="table table-striped" style="background-color: azure">
+    <thead>
+        <tr>
+            <th>
+                @* OrderID *@
+                Order Number
+            </th>
+            <th>
+                @* UserID *@
+                User
+            </th>
+            <th>
+                Requested
+            </th>
+            <th>
+                Due
+            </th>
+            <th>
+                @* CrafterID *@
+                Crafter
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                @* price total calculation *@
+                Price
+            </th>
+        </tr>
+    </thead>
+</table>
