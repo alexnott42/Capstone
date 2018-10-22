@@ -16,12 +16,17 @@ namespace ElderScrollsOnlineCraftingOrders.Models
         public int UserID { get; set; }
 
         [Required]
+        public string Username { get; set; }
+
+        [Required]
         public DateTime Requested { get; set; }
 
         [Required]
         public DateTime Due { get; set; }
 
-        public int CrafterID { get; set; }
+        public int? CrafterID { get; set; }
+
+        public string Crafter { get; set; }
 
         [Required]
         [Range(1, 5)]

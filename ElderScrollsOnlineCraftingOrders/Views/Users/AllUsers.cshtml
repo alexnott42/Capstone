@@ -74,7 +74,7 @@
                        HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "Confirmation" },
                        new {@class = "btn btn-danger"})*@
 
-                        @Html.ActionLink("Delete", "DeleteUser", "Users", new { UserID = user.UserID }, new { @class = "btn btn-danger" })
+                        @Html.ActionLink("Delete", "DeleteUser", "Users", new { UserID = user.UserID }, new { @class = "btn btn-danger", onclick = "return confirm('delete this user?');" } )
                     </td>
                 }
             </tr>

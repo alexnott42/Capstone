@@ -14,16 +14,16 @@ namespace DAL.dalMappers
         public static UsersDO ReaderToUser(SqlDataReader from)
         {
 
-            UsersDO to = new UsersDO
-            {
-                UserID = from.GetInt32(0),
-                Username = from.GetValue(1) as string,
-                Email = from.GetValue(2) as string,
-                Password = from.GetValue(3) as string,
-                ESOname = from.GetValue(4) as string,
-                RoleID = from.GetByte(5),
-                Server = from.GetValue(6) as string,
-            };
+            UsersDO to = new UsersDO();
+            //mapping data
+            to.UserID = (int)from["UserID"];
+            to.Username = from["Username"] as string;
+            to.Email = from["email"] as string;
+            to.Password = from["Password"] as string;
+            to.ESOname = from["ESOname"] as string;
+            to.RoleID = (byte)from["RoleID"];
+            to.Server = from["Server"] as string;
+            
 
             //returning the User Data
             return to;
@@ -33,19 +33,19 @@ namespace DAL.dalMappers
         //Getting Item Data from the Database
         public static ItemsDO ReaderToItem(SqlDataReader from)
         {
-            ItemsDO to = new ItemsDO
-            {
-                ItemID = from.GetInt32(0),
-                Type = from.GetValue(1) as string,
-                SubType = from.GetValue(2) as string,
-                Trait = from.GetValue(3) as string,
-                Style = from.GetValue(4) as string,
-                Set = from.GetValue(5) as string,
-                Level = from.GetValue(6) as string,
-                Quality = from.GetValue(7) as string,
-                OrderID = from.GetInt32(8),
-                Price = from.GetInt32(9)
-            };
+            ItemsDO to = new ItemsDO();
+            //mapping data
+            to.ItemID = (int)from["ItemID"];
+            to.Type = from["Type"] as string;
+            to.SubType = from["SubType"] as string;
+            to.Trait = from["Trait"] as string;
+            to.Style = from["Style"] as string;
+            to.Set = from["Set"] as string;
+            to.Level = from["Level"] as string;
+            to.Quality = from["Quality"] as string;
+            to.OrderID = (int)from["OrderID"];
+            to.Price = (int)from["Price"];
+            
 
             //Returning Item Data
             return to;
@@ -54,16 +54,17 @@ namespace DAL.dalMappers
         //Getting Order Data from the Database
         public static OrdersDO ReaderToOrder(SqlDataReader from)
         {
-            OrdersDO to = new OrdersDO
-            {
-                OrderID = from.GetInt32(0),
-                UserID = from.GetInt32(1),
-                Requested = from.GetDateTime(2),
-                Due = from.GetDateTime(3),
-                CrafterID = from.GetInt32(4),
-                Status = from.GetByte(5)
-            };
+            OrdersDO to = new OrdersDO();
 
+            //mapping data
+            to.OrderID = (int)from["OrderID"];
+            to.UserID = (int)from["UserID"];
+            to.Requested = (DateTime)from["Requested"];
+            to.Due = (DateTime)from["Due"];
+            to.CrafterID = from["CrafterId"] as int?;
+            to.Status = (byte)from["Status"];
+            to.Username = from["Username"] as string;
+            to.Crafter = from["Crafter"] as string;
             //Returning Order Data
             return to;
         }

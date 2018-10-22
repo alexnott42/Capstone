@@ -15,19 +15,17 @@ namespace ElderScrollsOnlineCraftingOrders.Mapping
         public static ItemsPO ItemsDOtoItemsPO(ItemsDO from)
         {
             //mapping each individual attribute
-            ItemsPO to = new ItemsPO
-            {
-                ItemID = from.ItemID,
-                Type = from.Type,
-                SubType = from.SubType,
-                Trait = from.Trait,
-                Style = from.Style,
-                Set = from.Set,
-                Level = from.Level,
-                Quality = from.Quality,
-                OrderID = from.OrderID,
-                Price = from.Price
-            };
+            ItemsPO to = new ItemsPO();
+                to.ItemID = from.ItemID;
+                to.Type = from.Type;
+                to.SubType = from.SubType;
+                to.Trait = from.Trait;
+                to.Style = from.Style;
+                to.Set = from.Set;
+                to.Level = from.Level;
+                to.Quality = from.Quality;
+                to.OrderID = from.OrderID;
+                to.Price = from.Price;
             //making it usable in the future
             return to;
         }
@@ -36,19 +34,17 @@ namespace ElderScrollsOnlineCraftingOrders.Mapping
         public static ItemsDO ItemsPOtoItemsDO(ItemsPO from)
         {
             //mapping each individual attribute
-            ItemsDO to = new ItemsDO
-            {
-                ItemID = from.ItemID,
-                Type = from.Type,
-                SubType = from.SubType,
-                Trait = from.Trait,
-                Style = from.Style,
-                Set = from.Set,
-                Level = from.Level,
-                Quality = from.Quality,
-                OrderID = from.OrderID,
-                Price = from.Price
-            };
+            ItemsDO to = new ItemsDO();
+            to.ItemID = from.ItemID;
+            to.Type = from.Type;
+            to.SubType = from.SubType;
+            to.Trait = from.Trait;
+            to.Style = from.Style;
+            to.Set = from.Set;
+            to.Level = from.Level;
+            to.Quality = from.Quality;
+            to.OrderID = from.OrderID;
+            to.Price = from.Price;
             //making it usable in future
             return to;
         }
@@ -57,15 +53,15 @@ namespace ElderScrollsOnlineCraftingOrders.Mapping
         public static OrdersPO OrdersDOtoOrdersPO(OrdersDO from)
         {
             //mapping each individual attribute
-            OrdersPO to = new OrdersPO
-            {
-                OrderID = from.OrderID,
-                UserID = from.UserID,
-                Requested = from.Requested,
-                Due = from.Due,
-                CrafterID = from.CrafterID,
-                Status = from.Status
-            };
+            OrdersPO to = new OrdersPO();
+            to.OrderID = from.OrderID;
+            to.UserID = from.UserID;
+            to.Requested = from.Requested;
+            to.Due = from.Due;
+            to.CrafterID = from.CrafterID;
+            to.Status = from.Status;
+            to.Username = from.Username;
+            to.Crafter = from.Crafter;
             //making it usable in future
             return to;
         }
@@ -74,15 +70,15 @@ namespace ElderScrollsOnlineCraftingOrders.Mapping
         public static OrdersDO OrdersPOtoOrdersDO(OrdersPO from)
         {
             //mapping each individual attribute
-            OrdersDO to = new OrdersDO
-            {
-                OrderID = from.OrderID,
-                UserID = from.UserID,
-                Requested = from.Requested,
-                Due = from.Due,
-                CrafterID = from.CrafterID,
-                Status = from.Status
-            };
+            OrdersDO to = new OrdersDO();
+            to.OrderID = from.OrderID;
+            to.UserID = from.UserID;
+            to.Requested = from.Requested;
+            to.Due = from.Due;
+            to.CrafterID = from.CrafterID;
+            to.Status = from.Status;
+            to.Username = from.Username;
+            to.Crafter = from.Crafter;
             //making it usable in future
             return to;
         }
@@ -91,16 +87,14 @@ namespace ElderScrollsOnlineCraftingOrders.Mapping
         public static UsersPO UsersDOtoUsersPO(UsersDO from)
         {
             //mapping each individual attribute
-            UsersPO to = new UsersPO
-            {
-                UserID = from.UserID,
-                Username = from.Username,
-                Email = from.Email,
-                Password = from.Password,
-                ESOname = from.ESOname,
-                RoleID = from.RoleID,
-                Server = from.Server
-            };
+            UsersPO to = new UsersPO();
+            to.UserID = from.UserID;
+            to.Username = from.Username;
+            to.Email = from.Email;
+            to.Password = from.Password;
+            to.ESOname = from.ESOname;
+            to.RoleID = from.RoleID;
+            to.Server = from.Server;
             return to;
         }
 
@@ -108,16 +102,14 @@ namespace ElderScrollsOnlineCraftingOrders.Mapping
         public static UsersDO UsersPOtoUsersDO(UsersPO from)
         {
             //mapping each individual attribute
-            UsersDO to = new UsersDO
-            {
-                UserID = from.UserID,
-                Username = from.Username,
-                Email = from.Email,
-                Password = from.Password,
-                ESOname = from.ESOname,
-                RoleID = from.RoleID,
-                Server = from.Server
-            };
+            UsersDO to = new UsersDO();
+            to.UserID = from.UserID;
+            to.Username = from.Username;
+            to.Email = from.Email;
+            to.Password = from.Password;
+            to.ESOname = from.ESOname;
+            to.RoleID = from.RoleID;
+            to.Server = from.Server;
             return to;
         }
 

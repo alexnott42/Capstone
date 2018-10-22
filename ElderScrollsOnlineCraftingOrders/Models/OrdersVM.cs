@@ -7,5 +7,8 @@ namespace ElderScrollsOnlineCraftingOrders.Models
 {
     public class OrdersVM
     {
+        public OrdersPO Order { get; set; }
+
+        public List<ItemsPO> Items { get; set; }
     }
 }

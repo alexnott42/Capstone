@@ -35,44 +35,63 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(OrdersPO order in Model)
+        @foreach (OrdersPO order in Model)
         {
-        <tr>
-            <td>
-                <text> @order.UserID</text>@Html.ActionLink("Orders", "ViewOrderByUserID", "Orders", new { UserID = order.UserID }, new { @class = "btn" })
-            </td>
-            <td>
-                <text>@order.Requested</text>
-            </td>
-            <td>
-                <text>@order.Due</text>
-            </td>
-            @if (!(order.CrafterID == 0))
-            {
+            <tr>
                 <td>
-                    @* For some reason this needs the empty quotes, even though none of the other
-                        identical procedures do, don't remove them*@
-                    @Html.ActionLink(order.CrafterID + "", "ViewOrderByCrafterID", "Orders", new { CrafterID = order.CrafterID }, new { @class = "btn" })
+                    <text> @order.Username</text>@Html.ActionLink("Orders", "ViewOrderByUserID", "Orders", new { UserID = order.UserID }, new { @class = "btn" })
                 </td>
-            }
-            else
-            {
-                order.OrderID = 0;
-            }
-            <td>
-                @Html.ActionLink(order.Status + "/5", "ViewByStatus", "Orders", new { Status = order.Status }, new { @class = "btn" })
-            </td>
+                <td>
+                    <text>@order.Requested</text>
+                </td>
+                <td>
+                    <text>@order.Due</text>
+                </td>
+                <td>
+                    @if (order.CrafterID.HasValue)
+                    {
 
-            @if ((byte)Session["RoleID"] >= 5)
-            {
-                <td style="text-align: center">
-                    @Html.ActionLink("Update", "UpdateOrder", "Orders", new { OrderID = order.OrderID }, new { @class = "btn" })
+                        @Html.ActionLink(order.Crafter, "ViewOrderByCrafterID", "Orders", new { CrafterID = order.CrafterID }, new { @class = "btn" })
+
+                    }
+                    else
+                    {
+                        order.OrderID = 0;
+                    }
                 </td>
-                <td style="text-align: center">
-                    @Html.ActionLink("Delete", "DeleteOrder", "Orders", new { OrderID = order.OrderID }, new { @class = "btn" })
+                <td>
+                    @if ((byte)order.Status == 1)
+                    {
+                        @Html.ActionLink("Untaken", "ViewByStatus", "Orders", new { Status = order.Status }, new { @class = "btn" })
+                    }
+                    @if ((byte)order.Status == 2)
+                    {
+                        @Html.ActionLink("Taken", "ViewByStatus", "Orders", new { Status = order.Status }, new { @class = "btn" })
+                    }
+                    @if ((byte)order.Status == 3)
+                    {
+                        @Html.ActionLink("Crafted", "ViewByStatus", "Orders", new { Status = order.Status }, new { @class = "btn" })
+                    }
+                    @if ((byte)order.Status == 4)
+                    {
+                        @Html.ActionLink("Sent", "ViewByStatus", "Orders", new { Status = order.Status }, new { @class = "btn" })
+                    }
+                    @if ((byte)order.Status == 5)
+                    {
+                        @Html.ActionLink("Defaulted", "ViewByStatus", "Orders", new { Status = order.Status }, new { @class = "btn" })
+                    }
                 </td>
-            }
-        </tr>
+
+                @if ((byte)Session["RoleID"] >= 5)
+                {
+                    <td style="text-align: center">
+                        @Html.ActionLink("Update", "UpdateOrder", "Orders", new { OrderID = order.OrderID }, new { @class = "btn" })
+                    </td>
+                    <td style="text-align: center">
+                        @Html.ActionLink("Delete", "DeleteOrder", "Orders", new { OrderID = order.OrderID }, new { @class = "btn" })
+                    </td>
+                }
+            </tr>
         }
     </tbody>
 </table>

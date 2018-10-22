@@ -13,11 +13,15 @@ namespace DAL.dalModels
 
         public int UserID { get; set; }
 
+        public string Username { get; set; }
+
         public DateTime Requested { get; set; }
 
         public DateTime Due { get; set; }
 
-        public int CrafterID { get; set; }
+        public int? CrafterID { get; set; }
+
+        public string Crafter { get; set; }
 
         public byte Status { get; set; }
     }

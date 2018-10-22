@@ -173,6 +173,7 @@ namespace DAL
                     updateUser.Parameters.AddWithValue("UserID", userInfo.UserID);
                     updateUser.Parameters.AddWithValue("Username", userInfo.Username);
                     updateUser.Parameters.AddWithValue("Email", userInfo.Email);
+                    updateUser.Parameters.AddWithValue("RoleID", userInfo.RoleID);
                     updateUser.Parameters.AddWithValue("Password", userInfo.Password);
                     updateUser.Parameters.AddWithValue("ESOname", userInfo.ESOname);
                     updateUser.Parameters.AddWithValue("Server", userInfo.Server);

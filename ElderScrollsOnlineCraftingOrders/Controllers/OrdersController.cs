@@ -21,6 +21,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         private readonly string errorLogPath;
         private readonly string connectionString;
         private OrdersDAO _OrdersDAO;
+        private ItemsDAO _ItemsDAO;
 
 
         //constructor
@@ -29,6 +30,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             errorLogPath = ConfigurationManager.AppSettings["errorLogPath"];
             connectionString = ConfigurationManager.ConnectionStrings["dataSource"].ConnectionString;
             _OrdersDAO = new OrdersDAO(connectionString, errorLogPath);
+            _ItemsDAO = new ItemsDAO(connectionString, errorLogPath);
             Logger.errorLogPath = errorLogPath;
         }
         //view all orders
@@ -41,11 +43,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             List<OrdersPO> Orders = new List<OrdersPO>();
             try
             {
+                //mapping all the data to the view page
                 _Orders = _OrdersDAO.ViewAllOrders();
                 Orders = Mapper.OrdersListDOtoPO(_Orders);
                 response = View(Orders);
             }
-            //logging errors
+            //logging errors and redirecting
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
@@ -70,12 +73,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             List<OrdersPO> Orders = new List<OrdersPO>();
             try
             {
-                //mapping to presentation layer
+                //mapping all the data to the view page
                 _Orders = _OrdersDAO.ViewOrderByStatus(status);
                 Orders = Mapper.OrdersListDOtoPO(_Orders);
                 response = View(Orders);
             }
-            //logging errors
+            //logging errors and redirecting
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
@@ -97,14 +100,21 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         public ActionResult ViewOrderByID(int OrderID)
         {
             ActionResult response;
-            OrdersPO orderDetails = new OrdersPO();
+            OrdersPO order = new OrdersPO();
+            List<ItemsPO> orderItems = new List<ItemsPO>();
+            OrdersVM orderDetails = new OrdersVM();
+
             try
             {
-                //Mapping data to presentation layer
-                orderDetails = Mapper.OrdersDOtoOrdersPO(_OrdersDAO.ViewOrderByID(OrderID));
+                //mapping all the data to the view page
+                order = Mapper.OrdersDOtoOrdersPO(_OrdersDAO.ViewOrderByID(OrderID));
+                orderItems = Mapper.ItemsListDOtoPO(_ItemsDAO.ItemsByOrderID(OrderID));
+                orderDetails.Order = order;
+                orderDetails.Items = orderItems;
+
                 response = View(orderDetails);
             }
-            //logging errors
+            //logging errors and redirecting
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
@@ -115,6 +125,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 Logger.ErrorLog(ex);
                 response = RedirectToAction("Error", "Shared");
             }
+            //return view
             return response;
         }
 
@@ -130,12 +141,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             ActionResult response;
             try
             {
-                //Mapping all the data from database, to data access, to presentation layer
+                //mapping all the data to the view page
                 _Orders = _OrdersDAO.ViewOrderByUserID(UserID);
                 Orders = Mapper.OrdersListDOtoPO(_Orders);
                 response = View(Orders);
             }
-            //logging errors
+            //logging errors and redirecting
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
@@ -152,7 +163,6 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         //view order by crafter
         [SecurityFilter(4)]
         //todo: create view
-
         [HttpGet]
         public ActionResult ViewOrderByCrafterID(int CrafterID)
         {
@@ -161,13 +171,13 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             List<OrdersPO> Orders = new List<OrdersPO>();
             try
             {
-                //Mapping all the data from database, to data access, to presentation layer
+                //mapping all the data to the view page
                 _Orders = _OrdersDAO.ViewOrderByCrafterID(CrafterID);
                 Orders = Mapper.OrdersListDOtoPO(_Orders);
                 //returning form view
                 response = View(Orders);
             }
-            //logging errors
+            //logging errors and redirecting
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
@@ -178,6 +188,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 Logger.ErrorLog(ex);
                 response = RedirectToAction("Error", "Shared");
             }
+            //return view
             return response;
         }
 
@@ -191,7 +202,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             {
                response = View();
             }
-            //logging errors
+            //logging errors and redirecting
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
@@ -202,6 +213,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 Logger.ErrorLog(ex);
                 response = RedirectToAction("Error", "Shared");
             }
+            //return view
             return response;
         }
 
@@ -211,18 +223,19 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         public ActionResult CreateNewOrder(OrdersPO form)
         {
             ActionResult response;
+            //checking modelstate
             if (ModelState.IsValid)
             {
 
                 try
                 {
-                    //taking in user input and saving it to the database
+                    //taking user input and saving it to the database
                     OrdersDO newOrder = Mapper.OrdersPOtoOrdersDO(form);
                     _OrdersDAO.CreateNewOrder(newOrder);
-                    //redirecting to home page when finished
+                    //redirecting to Order page when finished
                     response = RedirectToAction("ViewOrderByUserID", "Orders");
                 }
-                //logging errors
+                //logging errors and redirecting
                 catch (SqlException sqlEx)
                 {
                     Logger.SqlErrorLog(sqlEx);
@@ -252,10 +265,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             ActionResult response;
             try
             {
+                //mapping user input to database
                 OrdersDO orderDO = _OrdersDAO.ViewOrderByID(UserID);
                 orderPO = Mapper.OrdersDOtoOrdersPO(orderDO);
                 response = View(orderPO);
             }
+            //logging errors and redirecting
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
@@ -266,6 +281,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 Logger.ErrorLog(ex);
                 response = RedirectToAction("Error", "Shared");
             }
+            //return view
             return response;
         }
 
@@ -276,15 +292,18 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         {
             ActionResult response;
 
+            //checking modelstate
             if (ModelState.IsValid)
             {
                 try
                 {
+                    //mapping user inpit to database
                     OrdersDO OrderDO = Mapper.OrdersPOtoOrdersDO(form);
                     _OrdersDAO.UpdateOrder(OrderDO);
                     response = RedirectToAction("ViewOrderByID", "Orders");
 
                 }
+                //logging errors and redirecting
                 catch (SqlException sqlEx)
                 {
                     Logger.SqlErrorLog(sqlEx);
@@ -301,6 +320,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 //returning to form view if model state is invalid
                 response = View(form);
             }
+            //return view
             return response;
         }
 
@@ -317,7 +337,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 //setting response page
                 response = RedirectToAction("ViewOrderByUserID", "Orders");
             }
-            //logging errors
+            //logging errors and redirecting
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);

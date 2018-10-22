@@ -159,6 +159,7 @@
     <Compile Include="Models\ItemsPO.cs" />
     <Compile Include="Models\LoginPO.cs" />
     <Compile Include="Models\OrdersPO.cs" />
+    <Compile Include="Models\OrdersVM.cs" />
     <Compile Include="Models\UsersPO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\SecurityFilter.cs" />
