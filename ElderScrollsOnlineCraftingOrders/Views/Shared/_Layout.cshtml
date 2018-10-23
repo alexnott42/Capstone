@@ -33,7 +33,11 @@
                     {
                         <li>@Html.ActionLink("My Orders", "ViewOrderByUserID", "Orders", new { UserID = Session["UserID"] }, null)</li>
                     }
-                    </ul>
+                    @if (!(Session["RoleID"] is null) && (byte)Session["RoleID"] >= 3)
+                    {
+                        <li>@Html.ActionLink("Taken Orders", "ViewOrderByCrafterID", "Orders", new { CrafterID = Session["UserID"] }, new { @class = "btn" })</li>
+                    }
+                </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @if (!(Session["Username"] is null))
                     {

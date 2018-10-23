@@ -1,30 +1,20 @@
-Time: 10/22/2018 1:46:31 PM
-Error:System.IndexOutOfRangeException: Crafter
-   at DAL.OrdersDAO.ViewAllOrders() in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 107
-   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.ViewAllOrders() in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 47
 -----
-Time: 10/22/2018 3:07:26 PM
-Error:System.Data.SqlClient.SqlException (0x80131904): Conversion failed when converting the nvarchar value 'Admin' to data type int.
-   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
-   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
-   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
-   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
-   at System.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
-   at System.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
-   at System.Data.SqlClient.SqlDataReader.Read()
-   at DAL.OrdersDAO.ViewOrderByUserID(Int32 UserID) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 258
-ClientConnectionId:3030fb59-22be-48ae-b22e-893c26b780e2
-Error Number:245,State:1,Class:16
+Time: 10/23/2018 12:47:05 PM
+Error:System.Data.SqlTypes.SqlTypeException: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+   at System.Data.SqlClient.TdsParser.TdsExecuteRPC(SqlCommand cmd, _SqlRPC[] rpcArray, Int32 timeout, Boolean inSchema, SqlNotificationRequest notificationRequest, TdsParserStateObject stateObj, Boolean isCommandProc, Boolean sync, TaskCompletionSource`1 completion, Int32 startRpc, Int32 startParam)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DAL.OrdersDAO.CreateNewOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 49
 -----
-Time: 10/22/2018 3:07:27 PM
-Error:System.Data.SqlClient.SqlException (0x80131904): Conversion failed when converting the nvarchar value 'Admin' to data type int.
-   at DAL.OrdersDAO.ViewOrderByUserID(Int32 UserID) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 270
-   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.ViewOrderByUserID(Int32 UserID) in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 145
-ClientConnectionId:3030fb59-22be-48ae-b22e-893c26b780e2
-Error Number:245,State:1,Class:16
+Time: 10/23/2018 12:47:05 PM
+Error:System.Data.SqlTypes.SqlTypeException: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+   at DAL.OrdersDAO.CreateNewOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 63
+   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.CreateNewOrder(OrdersPO form) in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 238
 -----
-Time: 10/22/2018 3:10:52 PM
-Error:System.Data.SqlClient.SqlException (0x80131904): Procedure or function 'USERS_UPDATE_ACCOUNT' expects parameter '@RoleID', which was not supplied.
+Time: 10/23/2018 12:48:04 PM
+Error:System.Data.SqlClient.SqlException (0x80131904): Procedure or function 'ORDERS_CREATE_NEW' expects parameter '@CrafterID', which was not supplied.
    at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
    at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
    at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
@@ -34,73 +24,321 @@ Error:System.Data.SqlClient.SqlException (0x80131904): Procedure or function 'US
    at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
    at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
    at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
-   at DAL.UsersDAO.UpdateUserInformation(UsersDO userInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\UsersDAO.cs:line 182
-ClientConnectionId:3030fb59-22be-48ae-b22e-893c26b780e2
+   at DAL.OrdersDAO.CreateNewOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 49
+ClientConnectionId:aab8c1ca-4c71-440b-9e33-58d42c04dad1
 Error Number:201,State:4,Class:16
 -----
-Time: 10/22/2018 3:10:52 PM
-Error:System.Data.SqlClient.SqlException (0x80131904): Procedure or function 'USERS_UPDATE_ACCOUNT' expects parameter '@RoleID', which was not supplied.
-   at DAL.UsersDAO.UpdateUserInformation(UsersDO userInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\UsersDAO.cs:line 189
-   at ElderScrollsOnlineCraftingOrders.Controllers.UsersController.UpdateUser(UsersPO form) in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\UsersController.cs:line 251
-ClientConnectionId:3030fb59-22be-48ae-b22e-893c26b780e2
+Time: 10/23/2018 12:48:05 PM
+Error:System.Data.SqlClient.SqlException (0x80131904): Procedure or function 'ORDERS_CREATE_NEW' expects parameter '@CrafterID', which was not supplied.
+   at DAL.OrdersDAO.CreateNewOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 57
+   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.CreateNewOrder(OrdersPO form) in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 238
+ClientConnectionId:aab8c1ca-4c71-440b-9e33-58d42c04dad1
 Error Number:201,State:4,Class:16
 -----
-Time: 10/22/2018 3:16:38 PM
-Error:System.IndexOutOfRangeException: Crafter
-   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
-   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
-   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
-   at DAL.dalMappers.MapperDAL.ReaderToOrder(SqlDataReader from) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\dalMappers\MapperDAL.cs:line 67
-   at DAL.OrdersDAO.ViewAllOrders() in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 91
+Time: 10/23/2018 12:49:44 PM
+Error:System.Data.SqlClient.SqlException (0x80131904): Invalid object name 'Order'.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DAL.OrdersDAO.CreateNewOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 49
+ClientConnectionId:aab8c1ca-4c71-440b-9e33-58d42c04dad1
+Error Number:208,State:1,Class:16
 -----
-Time: 10/22/2018 3:16:38 PM
-Error:System.IndexOutOfRangeException: Crafter
-   at DAL.OrdersDAO.ViewAllOrders() in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 107
-   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.ViewAllOrders() in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 47
+Time: 10/23/2018 12:49:44 PM
+Error:System.Data.SqlClient.SqlException (0x80131904): Invalid object name 'Order'.
+   at DAL.OrdersDAO.CreateNewOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 57
+   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.CreateNewOrder(OrdersPO form) in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 238
+ClientConnectionId:aab8c1ca-4c71-440b-9e33-58d42c04dad1
+Error Number:208,State:1,Class:16
 -----
-Time: 10/22/2018 3:16:44 PM
-Error:System.IndexOutOfRangeException: Crafter
-   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
-   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
-   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
-   at DAL.dalMappers.MapperDAL.ReaderToOrder(SqlDataReader from) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\dalMappers\MapperDAL.cs:line 67
-   at DAL.OrdersDAO.ViewAllOrders() in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 91
+Time: 10/23/2018 12:51:40 PM
+Error:System.Data.SqlTypes.SqlTypeException: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+   at System.Data.SqlClient.TdsParser.TdsExecuteRPC(SqlCommand cmd, _SqlRPC[] rpcArray, Int32 timeout, Boolean inSchema, SqlNotificationRequest notificationRequest, TdsParserStateObject stateObj, Boolean isCommandProc, Boolean sync, TaskCompletionSource`1 completion, Int32 startRpc, Int32 startParam)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DAL.OrdersDAO.CreateNewOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 49
 -----
-Time: 10/22/2018 3:16:44 PM
-Error:System.IndexOutOfRangeException: Crafter
-   at DAL.OrdersDAO.ViewAllOrders() in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 107
-   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.ViewAllOrders() in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 47
+Time: 10/23/2018 12:51:40 PM
+Error:System.Data.SqlTypes.SqlTypeException: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+   at DAL.OrdersDAO.CreateNewOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 63
+   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.CreateNewOrder(OrdersPO form) in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 238
 -----
-Time: 10/22/2018 3:16:48 PM
-Error:System.IndexOutOfRangeException: Crafter
-   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
-   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
-   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
-   at DAL.dalMappers.MapperDAL.ReaderToOrder(SqlDataReader from) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\dalMappers\MapperDAL.cs:line 67
-   at DAL.OrdersDAO.ViewAllOrders() in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 91
+Time: 10/23/2018 12:57:14 PM
+Error:System.NullReferenceException: Object reference not set to an instance of an object.
+   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.CreateNewOrder() in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 206
 -----
-Time: 10/22/2018 3:16:48 PM
-Error:System.IndexOutOfRangeException: Crafter
-   at DAL.OrdersDAO.ViewAllOrders() in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 107
-   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.ViewAllOrders() in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 47
+Time: 10/23/2018 12:57:20 PM
+Error:System.Data.SqlTypes.SqlTypeException: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+   at System.Data.SqlClient.TdsParser.TdsExecuteRPC(SqlCommand cmd, _SqlRPC[] rpcArray, Int32 timeout, Boolean inSchema, SqlNotificationRequest notificationRequest, TdsParserStateObject stateObj, Boolean isCommandProc, Boolean sync, TaskCompletionSource`1 completion, Int32 startRpc, Int32 startParam)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DAL.OrdersDAO.CreateNewOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 49
 -----
-Time: 10/22/2018 3:18:01 PM
-Error:System.IndexOutOfRangeException: Crafter
-   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
-   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
-   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
-   at DAL.dalMappers.MapperDAL.ReaderToOrder(SqlDataReader from) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\dalMappers\MapperDAL.cs:line 67
-   at DAL.OrdersDAO.ViewAllOrders() in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 91
+Time: 10/23/2018 12:57:20 PM
+Error:System.Data.SqlTypes.SqlTypeException: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+   at DAL.OrdersDAO.CreateNewOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 63
+   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.CreateNewOrder(OrdersPO form) in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 238
 -----
-Time: 10/22/2018 3:34:09 PM
-Error:System.IndexOutOfRangeException: Crafter
-   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
-   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
-   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
-   at DAL.dalMappers.MapperDAL.ReaderToOrder(SqlDataReader from) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\dalMappers\MapperDAL.cs:line 67
-   at DAL.OrdersDAO.ViewOrderByCrafterID(Int32 CrafterID) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 305
+Time: 10/23/2018 12:58:41 PM
+Error:System.Data.SqlTypes.SqlTypeException: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+   at System.Data.SqlClient.TdsParser.TdsExecuteRPC(SqlCommand cmd, _SqlRPC[] rpcArray, Int32 timeout, Boolean inSchema, SqlNotificationRequest notificationRequest, TdsParserStateObject stateObj, Boolean isCommandProc, Boolean sync, TaskCompletionSource`1 completion, Int32 startRpc, Int32 startParam)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DAL.OrdersDAO.CreateNewOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 49
 -----
-Time: 10/22/2018 3:34:09 PM
-Error:System.IndexOutOfRangeException: Crafter
-   at DAL.OrdersDAO.ViewOrderByCrafterID(Int32 CrafterID) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 321
-   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.ViewOrderByCrafterID(Int32 CrafterID) in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 175
+Time: 10/23/2018 12:58:41 PM
+Error:System.Data.SqlTypes.SqlTypeException: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+   at DAL.OrdersDAO.CreateNewOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 63
+   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.CreateNewOrder(OrdersPO form) in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 238
+-----
+Time: 10/23/2018 1:42:24 PM
+Error:System.Data.SqlTypes.SqlTypeException: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+   at System.Data.SqlClient.TdsParser.TdsExecuteRPC(SqlCommand cmd, _SqlRPC[] rpcArray, Int32 timeout, Boolean inSchema, SqlNotificationRequest notificationRequest, TdsParserStateObject stateObj, Boolean isCommandProc, Boolean sync, TaskCompletionSource`1 completion, Int32 startRpc, Int32 startParam)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DAL.OrdersDAO.UpdateOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 180
+-----
+Time: 10/23/2018 1:42:24 PM
+Error:System.Data.SqlTypes.SqlTypeException: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+   at DAL.OrdersDAO.UpdateOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 194
+   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.UpdateOrder(OrdersPO form) in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 306
+-----
+Time: 10/23/2018 1:42:42 PM
+Error:System.Data.SqlTypes.SqlTypeException: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+   at System.Data.SqlClient.TdsParser.TdsExecuteRPC(SqlCommand cmd, _SqlRPC[] rpcArray, Int32 timeout, Boolean inSchema, SqlNotificationRequest notificationRequest, TdsParserStateObject stateObj, Boolean isCommandProc, Boolean sync, TaskCompletionSource`1 completion, Int32 startRpc, Int32 startParam)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DAL.OrdersDAO.UpdateOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 180
+-----
+Time: 10/23/2018 1:42:42 PM
+Error:System.Data.SqlTypes.SqlTypeException: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+   at DAL.OrdersDAO.UpdateOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 194
+   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.UpdateOrder(OrdersPO form) in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 306
+-----
+Time: 10/23/2018 1:44:39 PM
+Error:System.Data.SqlTypes.SqlTypeException: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+   at System.Data.SqlClient.TdsParser.TdsExecuteRPC(SqlCommand cmd, _SqlRPC[] rpcArray, Int32 timeout, Boolean inSchema, SqlNotificationRequest notificationRequest, TdsParserStateObject stateObj, Boolean isCommandProc, Boolean sync, TaskCompletionSource`1 completion, Int32 startRpc, Int32 startParam)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DAL.OrdersDAO.UpdateOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 180
+-----
+Time: 10/23/2018 1:44:39 PM
+Error:System.Data.SqlTypes.SqlTypeException: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+   at DAL.OrdersDAO.UpdateOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 194
+   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.UpdateOrder(OrdersPO form) in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 298
+-----
+Time: 10/23/2018 1:57:09 PM
+Error:System.Data.SqlClient.SqlException (0x80131904): Procedure or function 'ORDERS_UPDATE' expects parameter '@CrafterID', which was not supplied.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DAL.OrdersDAO.UpdateOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 180
+ClientConnectionId:837177c1-0ecb-4d9c-b3c7-c23a5a6311bd
+Error Number:201,State:4,Class:16
+-----
+Time: 10/23/2018 1:57:09 PM
+Error:System.Data.SqlClient.SqlException (0x80131904): Procedure or function 'ORDERS_UPDATE' expects parameter '@CrafterID', which was not supplied.
+   at DAL.OrdersDAO.UpdateOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 188
+   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.UpdateOrder(OrdersPO form) in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 298
+ClientConnectionId:837177c1-0ecb-4d9c-b3c7-c23a5a6311bd
+Error Number:201,State:4,Class:16
+-----
+Time: 10/23/2018 1:58:20 PM
+Error:System.Data.SqlClient.SqlException (0x80131904): Procedure or function 'ORDERS_UPDATE' expects parameter '@CrafterID', which was not supplied.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DAL.OrdersDAO.UpdateOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 180
+ClientConnectionId:837177c1-0ecb-4d9c-b3c7-c23a5a6311bd
+Error Number:201,State:4,Class:16
+-----
+Time: 10/23/2018 1:58:20 PM
+Error:System.Data.SqlClient.SqlException (0x80131904): Procedure or function 'ORDERS_UPDATE' expects parameter '@CrafterID', which was not supplied.
+   at DAL.OrdersDAO.UpdateOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 188
+   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.UpdateOrder(OrdersPO form) in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 298
+ClientConnectionId:837177c1-0ecb-4d9c-b3c7-c23a5a6311bd
+Error Number:201,State:4,Class:16
+-----
+Time: 10/23/2018 1:58:23 PM
+Error:System.Data.SqlClient.SqlException (0x80131904): Procedure or function 'ORDERS_UPDATE' expects parameter '@CrafterID', which was not supplied.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DAL.OrdersDAO.UpdateOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 180
+ClientConnectionId:837177c1-0ecb-4d9c-b3c7-c23a5a6311bd
+Error Number:201,State:4,Class:16
+-----
+Time: 10/23/2018 1:58:24 PM
+Error:System.Data.SqlClient.SqlException (0x80131904): Procedure or function 'ORDERS_UPDATE' expects parameter '@CrafterID', which was not supplied.
+   at DAL.OrdersDAO.UpdateOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 188
+   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.UpdateOrder(OrdersPO form) in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 298
+ClientConnectionId:837177c1-0ecb-4d9c-b3c7-c23a5a6311bd
+Error Number:201,State:4,Class:16
+-----
+Time: 10/23/2018 2:29:00 PM
+Error:System.Data.SqlClient.SqlException (0x80131904): Procedure or function 'ORDERS_UPDATE' expects parameter '@CrafterID', which was not supplied.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DAL.OrdersDAO.UpdateOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 180
+ClientConnectionId:86222a3d-5be9-4067-8034-694a456d7672
+Error Number:201,State:4,Class:16
+-----
+Time: 10/23/2018 2:29:00 PM
+Error:System.Data.SqlClient.SqlException (0x80131904): Procedure or function 'ORDERS_UPDATE' expects parameter '@CrafterID', which was not supplied.
+   at DAL.OrdersDAO.UpdateOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 188
+   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.UpdateOrder(OrdersPO form)
+ClientConnectionId:86222a3d-5be9-4067-8034-694a456d7672
+Error Number:201,State:4,Class:16
+-----
+Time: 10/23/2018 2:29:34 PM
+Error:System.Data.SqlClient.SqlException (0x80131904): The UPDATE statement conflicted with the FOREIGN KEY constraint "FK__Orders__CrafterI__5070F446". The conflict occurred in database "ESO", table "dbo.Users", column 'UserID'.
+The statement has been terminated.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DAL.OrdersDAO.UpdateOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 180
+ClientConnectionId:7b7192ea-5998-47cb-81bc-fe125afebc26
+Error Number:547,State:0,Class:16
+-----
+Time: 10/23/2018 2:29:34 PM
+Error:System.Data.SqlClient.SqlException (0x80131904): The UPDATE statement conflicted with the FOREIGN KEY constraint "FK__Orders__CrafterI__5070F446". The conflict occurred in database "ESO", table "dbo.Users", column 'UserID'.
+The statement has been terminated.
+   at DAL.OrdersDAO.UpdateOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 188
+   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.UpdateOrder(OrdersPO form)
+ClientConnectionId:7b7192ea-5998-47cb-81bc-fe125afebc26
+Error Number:547,State:0,Class:16
+-----
+Time: 10/23/2018 2:33:51 PM
+Error:System.Data.SqlTypes.SqlTypeException: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+   at System.Data.SqlClient.TdsParser.TdsExecuteRPC(SqlCommand cmd, _SqlRPC[] rpcArray, Int32 timeout, Boolean inSchema, SqlNotificationRequest notificationRequest, TdsParserStateObject stateObj, Boolean isCommandProc, Boolean sync, TaskCompletionSource`1 completion, Int32 startRpc, Int32 startParam)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at DAL.OrdersDAO.CreateNewOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 49
+-----
+Time: 10/23/2018 2:33:51 PM
+Error:System.Data.SqlTypes.SqlTypeException: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+   at DAL.OrdersDAO.CreateNewOrder(OrdersDO orderInfo) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 63
+   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.CreateNewOrder(OrdersPO form) in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 230
+-----
+Time: 10/23/2018 2:39:39 PM
+Error:System.Data.SqlClient.SqlException (0x80131904): Procedure or function 'ORDERS_SELECT_BY_USER_ID' expects parameter '@UserID', which was not supplied.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at DAL.OrdersDAO.ViewOrderByUserID(Int32 UserID)
+ClientConnectionId:e0105f0d-1578-462e-acbb-deab815d59ca
+Error Number:201,State:4,Class:16
+-----
+Time: 10/23/2018 2:40:08 PM
+Error:System.Data.SqlClient.SqlException (0x80131904): Procedure or function 'ORDERS_SELECT_BY_USER_ID' expects parameter '@UserID', which was not supplied.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at DAL.OrdersDAO.ViewOrderByUserID(Int32 UserID)
+ClientConnectionId:e0105f0d-1578-462e-acbb-deab815d59ca
+Error Number:201,State:4,Class:16
+-----
+Time: 10/23/2018 2:40:30 PM
+Error:System.Data.SqlClient.SqlException (0x80131904): Procedure or function 'ORDERS_SELECT_BY_USER_ID' expects parameter '@UserID', which was not supplied.
+   at DAL.OrdersDAO.ViewOrderByUserID(Int32 UserID)
+   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.ViewOrderByUserID(Int32 UserID) in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 138
+ClientConnectionId:e0105f0d-1578-462e-acbb-deab815d59ca
+Error Number:201,State:4,Class:16
+-----
+Time: 10/23/2018 2:41:28 PM
+Error:System.Data.SqlClient.SqlException (0x80131904): Procedure or function 'ORDERS_SELECT_BY_USER_ID' expects parameter '@UserID', which was not supplied.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption, Boolean shouldCacheForAlwaysEncrypted)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteReader()
+   at DAL.OrdersDAO.ViewOrderByUserID(Int32 UserID)
+ClientConnectionId:e0105f0d-1578-462e-acbb-deab815d59ca
+Error Number:201,State:4,Class:16
+-----
+Time: 10/23/2018 2:41:28 PM
+Error:System.Data.SqlClient.SqlException (0x80131904): Procedure or function 'ORDERS_SELECT_BY_USER_ID' expects parameter '@UserID', which was not supplied.
+   at DAL.OrdersDAO.ViewOrderByUserID(Int32 UserID)
+   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.ViewOrderByUserID(Int32 UserID) in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 138
+ClientConnectionId:e0105f0d-1578-462e-acbb-deab815d59ca
+Error Number:201,State:4,Class:16
+-----
+Time: 10/23/2018 3:39:05 PM
+Error:System.NullReferenceException: Object reference not set to an instance of an object.
+   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.CreateNewOrder() in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 198

@@ -15,7 +15,6 @@ namespace ElderScrollsOnlineCraftingOrders.Models
         [Required]
         public int UserID { get; set; }
 
-        [Required]
         public string Username { get; set; }
 
         [Required]

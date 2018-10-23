@@ -275,6 +275,8 @@ namespace DAL
                     //opening connection and executing procedure
                     sqlConnection.Open();
                     rowsAffected = deleteItem.ExecuteNonQuery();
+                    sqlConnection.Close();
+                    sqlConnection.Dispose();
                 }
             }
             // logging errors

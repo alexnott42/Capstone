@@ -12,6 +12,9 @@
     <thead>
         <tr>
             <th>
+                Order#
+            </th>
+            <th>
                 User
             </th>
             <th>
@@ -39,7 +42,10 @@
         {
             <tr>
                 <td>
-                    <text> @order.Username</text>@Html.ActionLink("Orders", "ViewOrderByUserID", "Orders", new { UserID = order.UserID }, new { @class = "btn" })
+                    @Html.ActionLink(@order.OrderID + "", "ViewOrderByID", "Orders", new { OrderID = order.OrderID }, new { @class = "btn" })
+                </td>
+                <td>
+                    @Html.ActionLink(order.Username, "ViewOrderByUserID", "Orders", new { UserID = order.UserID }, new { @class = "btn" })
                 </td>
                 <td>
                     <text>@order.Requested</text>
@@ -70,11 +76,11 @@
                     }
                     @if ((byte)order.Status == 3)
                     {
-                        @Html.ActionLink("Crafted", "ViewByStatus", "Orders", new { Status = order.Status }, new { @class = "btn" })
+                        @Html.ActionLink("Sent", "ViewByStatus", "Orders", new { Status = order.Status }, new { @class = "btn" })
                     }
                     @if ((byte)order.Status == 4)
                     {
-                        @Html.ActionLink("Sent", "ViewByStatus", "Orders", new { Status = order.Status }, new { @class = "btn" })
+                        @Html.ActionLink("Paid", "ViewByStatus", "Orders", new { Status = order.Status }, new { @class = "btn" })
                     }
                     @if ((byte)order.Status == 5)
                     {
@@ -85,10 +91,9 @@
                 @if ((byte)Session["RoleID"] >= 5)
                 {
                     <td style="text-align: center">
-                        @Html.ActionLink("Update", "UpdateOrder", "Orders", new { OrderID = order.OrderID }, new { @class = "btn" })
-                    </td>
-                    <td style="text-align: center">
-                        @Html.ActionLink("Delete", "DeleteOrder", "Orders", new { OrderID = order.OrderID }, new { @class = "btn" })
+                        @Html.ActionLink("Update", "UpdateOrder", "Orders", new { OrderID = order.OrderID }, new { @class = "btn btn-info" })
+
+                        @Html.ActionLink("Delete", "DeleteOrder", "Orders", new { OrderID = order.OrderID }, new { @class = "btn btn-danger", onclick = "return confirm('delete this order?');" })
                     </td>
                 }
             </tr>

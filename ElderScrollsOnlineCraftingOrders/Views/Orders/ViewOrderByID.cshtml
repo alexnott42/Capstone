@@ -1,0 +1,128 @@
+﻿@using ElderScrollsOnlineCraftingOrders.Models
+@model OrdersVM
+@{
+    ViewBag.Title = "ViewOrderByID";
+}
+
+<h2>Order Details @Html.ActionLink("Add Item", "CreateNewItem", "Items", new { OrderID = Model.Order.OrderID }, new { @class = "btn btn-success" })</h2>
+
+
+<div class="row">
+    <div class="col-md-1">
+        <text>
+            Order#
+        </text>
+        <text>
+            @Model.Order.OrderID
+        </text>
+    </div>
+    <div class="col-md-1 col-md-offset-1">
+        <text>
+            Username:
+        </text>
+        <text>
+            @Html.ActionLink(Model.Order.Username, "ViewOrderByUserID", "Orders", new { UserID = Model.Order.UserID }, new { @class = "btn" })
+        </text>
+    </div>
+    <div class="col-md-1 col-md-offset-1">
+        <text>
+            Requested:
+        </text>
+        <text>
+            @Model.Order.Requested
+        </text>
+    </div>
+    <div class="col-md-1 col-md-offset-1">
+        <text>
+            Due by:
+        </text>
+        <text>
+            @Model.Order.Due
+        </text>
+    </div>
+    <div class="col-md-1 col-md-offset-1">
+        <text>
+            Crafter:
+        </text>
+        <text>
+            @Model.Order.Crafter
+        </text>
+    </div>
+    <div class="col-md-1 col-md-offset-1">
+        <text>
+            Status:
+        </text>
+        <text>
+            @if ((byte)Model.Order.Status == 1)
+            {
+                @Html.ActionLink("Untaken", "ViewByStatus", "Orders", new { Status = Model.Order.Status }, new { @class = "btn" })
+            }
+            @if ((byte)Model.Order.Status == 2)
+            {
+                @Html.ActionLink("Taken", "ViewByStatus", "Orders", new { Status = Model.Order.Status }, new { @class = "btn" })
+            }
+            @if ((byte)Model.Order.Status == 3)
+            {
+                @Html.ActionLink("Sent", "ViewByStatus", "Orders", new { Status = Model.Order.Status }, new { @class = "btn" })
+            }
+            @if ((byte)Model.Order.Status == 4)
+            {
+                @Html.ActionLink("Paid", "ViewByStatus", "Orders", new { Status = Model.Order.Status }, new { @class = "btn" })
+            }
+            @if ((byte)Model.Order.Status == 5)
+            {
+                @Html.ActionLink("Defaulted", "ViewByStatus", "Orders", new { Status = Model.Order.Status }, new { @class = "btn" })
+            }
+        </text>
+    </div>
+
+</div>
+<div>
+    <table class="table table-striped" style="background-color: azure">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>SubType</th>
+                <th>Trait</th>
+                <th>Style</th>
+                <th>Set</th>
+                <th>Level</th>
+                <th>Quality</th>
+                <th>OrderID</th>
+                <th>Price</th>
+                <th style="text-align: center">
+                    @if ((byte)Session["RoleID"] == 5 || (int)Session["UserID"] == Model.Order.UserID)
+                    {
+                        <text>Actions</text>
+                    }
+                </th >
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ItemsPO item in Model.Items)
+            {
+                <tr>
+                    <td>@item.Type</td>
+                    <td>@item.SubType</td>
+                    <td>@item.Trait</td>
+                    <td>@item.Style</td>
+                    <td>@item.Set</td>
+                    <td>@item.Level</td>
+                    <td>@item.Quality</td>
+                    <td>@item.OrderID</td>
+                    <td>@item.Price</td>
+                    <td>
+                        @if ((byte)Session["RoleID"] == 5 || (int)Session["UserID"] == Model.Order.CrafterID)
+                        {
+                            @Html.ActionLink("Update", "UpdateItem", "Items", new { ItemID = item.ItemID }, new { @class = "btn btn-info" })
+                        }
+                            @if ((byte)Session["RoleID"] == 5 || (int)Session["UserID"] == Model.Order.UserID)
+                            {
+                                @Html.ActionLink("Delete", "DeleteItem", "Items", new { ItemID = item.ItemID, OrderID = item.OrderID }, new { @class = "btn btn-danger", onclick = "return confirm('delete this item?');" })
+                            }
+                        </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

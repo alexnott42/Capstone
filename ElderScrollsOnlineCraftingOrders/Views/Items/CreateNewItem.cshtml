@@ -1,0 +1,49 @@
+﻿@using ElderScrollsOnlineCraftingOrders.Models
+@model ItemsPO
+@{
+    /**/
+
+    ViewBag.Title = "CreateNewItem";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create New Item</h2>
+
+@using (Html.BeginForm("CreateNewItem", "Items", FormMethod.Post))
+{
+    @Html.LabelFor(model => Model.Type)
+    <div>
+        @Html.DropDownListFor(model => Model.Type,)
+    </div>
+    @Html.LabelFor(model => Model.SubType)
+    <div>
+        @Html.DropDownListFor(model => Model.SubType,)
+    </div>
+    @Html.LabelFor(model => Model.Trait)
+    <div>
+        @Html.DropDownListFor(model => Model.Trait,)
+    </div>
+    @Html.LabelFor(model => Model.Style)
+    <div>
+        @Html.TextBoxFor(model => Model.Style)
+    </div>
+    @Html.LabelFor(model => Model.Set)
+    <div>
+        @Html.TextBoxFor(model => Model.Set)
+    </div>
+    @Html.LabelFor(model => Model.Level)
+    <div>
+        @Html.DropDownListFor(model => Model.Level,)
+    </div>
+    @Html.LabelFor(model => Model.Quality)
+    <div>
+        @Html.DropDownListFor(model => Model.Quality,)
+    </div>
+    @Html.HiddenFor(model => Model.OrderID)
+
+    @Html.LabelFor(model => Model.Price)
+    <div>
+        @Html.TextBoxFor(model => Model.Price)
+    </div>
+
+}

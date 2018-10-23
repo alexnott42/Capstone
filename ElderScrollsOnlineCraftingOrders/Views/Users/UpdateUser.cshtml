@@ -31,7 +31,12 @@
     {
         @Html.LabelFor(model => Model.RoleID)
         <div class="form-group">
-            @Html.TextBoxFor(model => Model.RoleID, new { @class = "form-control" })
+            @Html.DropDownListFor(model => Model.RoleID, new List<SelectListItem>()
+       { new SelectListItem {Text = "Banned", Value = "1" },
+        new SelectListItem {Text = "User", Value = "3" },
+        new SelectListItem {Text = "Crafter", Value = "4" },
+        new SelectListItem {Text = "Mod", Value = "5" },
+        new SelectListItem {Text = "Admin", Value = "6" } }, "Choose Role")
         </div>
     }
     @Html.LabelFor(model => Model.Server)
