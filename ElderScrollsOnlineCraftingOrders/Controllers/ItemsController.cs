@@ -32,64 +32,6 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             Logger.errorLogPath = errorLogPath;
         }
 
-        //view item by ID
-        [SecurityFilter(3)]
-        [HttpGet]
-        public ActionResult ViewItemByID(int ItemID)
-        {
-            ActionResult response;
-            ItemsPO itemDetails = new ItemsPO();
-            try
-            {
-                //mapping all the data to the view page
-                itemDetails = Mapper.ItemsDOtoItemsPO(_ItemsDAO.ViewItemByID(ItemID));
-                response = View(itemDetails);
-            }
-            //logging errors and redirecting
-            catch (SqlException sqlEx)
-            {
-                Logger.SqlErrorLog(sqlEx);
-                response = View("Error");
-            }
-            catch (Exception ex)
-            {
-                Logger.ErrorLog(ex);
-                response = View("Error");
-            }
-            //return view
-            return response;
-        }
-
-        //view item by Order ID
-        [SecurityFilter(3)]
-        [HttpGet]
-        public ActionResult ViewItemByOrder(int OrderID)
-        {
-            ActionResult response;
-            List<ItemsDO> _Items = new List<ItemsDO>();
-            List<ItemsPO> Items = new List<ItemsPO>();
-            try
-            {
-                //mapping all the data to the view page
-                _Items = _ItemsDAO.ItemsByOrderID(OrderID);
-                Items = Mapper.ItemsListDOtoPO(_Items);
-                response = View(Items);
-            }
-            //logging errors and redirecting
-            catch (SqlException sqlEx)
-            {
-                Logger.SqlErrorLog(sqlEx);
-                response = View("Error");
-            }
-            catch (Exception ex)
-            {
-                Logger.ErrorLog(ex);
-                response = View("Error");
-            }
-            //return view
-            return response;
-        }
-
         //create item
         [SecurityFilter(3)]
         [HttpGet]
