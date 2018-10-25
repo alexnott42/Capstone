@@ -32,6 +32,9 @@
             <th>
                 Status
             </th>
+            <th>
+                Order Price
+            </th>
             @if ((byte)Session["RoleID"] >= 5)
             {
                 <th style="text-align: center">
@@ -43,63 +46,65 @@
     <tbody>
         @foreach (OrdersPO order in Model)
         {
-            <tr>
-                <td>
-                    @Html.ActionLink(order.OrderID.ToString(), "ViewOrderByID", "Orders", new { OrderID = order.OrderID }, new { @class = "btn" })
-                </td>
-                <td>
-                    @Html.ActionLink(order.Username, "ViewOrderByUserID", "Orders", new { UserID = order.UserID }, new { @class = "btn" })
-                </td>
-                <td>
-                    <text>@order.Requested</text>
-                </td>
-                <td>
-                    <text>@order.Due</text>
-                </td>
-                <td>
-                    @if (order.CrafterID.HasValue)
-                    {
-
-                        @Html.ActionLink(order.Crafter, "ViewOrderByCrafterID", "Orders", new { CrafterID = order.CrafterID }, new { @class = "btn" })
-
-                    }
-                    else
-                    {
-                        order.OrderID = 0;
-                    }
-                </td>
-                <td>
-                    @if ((byte)order.Status == 1)
-                    {
-                        @Html.ActionLink("Untaken", "ViewByStatus", "Orders", new { Status = order.Status }, new { @class = "btn" })
-                    }
-                    @if ((byte)order.Status == 2)
-                    {
-                        @Html.ActionLink("Taken", "ViewByStatus", "Orders", new { Status = order.Status }, new { @class = "btn" })
-                    }
-                    @if ((byte)order.Status == 3)
-                    {
-                        @Html.ActionLink("Sent", "ViewByStatus", "Orders", new { Status = order.Status }, new { @class = "btn" })
-                    }
-                    @if ((byte)order.Status == 4)
-                    {
-                        @Html.ActionLink("Paid", "ViewByStatus", "Orders", new { Status = order.Status }, new { @class = "btn" })
-                    }
-                    @if ((byte)order.Status == 5)
-                    {
-                        @Html.ActionLink("Defaulted", "ViewByStatus", "Orders", new { Status = order.Status }, new { @class = "btn" })
-                    }
-                </td>
-
-                @if ((byte)Session["RoleID"] >= 5)
+        <tr>
+            <td>
+                @Html.ActionLink(order.OrderID.ToString(), "ViewOrderByID", "Orders", new { OrderID = order.OrderID }, new { @class = "btn" })
+            </td>
+            <td>
+                @Html.ActionLink(order.Username, "ViewOrderByUserID", "Orders", new { UserID = order.UserID }, new { @class = "btn" })
+            </td>
+            <td>
+                <text>@order.Requested</text>
+            </td>
+            <td>
+                <text>@order.Due</text>
+            </td>
+            <td>
+                @if (order.CrafterID.HasValue)
                 {
-                    <td style="text-align: center">
-                        @Html.ActionLink("Update", "UpdateOrder", "Orders", new { OrderID = order.OrderID }, new { @class = "btn btn-info" })
 
-                        @Html.ActionLink("Delete", "DeleteOrder", "Orders", new { OrderID = order.OrderID }, new { @class = "btn btn-danger", onclick = "return confirm('delete this order?');" })
-                    </td>
+                    @Html.ActionLink(order.Crafter, "ViewOrderByCrafterID", "Orders", new { CrafterID = order.CrafterID }, new { @class = "btn" })
+
                 }
-            </tr>
+                else
+                {
+                    order.OrderID = 0;
+                }
+            </td>
+            <td>
+                @if ((byte)order.Status == 1)
+                {
+                    @Html.ActionLink("Untaken", "ViewByStatus", "Orders", new { Status = order.Status }, new { @class = "btn" })
+                }
+                @if ((byte)order.Status == 2)
+                {
+                    @Html.ActionLink("Taken", "ViewByStatus", "Orders", new { Status = order.Status }, new { @class = "btn" })
+                }
+                @if ((byte)order.Status == 3)
+                {
+                    @Html.ActionLink("Sent", "ViewByStatus", "Orders", new { Status = order.Status }, new { @class = "btn" })
+                }
+                @if ((byte)order.Status == 4)
+                {
+                    @Html.ActionLink("Paid", "ViewByStatus", "Orders", new { Status = order.Status }, new { @class = "btn" })
+                }
+                @if ((byte)order.Status == 5)
+                {
+                    @Html.ActionLink("Defaulted", "ViewByStatus", "Orders", new { Status = order.Status }, new { @class = "btn" })
+                }
+            </td>
+            <td>
+                <text>@order.Pricetotal</text>
+            </td>
+            @if ((byte)Session["RoleID"] >= 5)
+            {
+                <td style="text-align: center">
+                    @Html.ActionLink("Update", "UpdateOrder", "Orders", new { OrderID = order.OrderID }, new { @class = "btn btn-info" })
+
+                    @Html.ActionLink("Delete", "DeleteOrder", "Orders", new { OrderID = order.OrderID }, new { @class = "btn btn-danger", onclick = "return confirm('delete this order?');" })
+                </td>
+            }
+        </tr>
         }
     </tbody>
 </table>

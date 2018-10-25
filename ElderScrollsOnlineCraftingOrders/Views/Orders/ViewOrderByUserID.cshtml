@@ -32,6 +32,9 @@
             <th>
                 Status
             </th>
+            <th>
+                Order Price
+            </th>
             @if ((byte)Session["RoleID"] >= 5)
             {
                 <th style="text-align: center">
@@ -90,7 +93,10 @@
                         @Html.ActionLink("Defaulted", "ViewByStatus", "Orders", new { Status = order.Status }, new { @class = "btn" })
                     }
                 </td>
+                <td>
+                    <text>@order.Pricetotal</text>
 
+                </td>
                 @if ((byte)Session["RoleID"] >= 5)
                 {
                     <td style="text-align: center">

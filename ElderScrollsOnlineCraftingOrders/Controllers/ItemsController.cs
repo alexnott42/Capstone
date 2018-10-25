@@ -32,6 +32,8 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             Logger.errorLogPath = errorLogPath;
         }
 
+        //fix views for items
+
         //create item
         [SecurityFilter(3)]
         [HttpGet]

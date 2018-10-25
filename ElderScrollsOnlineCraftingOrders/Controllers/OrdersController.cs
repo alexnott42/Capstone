@@ -8,6 +8,8 @@ using DAL;
 using ElderScrollsOnlineCraftingOrders.Logging;
 using DAL.dalMappers;
 using DAL.dalModels;
+using BLL;
+using BLL.Models;
 using ElderScrollsOnlineCraftingOrders;
 using ElderScrollsOnlineCraftingOrders.Mapping;
 using ElderScrollsOnlineCraftingOrders.Models;

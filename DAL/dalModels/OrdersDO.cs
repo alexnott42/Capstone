@@ -24,5 +24,7 @@ namespace DAL.dalModels
         public string Crafter { get; set; }
 
         public byte Status { get; set; }
+
+        public int Pricetotal { get; set; }
     }
 }

@@ -1,34 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.ComponentModel.DataAnnotations;
+using System.Text;
+using System.Threading.Tasks;
 
-
-namespace ElderScrollsOnlineCraftingOrders.Models
+namespace BLL.Models
 {
-    public class OrdersPO
+    //defining what an Order is and its attributes
+    public class OrdersBO
     {
-        [Required]
         public int OrderID { get; set; }
 
-        [Required]
         public int UserID { get; set; }
 
         public string Username { get; set; }
 
-        [Required]
         public DateTime Requested { get; set; }
 
-        [Required]
         public DateTime Due { get; set; }
 
         public int? CrafterID { get; set; }
 
         public string Crafter { get; set; }
 
-        [Required]
-        [Range(1, 5)]
         public byte Status { get; set; }
 
         public int Pricetotal { get; set; }
