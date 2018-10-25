@@ -19,4 +19,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
 
     }
 }
-//TODO: create register view, create Users views, CREATE orders views, create items views
+//TODO: create items views
+//todo: partialview orders on users page
+//todo: create item page linked from order details page
+//todo: update item page

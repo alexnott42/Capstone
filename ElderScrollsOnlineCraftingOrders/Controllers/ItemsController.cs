@@ -32,61 +32,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             Logger.errorLogPath = errorLogPath;
         }
 
-        //view item by ID
-        [SecurityFilter(3)]
-        [HttpGet]
-        public ActionResult ViewItemByID(int ItemID)
-        {
-            ActionResult response;
-            ItemsPO itemDetails = new ItemsPO();
-            try
-            {
-                //mapping to presentation layer
-                itemDetails = Mapper.ItemsDOtoItemsPO(_ItemsDAO.ViewItemByID(ItemID));
-                response = View(itemDetails);
-            }
-            //logging errors
-            catch (SqlException sqlEx)
-            {
-                Logger.SqlErrorLog(sqlEx);
-                response = View(itemDetails);
-            }
-            catch (Exception ex)
-            {
-                Logger.ErrorLog(ex);
-                response = View(itemDetails);
-            }
-            return response;
-        }
-
-        //view item by Order ID
-        [SecurityFilter(3)]
-        [HttpGet]
-        public ActionResult ViewItemByOrder(int OrderID)
-        {
-            ActionResult response;
-            List<ItemsDO> _Items = new List<ItemsDO>();
-            List<ItemsPO> Items = new List<ItemsPO>();
-            try
-            {
-                //mapping to presentation layer
-                _Items = _ItemsDAO.ItemsByOrderID(OrderID);
-                Items = Mapper.ItemsListDOtoPO(_Items);
-                response = View(Items);
-            }
-            //logging errors
-            catch (SqlException sqlEx)
-            {
-                Logger.SqlErrorLog(sqlEx);
-                response = View(Items);
-            }
-            catch (Exception ex)
-            {
-                Logger.ErrorLog(ex);
-                response = View(Items);
-            }
-            return response;
-        }
+        //fix views for items
 
         //create item
         [SecurityFilter(3)]
@@ -98,25 +44,27 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             {
                 response = View();
             }
-            //logging errors
+            //logging errors and redirecting
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
-                response = View();
+                response = View("Error");
             }
             catch (Exception ex)
             {
                 Logger.ErrorLog(ex);
-                response = View();
+                response = View("Error");
             }
+            //return view
             return response;
         }
 
         //create new item continued
         [HttpPost]
-        public ActionResult CreateNewItem(ItemsPO form)
+        public ActionResult CreateNewItem(ItemsPO form, int OrderID)
         {
             ActionResult response;
+            //checking model
             if (ModelState.IsValid)
             {
 
@@ -124,20 +72,21 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 {
                     //taking user input and mapping it to the database
                     ItemsDO newItem = Mapper.ItemsPOtoItemsDO(form);
+                    newItem.OrderID = OrderID;
                     _ItemsDAO.CreateNewItemEntry(newItem);
                     //setting response view
                     response = RedirectToAction("ViewOrderByID", "Orders");
                 }
-                //logging errors
+                //logging errors and redirecting
                 catch (SqlException sqlEx)
                 {
                     Logger.SqlErrorLog(sqlEx);
-                    response = View(form);
+                    response = View("Error");
                 }
                 catch (Exception ex)
                 {
                     Logger.ErrorLog(ex);
-                    response = View(form);
+                    response = View("Error");
                 }
             }
             else
@@ -164,16 +113,16 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 //setting response view
                 response = View(ItemPO);
             }
-            //logging errors
+            //logging errors and redirecting
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
-                response = View(ItemPO);
+                response = View("Error");
             }
             catch (Exception ex)
             {
                 Logger.ErrorLog(ex);
-                response = View(ItemPO);
+                response = View("Error");
             }
             //return view
             return response;
@@ -185,6 +134,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         public ActionResult UpdateItem(ItemsPO form)
         {
             ActionResult response;
+            //checking modelstate
             if (ModelState.IsValid)
             {
 
@@ -198,16 +148,16 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                         response = RedirectToAction("ViewOrderByID", "Orders");
                     }
                 }
-                //logging errors
+                //logging errors and redirecting
                 catch (SqlException sqlEx)
                 {
                     Logger.SqlErrorLog(sqlEx);
-                    response = View(form);
+                    response = View("Error");
                 }
                 catch (Exception ex)
                 {
                     Logger.ErrorLog(ex);
-                    response = View(form);
+                    response = View("Error");
                 }
             }
             else
@@ -215,13 +165,14 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 //returning to form view if model state is invalid
                 response = View(form);
             }
+            //return view
             return response;
         }
 
         //delete item
         [SecurityFilter(3)]
         [HttpGet]
-        public ActionResult DeleteItem(int ItemID)
+        public ActionResult DeleteItem(int ItemID, int OrderID)
         {
             ActionResult response;
             try
@@ -229,18 +180,18 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 //executing procedure
                 _ItemsDAO.DeleteItemEntry(ItemID);
                 //setting response view
-                response = RedirectToAction("ViewOrderByID", "Orders");
+                response = RedirectToAction("ViewOrderByID", "Orders", new { OrderID });
             }
-            //logging errors
+            //logging errors and redirecting
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
-                response = RedirectToAction("ViewOrderByID", "Orders");
+                response = View("Error");
             }
             catch (Exception ex)
             {
                 Logger.ErrorLog(ex);
-                response = RedirectToAction("ViewOrderByID", "Orders");
+                response = View("Error");
             }
             //returning view
             return response;

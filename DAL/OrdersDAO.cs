@@ -42,7 +42,6 @@ namespace DAL
                     createOrder.Parameters.AddWithValue("UserID", orderInfo.UserID);
                     createOrder.Parameters.AddWithValue("Requested", orderInfo.Requested);
                     createOrder.Parameters.AddWithValue("Due", orderInfo.Due);
-                    createOrder.Parameters.AddWithValue("CrafterID", orderInfo.CrafterID);
                     createOrder.Parameters.AddWithValue("Status", orderInfo.Status);
 
                     //Saving information to database
@@ -170,10 +169,8 @@ namespace DAL
                     updateOrder.CommandTimeout = 60;
 
                     //inserting information
-                    updateOrder.Parameters.AddWithValue("UserID", orderInfo.UserID);
-                    updateOrder.Parameters.AddWithValue("Requested", orderInfo.Requested);
+                    updateOrder.Parameters.AddWithValue("OrderID", orderInfo.OrderID);
                     updateOrder.Parameters.AddWithValue("Due", orderInfo.Due);
-                    updateOrder.Parameters.AddWithValue("CrafterID", orderInfo.CrafterID);
                     updateOrder.Parameters.AddWithValue("Status", orderInfo.Status);
 
                     //Saving information to database
@@ -255,7 +252,7 @@ namespace DAL
                     sqlConnection.Open();
                     using (SqlDataReader reader = viewByUserID.ExecuteReader())
                     {
-                        if (reader.Read())
+                        while (reader.Read())
                         {
                             orderData.Add(MapperDAL.ReaderToOrder(reader));
                         }

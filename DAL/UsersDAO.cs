@@ -156,9 +156,8 @@ namespace DAL
         }
 
         //Updating an existing user
-        public int UpdateUserInformation(UsersDO userInfo)
+        public void UpdateUserInformation(UsersDO userInfo)
         {
-            int rowsAffected = 0;
 
             try
             {
@@ -174,14 +173,14 @@ namespace DAL
                     updateUser.Parameters.AddWithValue("UserID", userInfo.UserID);
                     updateUser.Parameters.AddWithValue("Username", userInfo.Username);
                     updateUser.Parameters.AddWithValue("Email", userInfo.Email);
+                    updateUser.Parameters.AddWithValue("RoleID", userInfo.RoleID);
                     updateUser.Parameters.AddWithValue("Password", userInfo.Password);
                     updateUser.Parameters.AddWithValue("ESOname", userInfo.ESOname);
-                    updateUser.Parameters.AddWithValue("RoleID", userInfo.RoleID);
                     updateUser.Parameters.AddWithValue("Server", userInfo.Server);
 
                     //Saving information to database
                     sqlConnection.Open();
-                    rowsAffected = updateUser.ExecuteNonQuery();
+                    updateUser.ExecuteNonQuery();
                 }
             }
             //logging errors
@@ -195,7 +194,6 @@ namespace DAL
                 LoggerDAL.ErrorLog(ex);
                 throw ex;
             }
-            return rowsAffected;
         }
 
         //deleting a user entry
@@ -320,6 +318,50 @@ namespace DAL
             }
             //returning data
             return userData;
+        }   
+        //retrieve a single user entry from database
+    public List<UsersDO> ViewUserByServer(string server)
+    {
+        List<UsersDO> userData = new List<UsersDO>();
+        try
+        {
+            //defining commands to access the database
+            using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
+            using (SqlCommand viewByRole = new SqlCommand("USERS_SELECT_BY_SERVER", sqlConnection))
+            {
+                //giving up after 60 seconds
+                viewByRole.CommandType = CommandType.StoredProcedure;
+                viewByRole.CommandTimeout = 60;
+
+                //inserting the UserID to sort through entries
+                viewByRole.Parameters.AddWithValue("Server", server);
+
+                //reading the data and using Mapper to store it
+                sqlConnection.Open();
+                using (SqlDataReader reader = viewByRole.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        //creating a list and mapping objects
+                        userData.Add(MapperDAL.ReaderToUser(reader));
+                    }
+                }
+            }
         }
+        //logging errors
+        catch (SqlException sqlEx)
+        {
+            LoggerDAL.SqlErrorLog(sqlEx);
+            throw sqlEx;
+        }
+        catch (Exception ex)
+        {
+            LoggerDAL.ErrorLog(ex);
+            throw ex;
+        }
+        //returning data
+        return userData;
     }
+    }
+
 }

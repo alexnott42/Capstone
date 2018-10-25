@@ -1,0 +1,12 @@
+﻿@using ElderScrollsOnlineCraftingOrders.Models
+@model ItemsPO
+@{
+    /**/
+
+    ViewBag.Title = "CreateNewItem";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create New Item</h2>
+
+@using (Html.BeginForm("CreateNewItem", "Items", FormMethod.Post))

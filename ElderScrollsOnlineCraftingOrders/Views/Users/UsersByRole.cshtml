@@ -1,0 +1,82 @@
+﻿@using ElderScrollsOnlineCraftingOrders.Models
+@model List<UsersPO>
+@{
+    ViewBag.Title = "UsersByRole";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">Users sorted by role</h2>
+
+<table class="table table-striped" style="background-color: azure">
+    <thead>
+        <tr>
+            <th>
+                Username
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                ESO Name
+            </th>
+            <th>
+                Server
+            </th>
+            <th>
+                Role
+            </th>
+            <th>
+                Orders
+            </th>
+            <th>
+                Crafting
+            </th>
+            @if ((byte)Session["RoleID"] == 6)
+            {
+                <th style="text-align: center">
+                    Actions
+                </th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (UsersPO user in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(user.Username, "ViewOrderByUserID", "Orders", new { UserID = user.UserID }, new { @class = "btn" })
+                </td>
+                <td>
+                    <text>@user.Email</text>
+                </td>
+                <td>
+                    <text>@user.ESOname</text>
+                </td>
+                <td>
+                    <text>@user.Server </text>@Html.ActionLink("Sort", "UsersByServer", "Users", new { Server = user.Server }, new { @class = "btn-sm btn-info" })
+                </td>
+                <td>
+                    <text>@user.RoleID</text>
+                </td>
+                <td>
+                    @Html.ActionLink("Orders", "ViewOrderByUserID", "Orders", new { UserID = user.UserID }, new { @class = "btn" })
+                </td>
+                <td>
+                    @Html.ActionLink("Crafting", "ViewOrderByCrafterID", "Orders", new { CrafterID = user.UserID }, new { @class = "btn" })
+                </td>
+                @if ((byte)Session["RoleID"] == 6)
+                {
+                    <td style="text-align: center">
+                        @Html.ActionLink("Update", "UpdateUser", "Users", new { UserID = user.UserID }, new { @class = "btn btn-info" })
+                        @*@Ajax.ActionLink("Delete", "DeleteUser", "Users", new { UserID = user.UserID },
+                            new AjaxOptions() { OnSuccess = "DisplayModal", OnFailure = "FailedToLoadModal",
+                            HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "Confirmation" },
+                            new {@class = "btn btn-danger"})*@
+
+                        @Html.ActionLink("Delete", "DeleteUser", "Users", new { UserID = user.UserID }, new { @class = "btn btn-danger", onclick = "return confirm('delete this user?');" })
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

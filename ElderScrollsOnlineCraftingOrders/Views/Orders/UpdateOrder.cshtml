@@ -1,0 +1,38 @@
+﻿@using ElderScrollsOnlineCraftingOrders.Models
+@model OrdersPO
+@{
+    ViewBag.Title = "UpdateOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>UpdateOrder</h2>
+
+@using (Html.BeginForm("UpdateOrder", "Orders", FormMethod.Post))
+{
+    @Html.HiddenFor(model => Model.OrderID)
+
+    @Html.HiddenFor(model => Model.CrafterID)
+
+    @Html.HiddenFor(model => Model.UserID)
+
+    @Html.HiddenFor(model => Model.Username)
+
+    @Html.HiddenFor(model => Model.Crafter)
+
+    @Html.HiddenFor(model => Model.Requested)
+
+    @Html.HiddenFor(model => Model.Due)
+
+    @Html.LabelFor(model => Model.Status)
+    <div>
+        @Html.DropDownListFor(model => Model.Status, new List<SelectListItem>()
+        { new SelectListItem {Text = "Untaken", Value = "1"} ,
+         new SelectListItem {Text = "Taken", Value = "2"} ,
+         new SelectListItem {Text = "Sent", Value = "3"} ,
+         new SelectListItem {Text = "Paid", Value = "4"} ,
+         new SelectListItem {Text = "Defaulted", Value = "5"} }, "Choose Status")
+
+    </div>
+    <input type="submit" value="Update" class="btn" />
+}
+

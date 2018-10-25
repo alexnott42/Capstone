@@ -41,20 +41,23 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             UsersPO userDetails = new UsersPO();
             try
             {
+                //mapping all the data to the view page
                 UsersDO userDO = _UsersDAO.ViewUserByID(UserID);
                 userDetails = Mapper.UsersDOtoUsersPO(userDO);
                 response = View(userDetails);
             }
+            //logging exceptions and redirecting to error page
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
-                response = View(userDetails);
+                response = View("Error");
             }
             catch (Exception ex)
             {
                 Logger.ErrorLog(ex);
-                response = View(userDetails);
+                response = View("Error");
             }
+            //returning response view
             return response;
         }
 
@@ -63,28 +66,29 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         [HttpGet]
         public ActionResult AllUsers()
         {
-            ActionResult result;
+            ActionResult response;
             List<UsersPO> userList = new List<UsersPO>();
 
             try
             {
+                //mapping all the data to the view page
                 List<UsersDO> allUsers = _UsersDAO.ViewAllUsers();
                 userList = Mapper.UsersListDOtoPO(allUsers);
-                //todo: confirmations on deletes
-                result = View(userList);
+                response = View(userList);
             }
             //logging errors
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
-                result = View(userList);
+                response = View("Error");
             }
             catch (Exception ex)
             {
                 Logger.ErrorLog(ex);
-                result = View(userList);
+                response = View("Error");
             }
-            return View(userList);
+            //returning view
+            return response;
         }
 
         //login
@@ -97,7 +101,6 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         //login continued
         [HttpPost]
         public ActionResult Login(LoginPO form)
-            //todo: implement password hashing
         {
             ActionResult response;
             //checks if model is valid
@@ -113,7 +116,6 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                         //setting session data
                         Session["UserID"] = user.UserID;
                         Session["Username"] = user.Username;
-                        //Session["ESOname"] = user.ESOname;
                         Session["RoleID"] = user.RoleID;
 
                         //setting response to redirect to home page
@@ -130,12 +132,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 catch (SqlException sqlEx)
                 {
                     Logger.SqlErrorLog(sqlEx);
-                    response = View(form);
+                    response = View("Error");
                 }
                 catch (Exception ex)
                 {
                     Logger.ErrorLog(ex);
-                    response = View(form);
+                    response = View("Error");
                 }
             }
             else
@@ -168,27 +170,30 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         public ActionResult CreateNewAccount(UsersPO form)
         {
             ActionResult response;
+            //checking modelstate
             if (ModelState.IsValid)
             {
                 try
                 {
                     //taking user input and mapping it to the database
+                    form.RoleID = 3;
+                    
                     UsersDO newUser = Mapper.UsersPOtoUsersDO(form);
                     _UsersDAO.CreateNewUserEntry(newUser);
                     //setting response view
-                    response = RedirectToAction("Index", "Home");
+                    response = RedirectToAction("Login", "Users");
                 }
                 //logging errors
                 catch (SqlException sqlEx)
                 {
                     Logger.SqlErrorLog(sqlEx);
-                    throw sqlEx;
+                    response = View("Error");
                 }
                 catch (Exception ex)
                 {
                     Logger.ErrorLog(ex);
-                    throw ex;
-                } 
+                    response = View("Error");
+                }
             }
             else
             {
@@ -204,24 +209,25 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         [HttpGet]
         public ActionResult UpdateUser(int UserID)
         {
+            UsersPO UserPO = new UsersPO();
             ActionResult response;
             try
             {
                 //retrieving data and displaying to user
                 UsersDO UserDO = _UsersDAO.ViewUserByID(UserID);
-                UsersPO UserPO = Mapper.UsersDOtoUsersPO(UserDO);
+                UserPO = Mapper.UsersDOtoUsersPO(UserDO);
                 response = View(UserPO);
             }
-            //logging errors
+            //logging errors and redirecting 
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
-                throw sqlEx;
+                response = View("Error");
             }
             catch (Exception ex)
             {
                 Logger.ErrorLog(ex);
-                throw ex;
+                response = View("Error");
             }
             //return view
             return response;
@@ -233,6 +239,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         public ActionResult UpdateUser(UsersPO form)
         {
             ActionResult response;
+            //checking modelstate
             if (ModelState.IsValid)
             {
 
@@ -244,16 +251,16 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                     //setting response page
                     response = RedirectToAction("AllUsers", "Users");
                 }
-                //logging errors
+                //logging errors and redirecting
                 catch (SqlException sqlEx)
                 {
                     Logger.SqlErrorLog(sqlEx);
-                    throw sqlEx;
+                    response = View("Error");
                 }
                 catch (Exception ex)
                 {
                     Logger.ErrorLog(ex);
-                    throw ex;
+                    response = View("Error");
                 }
             }
             else
@@ -282,14 +289,73 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             catch (SqlException sqlEx)
             {
                 Logger.SqlErrorLog(sqlEx);
-                throw sqlEx;
+                response = View("Error");
             }
             catch (Exception ex)
             {
                 Logger.ErrorLog(ex);
-                throw ex;
+                response = View("Error");
             }
             //returning view
+            return response;
+        }
+
+        //view users by role
+        [SecurityFilter(5)]
+        [HttpGet]
+        public ActionResult UsersByRole (byte RoleID)
+        {
+            ActionResult response;
+            List<UsersPO> userList = new List<UsersPO>();
+
+            try
+            {
+                //mapping all the data to the view page
+                List<UsersDO> allUsers = _UsersDAO.ViewUserByRole(RoleID);
+                userList = Mapper.UsersListDOtoPO(allUsers);
+                //return view with data 
+                //todo: more comments
+                response = View(userList);
+            }
+            //logging errors and redirecting
+            catch (SqlException sqlEx)
+            {
+                Logger.SqlErrorLog(sqlEx);
+                response = View("Error");
+            }
+            catch (Exception ex)
+            {
+                Logger.ErrorLog(ex);
+                response = View("Error");
+            }
+            return response;
+        }
+        [SecurityFilter(5)]
+        [HttpGet]
+        public ActionResult UsersByServer(string server)
+        {
+            ActionResult response;
+            List<UsersPO> userList = new List<UsersPO>();
+
+            try
+            {
+                //mapping all the data to the view page
+                List<UsersDO> allUsers = _UsersDAO.ViewUserByServer(server);
+                userList = Mapper.UsersListDOtoPO(allUsers);
+                response = View(userList);
+            }
+            //logging errors
+            catch (SqlException sqlEx)
+            {
+                Logger.SqlErrorLog(sqlEx);
+                response = View("Error");
+            }
+            catch (Exception ex)
+            {
+                Logger.ErrorLog(ex);
+                response = View("Error");
+            }
+            //return view
             return response;
         }
     }

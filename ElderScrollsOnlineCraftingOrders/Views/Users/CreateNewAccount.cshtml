@@ -4,7 +4,6 @@
     ViewBag.Title = "CreateNewAccount";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <h2>Register</h2>
 
 @using (Html.BeginForm("CreateNewAccount", "Users", FormMethod.Post))
@@ -19,19 +18,21 @@
     </div>
     @Html.LabelFor(model => Model.Password)
     <div class="form-group">
-        @Html.TextBoxFor(model => Model.Password, new { @class = "form-control", placeholder = "Example: *******" })
+        @Html.PasswordFor(model => Model.Password, new { @class = "form-control", placeholder = "*******" })
     </div>
     @Html.LabelFor(model => Model.ESOname)
     <div class="form-group">
         @Html.TextBoxFor(model => Model.ESOname, new { @class = "form-control", placeholder = "Example: @therealmadgod" })
     </div>
-    @Html.LabelFor(model => Model.RoleID)
-    <div class="form-group">
-        @Html.TextBoxFor(model => Model.RoleID, new { @class = "form-control" })
-    </div>
     @Html.LabelFor(model => Model.Server)
     <div class="form-group">
         @Html.TextBoxFor(model => Model.Server, new { @class = "form-control", placeholder = "Example: EU" })
     </div>
+    @*<div>
+        @Html.HiddenFor(model => Model.UserID)
+    </div>
+    <div>
+        @Html.HiddenFor(model => Model.RoleID)
+    </div>*@
     <input type="submit" value="Create" class="btn" />
 }

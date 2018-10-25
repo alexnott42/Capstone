@@ -26,9 +26,15 @@
             <th>
                 Role
             </th>
+            <th>
+                Orders
+            </th>
+            <th>
+                Crafting
+            </th>
             @if ((byte)Session["RoleID"] == 6)
             {
-                <th>
+                <th style="text-align: center">
                     Actions
                 </th>
             }
@@ -37,33 +43,56 @@
     <tbody>
         @foreach (UsersPO user in Model)
         {
-        <tr>
-            <td>
-                <text>@user.Username</text>
-            </td>
-            <td>
-                <text>@user.Email</text>
-            </td>
-            <td>
-                <text>@user.ESOname</text>
-            </td>
-            <td>
-                <text>@user.Server</text>
-            </td>
-            <td>
-                <text>@user.RoleID</text>
-            </td>
-            @if ((byte)Session["RoleID"] == 6)
-            {
+            <tr>
                 <td>
-                    @Html.ActionLink("Update", "UpdateUser", "Users", new { UserID = user.UserID }, new { @class = "btn btn-info" })
+                    @Html.ActionLink(user.Username, "ViewOrderByUserID", "Orders", new { UserID = user.UserID }, new { @class = "btn" })
                 </td>
                 <td>
-                    @Html.ActionLink("Delete", "DeleteUser", "Users", new { UserID = user.UserID }, new { @class = "btn btn-danger" })
+                    <text>@user.Email</text>
                 </td>
-            }
-        </tr>
+                <td>
+                    <text>@user.ESOname</text>
+                </td>
+                <td>
+                    @Html.ActionLink(user.Server, "UsersByServer", "Users", new { Server = user.Server }, new { @class = "btn" })
+                </td>
+                <td>
+                    @if ((int)user.RoleID == 1)
+                    {
+                        @Html.ActionLink("Banned", "UsersByRole", "Users", new { RoleID = user.RoleID }, new { @class = "btn" })
+                    }
+                    @if ((int)user.RoleID == 3)
+                    {
+                        @Html.ActionLink("User", "UsersByRole", "Users", new { RoleID = user.RoleID }, new { @class = "btn" })
+                    }
+                    @if ((int)user.RoleID == 4)
+                    {
+                        @Html.ActionLink("Crafter", "UsersByRole", "Users", new { RoleID = user.RoleID }, new { @class = "btn" })
+                    }
+                    @if ((int)user.RoleID == 5)
+                    {
+                        @Html.ActionLink("Mod", "UsersByRole", "Users", new { RoleID = user.RoleID }, new { @class = "btn" })
+                    }
+                    @if ((int)user.RoleID == 6)
+                    {
+                        @Html.ActionLink("Admin", "UsersByRole", "Users", new { RoleID = user.RoleID }, new { @class = "btn" })
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Submitted", "ViewOrderByUserID", "Orders", new { UserID = user.UserID }, new { @class = "btn" })
+                </td>
+                <td>
+                    @Html.ActionLink("Taken", "ViewOrderByCrafterID", "Orders", new { CrafterID = user.UserID }, new { @class = "btn" })
+                </td>
+                @if ((byte)Session["RoleID"] == 6)
+                {
+                    <td style="text-align: center">
+                        @Html.ActionLink("Update", "UpdateUser", "Users", new { UserID = user.UserID }, new { @class = "btn btn-info" })
+
+                        @Html.ActionLink("Delete", "DeleteUser", "Users", new { UserID = user.UserID }, new { @class = "btn btn-danger", onclick = "return confirm('delete this user?');" } )
+                    </td>
+                }
+            </tr>
         }
     </tbody>
 </table>
-

@@ -1,0 +1,31 @@
+﻿@using ElderScrollsOnlineCraftingOrders.Models
+@model OrdersPO
+@{
+                /**/
+
+                ViewBag.Title = "CreateNewOrder";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Due by</h2><h3>(Default: 1 week from present)</h3>
+
+@using (Html.BeginForm("CreateNewOrder", "Orders", FormMethod.Post))
+{
+    @Html.HiddenFor(model => Model.UserID)
+
+    @Html.HiddenFor(model => Model.CrafterID)
+
+    @Html.HiddenFor(model => Model.Username)
+
+    @Html.HiddenFor(model => Model.Crafter)
+
+    @Html.HiddenFor(model => Model.Requested)
+
+    @Html.HiddenFor(model => Model.Status)
+    <div class="form-group">
+        @Html.TextBoxFor(model => model.Due, new { @class = "form-control", placeholder = "MM/DD/YYYY" })
+        @Html.ValidationMessageFor(model => model.Due)
+    </div>
+
+        <input type="submit" value="Create" class="btn" />
+    }

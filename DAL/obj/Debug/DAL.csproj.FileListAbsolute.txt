@@ -6,7 +6,6 @@ C:\Users\Alex\source\repos\ElderScrollsOnlineCraftingOrders\DAL\obj\Debug\DAL.dl
 C:\Users\Alex\source\repos\ElderScrollsOnlineCraftingOrders\DAL\obj\Debug\DAL.pdb
 C:\Users\Alex\Documents\GitHub\Capstone\DAL\bin\Debug\DAL.dll
 C:\Users\Alex\Documents\GitHub\Capstone\DAL\bin\Debug\DAL.pdb
-C:\Users\Alex\Documents\GitHub\Capstone\DAL\obj\Debug\DAL.csprojAssemblyReference.cache
 C:\Users\Alex\Documents\GitHub\Capstone\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
 C:\Users\Alex\Documents\GitHub\Capstone\DAL\obj\Debug\DAL.dll
 C:\Users\Alex\Documents\GitHub\Capstone\DAL\obj\Debug\DAL.pdb
