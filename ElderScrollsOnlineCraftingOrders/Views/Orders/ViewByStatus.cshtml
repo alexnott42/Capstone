@@ -30,7 +30,6 @@
                 Status
             </th>
             <th>
-                @* price total calculation *@
                 Order Price
             </th>
             @if ((byte)Session["RoleID"] >= 5)
@@ -66,7 +65,7 @@
                 }
                 else
                 {
-                    order.OrderID = 0;
+                    @Html.ActionLink("Take Order", "AssignMeToOrder", "Orders", new { CrafterID = ((int)Session["UserID"]), OrderID = order.OrderID }, new { @class = "btn" });
                 }
             </td>
             <td>

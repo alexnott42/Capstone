@@ -365,5 +365,85 @@ namespace DAL
             //returning order
             return orderData;
         }
+
+        //updating an existing order's pricetotal
+        public int UpdateOrderPricetotal(OrdersDO orderInfo)
+        {
+            int rowsAffected = 0;
+
+            try
+            {
+                //defining some commands
+                using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
+                using (SqlCommand updateOrderPricetotal = new SqlCommand("ORDERS_UPDATE_PRICETOTAL", sqlConnection))
+                {
+                    //timing out after 60 seconds
+                    updateOrderPricetotal.CommandType = CommandType.StoredProcedure;
+                    updateOrderPricetotal.CommandTimeout = 60;
+
+                    //inserting information
+                    updateOrderPricetotal.Parameters.AddWithValue("OrderID", orderInfo.OrderID);
+                    updateOrderPricetotal.Parameters.AddWithValue("Pricetotal", orderInfo.Pricetotal);
+
+                    //Saving information to database
+                    sqlConnection.Open();
+                    rowsAffected = updateOrderPricetotal.ExecuteNonQuery();
+                }
+            }
+            //logging errors
+            catch (SqlException sqlEx)
+            {
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
+                LoggerDAL.SqlErrorLog(sqlEx);
+                throw sqlEx;
+            }
+            catch (Exception ex)
+            {
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
+                LoggerDAL.ErrorLog(ex);
+                throw ex;
+            }
+            return rowsAffected;
+        }
+
+        //updating an existing order's crafer
+        public int UpdateOrderCrafter(OrdersDO newInfo)
+        {
+            int rowsAffected = 0;
+
+            try
+            {
+                //defining some commands
+                using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
+                using (SqlCommand updateOrder = new SqlCommand("ORDERS_UPDATE_CRAFTER", sqlConnection))
+                {
+                    //timing out after 60 seconds
+                    updateOrder.CommandType = CommandType.StoredProcedure;
+                    updateOrder.CommandTimeout = 60;
+
+                    //inserting information
+                    updateOrder.Parameters.AddWithValue("OrderID", newInfo.OrderID);
+                    updateOrder.Parameters.AddWithValue("CrafterID", newInfo.CrafterID);
+
+                    //Saving information to database
+                    sqlConnection.Open();
+                    rowsAffected = updateOrder.ExecuteNonQuery();
+                }
+            }
+            //logging errors
+            catch (SqlException sqlEx)
+            {
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
+                LoggerDAL.SqlErrorLog(sqlEx);
+                throw sqlEx;
+            }
+            catch (Exception ex)
+            {
+                LoggerDAL.ErrorLogPath = _ErrorLogPath;
+                LoggerDAL.ErrorLog(ex);
+                throw ex;
+            }
+            return rowsAffected;
+        }
     }
 }

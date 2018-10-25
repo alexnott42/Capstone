@@ -4,7 +4,15 @@
     ViewBag.Title = "ViewOrderByID";
 }
 
-<h2>Order Details @Html.ActionLink("Add Item", "CreateNewItem", "Items", new { OrderID = Model.Order.OrderID }, new { @class = "btn btn-success" })</h2>
+<h2>
+    Order Details
+    @Html.ActionLink("Add Item", "CreateNewItem", "Items",
+    new { OrderID = Model.Order.OrderID },
+    new { @class = "btn btn-success" })
+    @Html.ActionLink("Delete", "DeleteOrder", "Orders",
+    new { OrderID = Model.Order.OrderID },
+    new { @class = "btn btn-danger", onclick = "return confirm('delete this order?');" })
+</h2>
 
 
 <div class="row">
@@ -99,7 +107,7 @@
                     {
                         <text>Actions</text>
                     }
-                </th >
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -120,11 +128,11 @@
                         {
                             @Html.ActionLink("Update", "UpdateItem", "Items", new { ItemID = item.ItemID }, new { @class = "btn btn-info" })
                         }
-                            @if ((byte)Session["RoleID"] == 5 || (int)Session["UserID"] == Model.Order.UserID)
-                            {
-                                @Html.ActionLink("Delete", "DeleteItem", "Items", new { ItemID = item.ItemID, OrderID = item.OrderID }, new { @class = "btn btn-danger", onclick = "return confirm('delete this item?');" })
-                            }
-                        </td>
+                        @if ((byte)Session["RoleID"] == 5 || (int)Session["UserID"] == Model.Order.UserID)
+                        {
+                            @Html.ActionLink("Delete", "DeleteItem", "Items", new { ItemID = item.ItemID, OrderID = item.OrderID }, new { @class = "btn btn-danger", onclick = "return confirm('delete this item?');" })
+                        }
+                    </td>
                 </tr>
             }
         </tbody>

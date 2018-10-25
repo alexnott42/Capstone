@@ -68,7 +68,7 @@
                     }
                     else
                     {
-                        order.CrafterID = 0;
+                        @Html.ActionLink("Take Order", "AssignMeToOrder", "Orders", new { OrderID = order.OrderID }, new { @class = "btn" });
                     }
                 </td>
                 <td>

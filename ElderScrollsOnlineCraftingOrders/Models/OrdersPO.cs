@@ -31,6 +31,6 @@ namespace ElderScrollsOnlineCraftingOrders.Models
         [Range(1, 5)]
         public byte Status { get; set; }
 
-        public int Pricetotal { get; set; }
+        public int? Pricetotal { get; set; }
     }
 }

@@ -106,6 +106,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 //mapping all the data to the view page
                 order = Mapper.OrdersDOtoOrdersPO(_OrdersDAO.ViewOrderByID(OrderID));
                 orderItems = Mapper.ItemsListDOtoPO(_ItemsDAO.ItemsByOrderID(OrderID));
+                OrdersBO calcOrder = Mapper.OrdersPOtoOrdersBO(order);
+                List<ItemsBO> calcItems = Mapper.ItemsListPOtoBO(orderItems);
+                calcOrder = Calculation.PriceTotalCalculator(calcOrder, calcItems);
+                order.Pricetotal = calcOrder.Pricetotal;
+                OrdersDO newTotal = Mapper.OrdersPOtoOrdersDO(order);
+                _OrdersDAO.UpdateOrderPricetotal(newTotal);
                 orderDetails.Order = order;
                 orderDetails.Items = orderItems;
 
@@ -337,6 +343,46 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 //setting response page
                 int UserID = (int)Session["UserID"];
                 response = RedirectToAction("ViewOrderByUserID", "Orders", new { UserID });
+            }
+            //logging errors and redirecting
+            catch (SqlException sqlEx)
+            {
+                Logger.SqlErrorLog(sqlEx);
+                response = View("Error");
+            }
+            catch (Exception ex)
+            {
+                Logger.ErrorLog(ex);
+                response = View("Error");
+            }
+            //returning response page
+            return response;
+        }
+
+        [SecurityFilter(4)]
+        [HttpGet]
+        public PartialViewResult AssignMeToOrder(int OrderID)
+        {
+            OrdersDO Order = _OrdersDAO.ViewOrderByID(OrderID);
+            OrdersPO orderDetails = Mapper.OrdersDOtoOrdersPO(Order);
+            return PartialView(orderDetails);
+        }
+
+        //todo make "AssignMeToOrder" actually work
+        //Assigning user to order
+        [SecurityFilter(4)]
+        [HttpPost]
+        //todo: return a view showing the information on this page
+        public ActionResult AssignMeToOrder(OrdersPO order)
+        {
+            ActionResult response;
+            try
+            {
+                OrdersDO newInfo = Mapper.OrdersPOtoOrdersDO(order);
+                newInfo.CrafterID = (int)Session["UserID"];
+                //running the stored procedure
+                _OrdersDAO.UpdateOrderCrafter(newInfo);
+                response = RedirectToAction("ViewOrderByID", "Orders", new { order.OrderID });
             }
             //logging errors and redirecting
             catch (SqlException sqlEx)

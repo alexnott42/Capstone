@@ -342,3 +342,22 @@ Error Number:201,State:4,Class:16
 Time: 10/23/2018 3:39:05 PM
 Error:System.NullReferenceException: Object reference not set to an instance of an object.
    at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.CreateNewOrder() in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 198
+-----
+Time: 10/25/2018 1:01:25 PM
+Error:System.InvalidCastException: Specified cast is not valid.
+   at DAL.dalMappers.MapperDAL.ReaderToOrder(SqlDataReader from) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\dalMappers\MapperDAL.cs:line 68
+   at DAL.OrdersDAO.ViewOrderByUserID(Int32 UserID) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 257
+-----
+Time: 10/25/2018 1:01:25 PM
+Error:System.InvalidCastException: Specified cast is not valid.
+   at DAL.OrdersDAO.ViewOrderByUserID(Int32 UserID) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 273
+   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.ViewOrderByUserID(Int32 UserID) in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 146
+-----
+Time: 10/25/2018 1:01:35 PM
+Error:System.InvalidCastException: Specified cast is not valid.
+   at DAL.dalMappers.MapperDAL.ReaderToOrder(SqlDataReader from) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\dalMappers\MapperDAL.cs:line 68
+   at DAL.OrdersDAO.ViewOrderByUserID(Int32 UserID) in C:\Users\Alex\Documents\GitHub\Capstone\DAL\OrdersDAO.cs:line 257
+-----
+Time: 10/25/2018 4:34:09 PM
+Error:System.NullReferenceException: Object reference not set to an instance of an object.
+   at ElderScrollsOnlineCraftingOrders.Controllers.OrdersController.CreateNewOrder() in C:\Users\Alex\Documents\GitHub\Capstone\ElderScrollsOnlineCraftingOrders\Controllers\OrdersController.cs:line 206

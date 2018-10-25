@@ -65,6 +65,7 @@ namespace DAL.dalMappers
             to.Status = (byte)from["Status"];
             to.Username = from["Username"] as string;
             to.Crafter = from["Crafter"] as string;
+            to.Pricetotal = from["Pricetotal"] as int?;
             //Returning Order Data
             return to;
         }

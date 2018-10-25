@@ -25,6 +25,6 @@ namespace DAL.dalModels
 
         public byte Status { get; set; }
 
-        public int Pricetotal { get; set; }
+        public int? Pricetotal { get; set; }
     }
 }

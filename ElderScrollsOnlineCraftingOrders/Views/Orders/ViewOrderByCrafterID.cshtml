@@ -68,7 +68,7 @@
                 }
                 else
                 {
-                    order.OrderID = 0;
+                    @Html.ActionLink("Take Order", "AssignMeToOrder", "Orders", new { CrafterID = ((int)Session["UserID"]), OrderID = order.OrderID }, new { @class = "btn" });
                 }
             </td>
             <td>
