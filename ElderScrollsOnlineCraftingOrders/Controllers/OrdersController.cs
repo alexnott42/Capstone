@@ -40,13 +40,11 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         public ActionResult ViewAllOrders()
         {
             ActionResult response;
-            List<OrdersDO> _Orders = new List<OrdersDO>();
-            List<OrdersPO> Orders = new List<OrdersPO>();
             try
             {
                 //mapping all the data to the view page
-                _Orders = _OrdersDAO.ViewAllOrders();
-                Orders = Mapper.OrdersListDOtoPO(_Orders);
+                List<OrdersDO> _Orders = _OrdersDAO.ViewAllOrders();
+                List<OrdersPO> Orders = Mapper.OrdersListDOtoPO(_Orders);
                 response = View(Orders);
             }
             //logging errors and redirecting
@@ -68,13 +66,11 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         public ActionResult ViewByStatus(byte status)
         {
             ActionResult response;
-            List<OrdersDO> _Orders = new List<OrdersDO>();
-            List<OrdersPO> Orders = new List<OrdersPO>();
             try
             {
                 //mapping all the data to the view page
-                _Orders = _OrdersDAO.ViewOrderByStatus(status);
-                Orders = Mapper.OrdersListDOtoPO(_Orders);
+                List<OrdersDO> _Orders = _OrdersDAO.ViewOrderByStatus(status);
+                List<OrdersPO> Orders = Mapper.OrdersListDOtoPO(_Orders);
                 response = View(Orders);
             }
             //logging errors and redirecting
@@ -97,21 +93,27 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         public ActionResult ViewOrderByID(int OrderID)
         {
             ActionResult response;
-            OrdersPO order = new OrdersPO();
-            List<ItemsPO> orderItems = new List<ItemsPO>();
             OrdersVM orderDetails = new OrdersVM();
 
             try
             {
                 //mapping all the data to the view page
-                order = Mapper.OrdersDOtoOrdersPO(_OrdersDAO.ViewOrderByID(OrderID));
-                orderItems = Mapper.ItemsListDOtoPO(_ItemsDAO.ItemsByOrderID(OrderID));
+                OrdersPO order = Mapper.OrdersDOtoOrdersPO(_OrdersDAO.ViewOrderByID(OrderID));
+                List<ItemsPO> orderItems = Mapper.ItemsListDOtoPO(_ItemsDAO.ItemsByOrderID(OrderID));
+
+                //sending to business logic layer
                 OrdersBO calcOrder = Mapper.OrdersPOtoOrdersBO(order);
                 List<ItemsBO> calcItems = Mapper.ItemsListPOtoBO(orderItems);
+
+                //doing valculations
                 calcOrder = Calculation.PriceTotalCalculator(calcOrder, calcItems);
                 order.Pricetotal = calcOrder.Pricetotal;
+
+                //assigning new total price
                 OrdersDO newTotal = Mapper.OrdersPOtoOrdersDO(order);
                 _OrdersDAO.UpdateOrderPricetotal(newTotal);
+
+                //assigning objects to viewmodel
                 orderDetails.Order = order;
                 orderDetails.Items = orderItems;
 
@@ -137,14 +139,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         [HttpGet]
         public ActionResult ViewOrderByUserID(int UserID)
         {
-            List<OrdersDO> _Orders = new List<OrdersDO>();
-            List<OrdersPO> Orders = new List<OrdersPO>();
             ActionResult response;
             try
             {
                 //mapping all the data to the view page
-                _Orders = _OrdersDAO.ViewOrderByUserID(UserID);
-                Orders = Mapper.OrdersListDOtoPO(_Orders);
+                List<OrdersDO> _Orders = _OrdersDAO.ViewOrderByUserID(UserID);
+                List<OrdersPO> Orders = Mapper.OrdersListDOtoPO(_Orders);
                 response = View(Orders);
             }
             //logging errors and redirecting
@@ -167,13 +167,11 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         public ActionResult ViewOrderByCrafterID(int CrafterID)
         {
             ActionResult response;
-            List<OrdersDO> _Orders = new List<OrdersDO>();
-            List<OrdersPO> Orders = new List<OrdersPO>();
             try
             {
                 //mapping all the data to the view page
-                _Orders = _OrdersDAO.ViewOrderByCrafterID(CrafterID);
-                Orders = Mapper.OrdersListDOtoPO(_Orders);
+                List<OrdersDO> _Orders = _OrdersDAO.ViewOrderByCrafterID(CrafterID);
+                List<OrdersPO> Orders = Mapper.OrdersListDOtoPO(_Orders);
                 //returning form view
                 response = View(Orders);
             }
@@ -266,13 +264,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         [HttpGet]
         public ActionResult UpdateOrder(int OrderID)
         {
-            OrdersPO orderPO = new OrdersPO(); 
             ActionResult response;
             try
             {
                 //mapping user input to database
                 OrdersDO orderDO = _OrdersDAO.ViewOrderByID(OrderID);
-                orderPO = Mapper.OrdersDOtoOrdersPO(orderDO);
+                OrdersPO orderPO = Mapper.OrdersDOtoOrdersPO(orderDO);
 
                 response = View(orderPO);
             }
@@ -361,11 +358,13 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
 
         [SecurityFilter(4)]
         [HttpGet]
-        public PartialViewResult AssignMeToOrder(int OrderID)
+        public ActionResult ConfirmAssign(int OrderID)
         {
             OrdersDO Order = _OrdersDAO.ViewOrderByID(OrderID);
             OrdersPO orderDetails = Mapper.OrdersDOtoOrdersPO(Order);
-            return PartialView(orderDetails);
+            orderDetails.CrafterID = (int)Session["UserID"];
+            orderDetails.Crafter = (string)Session["Username"];
+            return View(orderDetails);
         }
 
         //todo make "AssignMeToOrder" actually work
@@ -373,27 +372,34 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         [SecurityFilter(4)]
         [HttpPost]
         //todo: return a view showing the information on this page
-        public ActionResult AssignMeToOrder(OrdersPO order)
+        public ActionResult AssignMeToOrder(OrdersPO form)
         {
             ActionResult response;
-            try
+            if (ModelState.IsValid)
             {
-                OrdersDO newInfo = Mapper.OrdersPOtoOrdersDO(order);
-                newInfo.CrafterID = (int)Session["UserID"];
-                //running the stored procedure
-                _OrdersDAO.UpdateOrderCrafter(newInfo);
-                response = RedirectToAction("ViewOrderByID", "Orders", new { order.OrderID });
+                try
+                {
+                    OrdersDO newInfo = Mapper.OrdersPOtoOrdersDO(form);
+                    //running the stored procedure
+                    _OrdersDAO.UpdateOrderCrafter(newInfo);
+                    response = RedirectToAction("ViewOrderByID", "Orders", new { form.OrderID });
+                }
+                //logging errors and redirecting
+                catch (SqlException sqlEx)
+                {
+                    Logger.SqlErrorLog(sqlEx);
+                    response = View("Error");
+                }
+                catch (Exception ex)
+                {
+                    Logger.ErrorLog(ex);
+                    response = View("Error");
+                } 
             }
-            //logging errors and redirecting
-            catch (SqlException sqlEx)
+            else
             {
-                Logger.SqlErrorLog(sqlEx);
-                response = View("Error");
-            }
-            catch (Exception ex)
-            {
-                Logger.ErrorLog(ex);
-                response = View("Error");
+                //returning to form view if model state is invalid
+                response = View(form);
             }
             //returning response page
             return response;

@@ -37,12 +37,14 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         //create item
         [SecurityFilter(3)]
         [HttpGet]
-        public ActionResult CreateNewItem()
+        public ActionResult CreateNewItem(int OrderID)
         {
             ActionResult response;
             try
             {
-                response = View();
+                ItemsPO newItem = new ItemsPO();
+                newItem.OrderID = OrderID;
+                response = View(newItem);
             }
             //logging errors and redirecting
             catch (SqlException sqlEx)
@@ -75,7 +77,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                     newItem.OrderID = OrderID;
                     _ItemsDAO.CreateNewItemEntry(newItem);
                     //setting response view
-                    response = RedirectToAction("ViewOrderByID", "Orders");
+                    response = RedirectToAction("ViewOrderByID", "Orders", new { form.OrderID });
                 }
                 //logging errors and redirecting
                 catch (SqlException sqlEx)
@@ -104,12 +106,11 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         public ActionResult UpdateItem(int ItemID)
         {
             ActionResult response;
-            ItemsPO ItemPO = new ItemsPO();
             try
             {
                 //retrieving data and displaying to user
                 ItemsDO ItemDO = _ItemsDAO.ViewItemByID(ItemID);
-                ItemPO = Mapper.ItemsDOtoItemsPO(ItemDO);
+                ItemsPO ItemPO = Mapper.ItemsDOtoItemsPO(ItemDO);
                 //setting response view
                 response = View(ItemPO);
             }
@@ -145,7 +146,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                         ItemsDO ItemDO = Mapper.ItemsPOtoItemsDO(form);
                         _ItemsDAO.UpdateItemEntryInformation(ItemDO);
                         //setting response page
-                        response = RedirectToAction("ViewOrderByID", "Orders");
+                        response = RedirectToAction("ViewOrderByID", "Orders", new { form.OrderID });
                     }
                 }
                 //logging errors and redirecting

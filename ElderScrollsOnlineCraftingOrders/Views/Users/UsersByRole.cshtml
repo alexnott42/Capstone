@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="text-center">Users sorted by role</h2>
+<h2 class="text-center">Users By Role</h2>
 
 <table class="table table-striped" style="background-color: azure">
     <thead>
@@ -25,12 +25,10 @@
             <th>
                 Role
             </th>
-            <th>
+            <th class="text-center">
                 Orders
             </th>
-            <th>
-                Crafting
-            </th>
+
             @if ((byte)Session["RoleID"] == 6)
             {
                 <th style="text-align: center">
@@ -53,25 +51,39 @@
                     <text>@user.ESOname</text>
                 </td>
                 <td>
-                    <text>@user.Server </text>@Html.ActionLink("Sort", "UsersByServer", "Users", new { Server = user.Server }, new { @class = "btn-sm btn-info" })
+                    @Html.ActionLink(user.Server, "UsersByServer", "Users", new { Server = user.Server }, new { @class = "btn" })
                 </td>
                 <td>
-                    <text>@user.RoleID</text>
+                    @if ((int)user.RoleID == 1)
+                    {
+                        @Html.ActionLink("Banned", "UsersByRole", "Users", new { RoleID = user.RoleID }, new { @class = "btn" })
+                    }
+                    @if ((int)user.RoleID == 3)
+                    {
+                        @Html.ActionLink("User", "UsersByRole", "Users", new { RoleID = user.RoleID }, new { @class = "btn" })
+                    }
+                    @if ((int)user.RoleID == 4)
+                    {
+                        @Html.ActionLink("Crafter", "UsersByRole", "Users", new { RoleID = user.RoleID }, new { @class = "btn" })
+                    }
+                    @if ((int)user.RoleID == 5)
+                    {
+                        @Html.ActionLink("Mod", "UsersByRole", "Users", new { RoleID = user.RoleID }, new { @class = "btn" })
+                    }
+                    @if ((int)user.RoleID == 6)
+                    {
+                        @Html.ActionLink("Admin", "UsersByRole", "Users", new { RoleID = user.RoleID }, new { @class = "btn" })
+                    }
                 </td>
-                <td>
-                    @Html.ActionLink("Orders", "ViewOrderByUserID", "Orders", new { UserID = user.UserID }, new { @class = "btn" })
-                </td>
-                <td>
-                    @Html.ActionLink("Crafting", "ViewOrderByCrafterID", "Orders", new { CrafterID = user.UserID }, new { @class = "btn" })
+                <td class="text-center">
+                    @Html.ActionLink("Submitted", "ViewOrderByUserID", "Orders", new { UserID = user.UserID }, new { @class = "btn btn-info" })
+
+                    @Html.ActionLink("Taken", "ViewOrderByCrafterID", "Orders", new { CrafterID = user.UserID }, new { @class = "btn btn-info" })
                 </td>
                 @if ((byte)Session["RoleID"] == 6)
                 {
                     <td style="text-align: center">
-                        @Html.ActionLink("Update", "UpdateUser", "Users", new { UserID = user.UserID }, new { @class = "btn btn-info" })
-                        @*@Ajax.ActionLink("Delete", "DeleteUser", "Users", new { UserID = user.UserID },
-                            new AjaxOptions() { OnSuccess = "DisplayModal", OnFailure = "FailedToLoadModal",
-                            HttpMethod = "GET", InsertionMode = InsertionMode.Replace, UpdateTargetId = "Confirmation" },
-                            new {@class = "btn btn-danger"})*@
+                        @Html.ActionLink("Update", "UpdateUser", "Users", new { UserID = user.UserID }, new { @class = "btn btn-primary" })
 
                         @Html.ActionLink("Delete", "DeleteUser", "Users", new { UserID = user.UserID }, new { @class = "btn btn-danger", onclick = "return confirm('delete this user?');" })
                     </td>

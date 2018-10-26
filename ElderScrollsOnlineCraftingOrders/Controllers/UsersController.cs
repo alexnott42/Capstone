@@ -38,12 +38,11 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         public ActionResult Users(int UserID)
         {
             ActionResult response;
-            UsersPO userDetails = new UsersPO();
             try
             {
                 //mapping all the data to the view page
                 UsersDO userDO = _UsersDAO.ViewUserByID(UserID);
-                userDetails = Mapper.UsersDOtoUsersPO(userDO);
+                UsersPO userDetails = Mapper.UsersDOtoUsersPO(userDO);
                 response = View(userDetails);
             }
             //logging exceptions and redirecting to error page
@@ -67,13 +66,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         public ActionResult AllUsers()
         {
             ActionResult response;
-            List<UsersPO> userList = new List<UsersPO>();
 
             try
             {
                 //mapping all the data to the view page
                 List<UsersDO> allUsers = _UsersDAO.ViewAllUsers();
-                userList = Mapper.UsersListDOtoPO(allUsers);
+                List<UsersPO> userList = Mapper.UsersListDOtoPO(allUsers);
                 response = View(userList);
             }
             //logging errors
@@ -209,13 +207,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         [HttpGet]
         public ActionResult UpdateUser(int UserID)
         {
-            UsersPO UserPO = new UsersPO();
             ActionResult response;
             try
             {
                 //retrieving data and displaying to user
                 UsersDO UserDO = _UsersDAO.ViewUserByID(UserID);
-                UserPO = Mapper.UsersDOtoUsersPO(UserDO);
+                UsersPO UserPO = Mapper.UsersDOtoUsersPO(UserDO);
                 response = View(UserPO);
             }
             //logging errors and redirecting 
@@ -306,13 +303,12 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
         public ActionResult UsersByRole (byte RoleID)
         {
             ActionResult response;
-            List<UsersPO> userList = new List<UsersPO>();
 
             try
             {
                 //mapping all the data to the view page
                 List<UsersDO> allUsers = _UsersDAO.ViewUserByRole(RoleID);
-                userList = Mapper.UsersListDOtoPO(allUsers);
+                List<UsersPO> userList = Mapper.UsersListDOtoPO(allUsers);
                 //return view with data 
                 //todo: more comments
                 response = View(userList);
@@ -330,18 +326,18 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             }
             return response;
         }
+
         [SecurityFilter(5)]
         [HttpGet]
         public ActionResult UsersByServer(string server)
         {
             ActionResult response;
-            List<UsersPO> userList = new List<UsersPO>();
 
             try
             {
                 //mapping all the data to the view page
                 List<UsersDO> allUsers = _UsersDAO.ViewUserByServer(server);
-                userList = Mapper.UsersListDOtoPO(allUsers);
+                List<UsersPO> userList = Mapper.UsersListDOtoPO(allUsers);
                 response = View(userList);
             }
             //logging errors

@@ -24,7 +24,7 @@
                     {
                         <li>@Html.ActionLink("Accounts", "AllUsers", "Users")</li>
                     }
-                    @if (!(Session["RoleID"] is null) && (byte)Session["RoleID"] >= 5)
+                    @if (!(Session["RoleID"] is null) && (byte)Session["RoleID"] >= 4)
                     {
                         <li>@Html.ActionLink("All Orders", "ViewAllOrders", "Orders")</li>
                     }
@@ -33,7 +33,7 @@
                     {
                         <li>@Html.ActionLink("My Orders", "ViewOrderByUserID", "Orders", new { UserID = Session["UserID"] }, null)</li>
                     }
-                    @if (!(Session["RoleID"] is null) && (byte)Session["RoleID"] >= 3)
+                    @if (!(Session["RoleID"] is null) && (byte)Session["RoleID"] >= 4)
                     {
                         <li>@Html.ActionLink("Taken Orders", "ViewOrderByCrafterID", "Orders", new { CrafterID = Session["UserID"] }, new { @class = "btn" })</li>
                     }

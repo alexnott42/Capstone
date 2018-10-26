@@ -1,7 +1,7 @@
 ﻿@using ElderScrollsOnlineCraftingOrders.Models
 @model OrdersPO
 @{
-    ViewBag.Title = "AssignMeToOrder";
+    ViewBag.Title = "ConfirmAssign";
 }
 
 <h2>Take This Order?</h2>
@@ -52,7 +52,7 @@
             Status:
         </text>
         <text>
-                Untaken
+            Untaken
         </text>
     </div>
     <div class="col-md-1 col-md-offset-1">
@@ -61,3 +61,25 @@
 
     </div>
 </div>
+@using (Html.BeginForm("AssignMeToOrder", "Orders", FormMethod.Post))
+{
+    @Html.HiddenFor(model => Model.OrderID)
+
+    @Html.HiddenFor(model => Model.CrafterID)
+
+    @Html.HiddenFor(model => Model.UserID)
+
+    @Html.HiddenFor(model => Model.Username)
+
+    @Html.HiddenFor(model => Model.Crafter)
+
+    @Html.HiddenFor(model => Model.Requested)
+
+    @Html.HiddenFor(model => Model.Due)
+
+    @Html.HiddenFor(model => Model.Pricetotal)
+
+    @Html.HiddenFor(model => Model.Status)
+
+    <input type="submit" value="Confirm" class="btn btn-success" />
+}

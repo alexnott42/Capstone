@@ -254,7 +254,7 @@ namespace DAL
                     sqlConnection.Open();
                     using (SqlDataReader reader = viewByRole.ExecuteReader())
                     {
-                        if (reader.Read())
+                        while (reader.Read())
                         {
                             //creating a list and mapping objects
                             userData.Add(MapperDAL.ReaderToUser(reader));
@@ -340,7 +340,7 @@ namespace DAL
                 sqlConnection.Open();
                 using (SqlDataReader reader = viewByRole.ExecuteReader())
                 {
-                    if (reader.Read())
+                    while (reader.Read())
                     {
                         //creating a list and mapping objects
                         userData.Add(MapperDAL.ReaderToUser(reader));

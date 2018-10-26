@@ -29,7 +29,7 @@
             Username:
         </text>
         <text>
-            @Html.ActionLink(Model.Order.Username, "ViewOrderByUserID", "Orders", new { UserID = Model.Order.UserID }, new { @class = "btn" })
+            @Html.ActionLink(Model.Order.Username, "Users", "Users", new { UserID = Model.Order.UserID }, new { @class = "btn" })
         </text>
     </div>
     <div class="col-md-1 col-md-offset-1">
@@ -124,11 +124,11 @@
                     <td>@item.OrderID</td>
                     <td>@item.Price</td>
                     <td>
-                        @if ((byte)Session["RoleID"] == 5 || (int)Session["UserID"] == Model.Order.CrafterID)
+                        @if ((byte)Session["RoleID"] == 5 || (int)Session["UserID"] == Model.Order.UserID && (!((int)Session["UserID"] == Model.Order.CrafterID)))
                         {
                             @Html.ActionLink("Update", "UpdateItem", "Items", new { ItemID = item.ItemID }, new { @class = "btn btn-info" })
                         }
-                        @if ((byte)Session["RoleID"] == 5 || (int)Session["UserID"] == Model.Order.UserID)
+                        @if ((byte)Session["RoleID"] == 5 || (int)Session["UserID"] == Model.Order.UserID && (!((int)Session["UserID"] == Model.Order.CrafterID)))
                         {
                             @Html.ActionLink("Delete", "DeleteItem", "Items", new { ItemID = item.ItemID, OrderID = item.OrderID }, new { @class = "btn btn-danger", onclick = "return confirm('delete this item?');" })
                         }

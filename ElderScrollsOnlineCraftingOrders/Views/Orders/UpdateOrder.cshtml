@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>UpdateOrder</h2>
+<h2>Update Order</h2>
 
 @using (Html.BeginForm("UpdateOrder", "Orders", FormMethod.Post))
 {
@@ -23,6 +23,8 @@
 
     @Html.HiddenFor(model => Model.Due)
 
+    @Html.HiddenFor(model => Model.Pricetotal)
+
     @Html.LabelFor(model => Model.Status)
     <div>
         @Html.DropDownListFor(model => Model.Status, new List<SelectListItem>()
@@ -30,7 +32,7 @@
          new SelectListItem {Text = "Taken", Value = "2"} ,
          new SelectListItem {Text = "Sent", Value = "3"} ,
          new SelectListItem {Text = "Paid", Value = "4"} ,
-         new SelectListItem {Text = "Defaulted", Value = "5"} }, "Choose Status")
+         new SelectListItem {Text = "Defaulted", Value = "5"} }, "Choose Status", new { @class = "form-control" })
 
     </div>
     <input type="submit" value="Update" class="btn" />

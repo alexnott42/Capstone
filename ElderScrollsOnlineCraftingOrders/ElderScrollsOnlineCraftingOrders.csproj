@@ -265,7 +265,7 @@
     <Content Include="Views\Orders\ViewOrderByCrafterID.cshtml" />
     <Content Include="Views\Items\CreateNewItem.cshtml" />
     <Content Include="Views\Items\UpdateItem.cshtml" />
-    <Content Include="Views\Orders\AssignMeToOrder.cshtml" />
+    <Content Include="Views\Orders\ConfirmAssign.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

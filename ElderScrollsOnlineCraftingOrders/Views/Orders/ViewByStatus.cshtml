@@ -48,7 +48,7 @@
                 @Html.ActionLink(order.OrderID + "", "ViewOrderByID", "Orders", new { OrderID = order.OrderID }, new { @class = "btn" })
             </td>
             <td>
-                @Html.ActionLink(order.Username, "ViewOrderByUserID", "Orders", new { UserID = order.UserID }, new { @class = "btn" })
+                @Html.ActionLink(order.Username, "Users", "Users", new { UserID = order.UserID }, new { @class = "btn" })
             </td>
             <td>
                 <text>@order.Requested</text>
@@ -65,7 +65,7 @@
                 }
                 else
                 {
-                    @Html.ActionLink("Take Order", "AssignMeToOrder", "Orders", new { CrafterID = ((int)Session["UserID"]), OrderID = order.OrderID }, new { @class = "btn" });
+                    @Html.ActionLink("Take Order", "ConfirmAssign", "Orders", new { CrafterID = ((int)Session["UserID"]), OrderID = order.OrderID }, new { @class = "btn" });
                 }
             </td>
             <td>

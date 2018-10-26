@@ -26,12 +26,10 @@
             <th>
                 Role
             </th>
-            <th>
+            <th class="text-center">
                 Orders
             </th>
-            <th>
-                Crafting
-            </th>
+
             @if ((byte)Session["RoleID"] == 6)
             {
                 <th style="text-align: center">
@@ -78,18 +76,17 @@
                         @Html.ActionLink("Admin", "UsersByRole", "Users", new { RoleID = user.RoleID }, new { @class = "btn" })
                     }
                 </td>
-                <td>
-                    @Html.ActionLink("Submitted", "ViewOrderByUserID", "Orders", new { UserID = user.UserID }, new { @class = "btn" })
-                </td>
-                <td>
-                    @Html.ActionLink("Taken", "ViewOrderByCrafterID", "Orders", new { CrafterID = user.UserID }, new { @class = "btn" })
+                <td class="text-center">
+                    @Html.ActionLink("Submitted", "ViewOrderByUserID", "Orders", new { UserID = user.UserID }, new { @class = "btn btn-info" })
+
+                    @Html.ActionLink("Taken", "ViewOrderByCrafterID", "Orders", new { CrafterID = user.UserID }, new { @class = "btn btn-info" })
                 </td>
                 @if ((byte)Session["RoleID"] == 6)
                 {
                     <td style="text-align: center">
-                        @Html.ActionLink("Update", "UpdateUser", "Users", new { UserID = user.UserID }, new { @class = "btn btn-info" })
+                        @Html.ActionLink("Update", "UpdateUser", "Users", new { UserID = user.UserID }, new { @class = "btn btn-primary" })
 
-                        @Html.ActionLink("Delete", "DeleteUser", "Users", new { UserID = user.UserID }, new { @class = "btn btn-danger", onclick = "return confirm('delete this user?');" } )
+                        @Html.ActionLink("Delete", "DeleteUser", "Users", new { UserID = user.UserID }, new { @class = "btn btn-danger", onclick = "return confirm('delete this user?');" })
                     </td>
                 }
             </tr>
