@@ -137,11 +137,11 @@
     @Html.LabelFor(model => Model.Quality)
     <div>
         @Html.DropDownListFor(model => Model.Quality, new List<SelectListItem>()
-        {new SelectListItem {Text = "White", Value = "White" },
-        new SelectListItem {Text = "Green", Value = "Green" },
-        new SelectListItem {Text = "Blue", Value = "Blue" },
-        new SelectListItem {Text = "Purple", Value = "Purple" },
-        new SelectListItem {Text = "Gold", Value = "Gold" } }, "Quality", new { @class = "form-control" })
+        {new SelectListItem {Text = "Common", Value = "Common" },
+        new SelectListItem {Text = "Fine", Value = "Fine" },
+        new SelectListItem {Text = "Superior", Value = "Superior" },
+        new SelectListItem {Text = "Epic", Value = "Epic" },
+        new SelectListItem {Text = "Legendary", Value = "Legendary" } }, "Quality", new { @class = "form-control" })
     </div>
     @Html.LabelFor(model => Model.Price)
     <div>
