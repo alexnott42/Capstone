@@ -46,14 +46,14 @@
        new SelectListItem {Text ="Ice Staff", Value = "Ice Staff" },
        new SelectListItem {Text ="Lightning Staff", Value = "Lightning Staff" },
        new SelectListItem {Text ="Restoration Staff", Value = "Restoration Staff" },
+             new SelectListItem {Text = "Ring", Value = "Ring"},
        new SelectListItem {Text = "Necklace", Value = "Necklace" }}, "SubType", new { @class = "form-control" })
     </div>
     @Html.LabelFor(model => Model.Trait)
     <div>
 
         @Html.DropDownListFor(model => Model.Trait, new List<SelectListItem>()
-            { new SelectListItem {Text = "Ring", Value = "Ring"},
-            new SelectListItem {Text = "Divines", Value = "Divines" },
+   {  new SelectListItem {Text = "Divines", Value = "Divines" },
             new SelectListItem {Text = "Invigorating", Value = "Invigorating" },
             new SelectListItem {Text = "Impenetrable", Value = "Impenetrable" },
             new SelectListItem {Text = "Infused", Value = "Infused" },

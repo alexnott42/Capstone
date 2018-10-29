@@ -297,7 +297,7 @@ namespace DAL
                     sqlConnection.Open();
                     using (SqlDataReader reader = viewByCrafterID.ExecuteReader())
                     {
-                        if (reader.Read())
+                        while (reader.Read())
                         {
                             orderData.Add(MapperDAL.ReaderToOrder(reader));
                         }
@@ -342,7 +342,7 @@ namespace DAL
                     sqlConnection.Open();
                     using (SqlDataReader reader = viewByStatus.ExecuteReader())
                     {
-                        if (reader.Read())
+                        while (reader.Read())
                         {
                             orderData.Add(MapperDAL.ReaderToOrder(reader));
                         }
@@ -424,6 +424,7 @@ namespace DAL
                     //inserting information
                     updateOrder.Parameters.AddWithValue("OrderID", newInfo.OrderID);
                     updateOrder.Parameters.AddWithValue("CrafterID", newInfo.CrafterID);
+                    updateOrder.Parameters.AddWithValue("Status", newInfo.Status);
 
                     //Saving information to database
                     sqlConnection.Open();

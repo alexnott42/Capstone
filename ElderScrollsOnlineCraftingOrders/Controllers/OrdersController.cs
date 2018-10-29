@@ -381,7 +381,9 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 {
                     OrdersDO newInfo = Mapper.OrdersPOtoOrdersDO(form);
                     //running the stored procedure
+                    newInfo.Status = 2;
                     _OrdersDAO.UpdateOrderCrafter(newInfo);
+
                     response = RedirectToAction("ViewOrderByID", "Orders", new { form.OrderID });
                 }
                 //logging errors and redirecting

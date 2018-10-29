@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="Calculation.cs" />
     <Compile Include="Logger\Logger.cs" />
-    <Compile Include="Mapper\Mapper.cs" />
     <Compile Include="Models\ItemsBO.cs" />
     <Compile Include="Models\OrdersBO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
