@@ -1,0 +1,85 @@
+﻿@using ElderScrollsOnlineCraftingOrders.Models
+@model OrdersPO
+@{
+    ViewBag.Title = "Unassign";
+}
+
+<h2>Drop This Order?</h2>
+
+<div class="row">
+    <div class="col-md-1">
+        <text>
+            Order#
+        </text>
+        <text>
+            @Model.OrderID
+        </text>
+    </div>
+    <div class="col-md-1 col-md-offset-1">
+        <text>
+            Username:
+        </text>
+        <text>
+            @Model.Username
+        </text>
+    </div>
+    <div class="col-md-1 col-md-offset-1">
+        <text>
+            Requested:
+        </text>
+        <text>
+            @Model.Requested
+        </text>
+    </div>
+    <div class="col-md-1 col-md-offset-1">
+        <text>
+            Due by:
+        </text>
+        <text>
+            @Model.Due
+        </text>
+    </div>
+    <div class="col-md-1 col-md-offset-1">
+        <text>
+            Crafter:
+        </text>
+        <text>
+            @Model.Crafter
+        </text>
+    </div>
+    <div class="col-md-1 col-md-offset-1">
+        <text>
+            Status:
+        </text>
+        <text>
+            @Model.Status
+        </text>
+    </div>
+    <div class="col-md-1 col-md-offset-1">
+        <text>Order Price:</text>
+        <text>@Model.Pricetotal</text>
+
+    </div>
+</div>
+@using (Html.BeginForm("UnassignMe", "Orders", FormMethod.Post))
+{
+    @Html.HiddenFor(model => Model.OrderID)
+
+    @Html.HiddenFor(model => Model.CrafterID)
+
+    @*@Html.HiddenFor(model => Model.UserID)
+
+    @Html.HiddenFor(model => Model.Username)
+
+    @Html.HiddenFor(model => Model.Crafter)
+
+    @Html.HiddenFor(model => Model.Requested)
+
+    @Html.HiddenFor(model => Model.Due)
+
+    @Html.HiddenFor(model => Model.Pricetotal)*@
+
+    @Html.HiddenFor(model => Model.Status)
+
+    <input type="submit" value="Confirm" class="btn btn-success" />
+}

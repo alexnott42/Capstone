@@ -19,6 +19,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
 
     }
 }
-//TODO: create items views
 //todo: partialview orders on users page
-//todo: update item page
+//todo: more comments
+//todo: password hashing
+//todo: make the dropdownlists on items change based on user selections

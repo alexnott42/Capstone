@@ -66,6 +66,7 @@
                     @Html.ActionLink(order.Crafter, "ViewOrderByCrafterID", "Orders", new { CrafterID = order.CrafterID }, new { @class = "btn" })
 
                 }
+
                 else
                 {
                     @Html.ActionLink("Take Order", "ConfirmAssign", "Orders", new { CrafterID = ((int)Session["UserID"]), OrderID = order.OrderID }, new { @class = "btn" });
@@ -96,14 +97,16 @@
             <td>
                 <text>@order.Pricetotal</text>
             </td>
-            @if ((byte)Session["RoleID"] >= 5)
-            {
-                <td style="text-align: center">
+            <td>
+                @if ((byte)Session["RoleID"] >= 5 || (order.UserID == ((int)Session["UserID"])))
+                {
                     @Html.ActionLink("Update", "UpdateOrder", "Orders", new { OrderID = order.OrderID }, new { @class = "btn btn-info" })
-
+                }
+                @if ((byte)Session["RoleID"] >= 5 && (!(order.CrafterID == ((int)Session["UserID"]))) || (order.UserID == ((int)Session["UserID"])))
+                {
                     @Html.ActionLink("Delete", "DeleteOrder", "Orders", new { OrderID = order.OrderID }, new { @class = "btn btn-danger", onclick = "return confirm('delete this order?');" })
-                </td>
-            }
+                }
+            </td>
         </tr>
         }
     </tbody>

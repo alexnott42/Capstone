@@ -22,8 +22,8 @@ namespace BLL
             Order.Pricetotal = totalPrice;
             return Order;
         }
-        //todo: price totals, every user and single user
-        //todo: defaulted payments
-        //todo: uncompleted orders
+        //todo: calculation: price totals, every user and single user
+        //todo: calculation: defaulted payments
+        //todo: calculation: uncompleted orders
     }
 }
