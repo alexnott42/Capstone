@@ -19,6 +19,8 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
 
     }
 }
+//todo: Create new order returns ViewOrderByUserID NOT BASED ON SESSION UserID
+//todo: Create new order NOT BASED ON SESSION UserID
 //todo: partialview orders on users page
 //todo: more comments
 //todo: password hashing
