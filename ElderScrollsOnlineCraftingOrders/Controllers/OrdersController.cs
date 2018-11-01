@@ -106,7 +106,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 List<ItemsBO> calcItems = Mapper.ItemsListPOtoBO(orderItems);
 
                 //doing valculations
-                calcOrder = Calculation.PriceTotalCalculator(calcOrder, calcItems);
+                calcOrder = Calculation.PriceTotalCalculator(calcItems);
                 order.Pricetotal = calcOrder.Pricetotal;
 
                 //assigning new total price
@@ -356,22 +356,19 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
             return response;
         }
 
+        //assign user to order
         [SecurityFilter(4)]
         [HttpGet]
         public ActionResult ConfirmAssign(int OrderID)
         {
             OrdersDO Order = _OrdersDAO.ViewOrderByID(OrderID);
             OrdersPO orderDetails = Mapper.OrdersDOtoOrdersPO(Order);
-            orderDetails.CrafterID = (int)Session["UserID"];
-            orderDetails.Crafter = (string)Session["Username"];
             return View(orderDetails);
         }
 
-        //todo make "AssignMeToOrder" actually work
-        //Assigning user to order
+        //assign user to order part 2
         [SecurityFilter(4)]
         [HttpPost]
-        //todo: return a view showing the information on this page
         public ActionResult AssignMeToOrder(OrdersPO form)
         {
             ActionResult response;
@@ -381,6 +378,9 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 {
                     OrdersDO newInfo = Mapper.OrdersPOtoOrdersDO(form);
                     //running the stored procedure
+
+                    newInfo.CrafterID = (int)Session["UserID"];
+                    newInfo.Crafter = (string)Session["Username"];
                     newInfo.Status = 2;
                     _OrdersDAO.UpdateOrderCrafter(newInfo);
 

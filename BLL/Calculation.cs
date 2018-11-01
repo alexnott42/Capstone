@@ -10,7 +10,7 @@ namespace BLL
     //finding price total
     public class Calculation
     {
-        public static OrdersBO PriceTotalCalculator(OrdersBO calcOrder, List<ItemsBO> calcItems)
+        public static OrdersBO PriceTotalCalculator(List<ItemsBO> calcItems)
         {
             int? totalPrice = 0;
             OrdersBO Order = new OrdersBO();
@@ -22,8 +22,8 @@ namespace BLL
             Order.Pricetotal = totalPrice;
             return Order;
         }
-        //todo: price totals, every user and single user
-        //todo: defaulted payments
-        //todo: uncompleted orders
+        //todo: calculation: price totals, every user and single user
+        //todo: calculation: defaulted payments
+        //todo: calculation: uncompleted orders
     }
 }

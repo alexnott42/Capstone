@@ -310,7 +310,6 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 List<UsersDO> allUsers = _UsersDAO.ViewUserByRole(RoleID);
                 List<UsersPO> userList = Mapper.UsersListDOtoPO(allUsers);
                 //return view with data 
-                //todo: more comments
                 response = View(userList);
             }
             //logging errors and redirecting

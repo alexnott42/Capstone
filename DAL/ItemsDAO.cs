@@ -24,49 +24,6 @@ namespace DAL
             this._ErrorLogPath = errorLogPath;
         }
 
-        //retrieving Item data from the database
-        public List<ItemsDO> ViewAllItems()
-        {
-            //Creating a list of items 
-            List<ItemsDO> itemsList = new List<ItemsDO>();
-            try
-            {
-                //defining some commands to access the database
-                using (SqlConnection sqlConnection = new SqlConnection(_ConnectionString))
-                using (SqlCommand viewItemTable = new SqlCommand("ITEMS_SELECT_ALL", sqlConnection))
-                {
-                    //time out after 60 seconds
-                    viewItemTable.CommandType = System.Data.CommandType.StoredProcedure;
-                    viewItemTable.CommandTimeout = 60;
-
-                    sqlConnection.Open();
-
-                    //Reading the data and using Mapper to store it
-                    using (SqlDataReader reader = viewItemTable.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            itemsList.Add(MapperDAL.ReaderToItem(reader));
-                        }
-                    }
-                }
-            }
-            //Logging any exceptions
-            catch (SqlException sqlEx)
-            {
-                LoggerDAL.ErrorLogPath = _ErrorLogPath;
-                LoggerDAL.SqlErrorLog(sqlEx);
-                throw sqlEx;
-            }
-            catch (Exception ex)
-            {
-                LoggerDAL.ErrorLogPath = _ErrorLogPath;
-                LoggerDAL.ErrorLog(ex);
-                throw ex;
-            }
-            //returning list of items
-            return itemsList;
-        }
         //Viewing a single item entry
         public ItemsDO ViewItemByID(int ItemID)
         {
@@ -270,6 +227,8 @@ namespace DAL
                     //Defining procedure and timing out after 60 seconds 
                     deleteItem.CommandType = CommandType.StoredProcedure;
                     deleteItem.CommandTimeout = 60;
+
+                    //adding ItemID as parameter
                     deleteItem.Parameters.AddWithValue("ItemID", ItemID);
 
                     //opening connection and executing procedure

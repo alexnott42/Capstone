@@ -26,6 +26,7 @@ namespace ElderScrollsOnlineCraftingOrders.Models
         [StringLength(50)]
         public string ESOname { get; set; }
 
+        [Display(Name = "Role")]
         public byte RoleID { get; set; }
 
         [Required]
