@@ -32,12 +32,9 @@
             <th>
                 Order Price
             </th>
-            @if ((byte)Session["RoleID"] >= 5)
-            {
-                <th style="text-align: center">
-                    Actions
-                </th>
-            }
+            <th style="text-align: center">
+                Actions
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -95,7 +92,7 @@
                 <text>@order.Pricetotal</text>
             </td>
             <td>
-                @if ((byte)Session["RoleID"] >= 5 || (order.UserID == ((int)Session["UserID"])))
+                @if ((byte)Session["RoleID"] >= 5 || (order.CrafterID == ((int)Session["UserID"])))
                 {
                     @Html.ActionLink("Update", "UpdateOrder", "Orders", new { OrderID = order.OrderID }, new { @class = "btn btn-info" })
                 }

@@ -10,7 +10,7 @@
     {
         @Html.ActionLink("Add Item", "CreateNewItem", "Items", new { OrderID = Model.Order.OrderID }, new { @class = "btn btn-success" })
     }
-    @if ((byte)Session["RoleID"] >= 5 || (Model.Order.UserID == ((int)Session["UserID"])))
+    @if ((byte)Session["RoleID"] >= 5 || (Model.Order.CrafterID == ((int)Session["UserID"])))
     {
         @Html.ActionLink("Update", "UpdateOrder", "Orders", new { OrderID = Model.Order.OrderID }, new { @class = "btn btn-info" })
     }
@@ -168,8 +168,8 @@
                     <td>@item.Level</td>
                     <td>@item.Quality</td>
                     <td>@item.Price</td>
-                    <td>
-                        @if ((byte)Session["RoleID"] >= 5 && (!((int)Session["UserID"] == Model.Order.CrafterID)) || (int)Session["UserID"] == Model.Order.UserID && (!((int)Session["UserID"] == Model.Order.CrafterID)))
+                    <td style="text-align: center">
+                        @if ((byte)Session["RoleID"] >= 5 && (!((int)Session["UserID"] == Model.Order.CrafterID)) || (int)Session["UserID"] == Model.Order.UserID)
                         {
                             @Html.ActionLink("Update", "UpdateItem", "Items", new { ItemID = item.ItemID }, new { @class = "btn btn-info" })
 
