@@ -106,7 +106,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 List<ItemsBO> calcItems = Mapper.ItemsListPOtoBO(orderItems);
 
                 //doing valculations
-                calcOrder = Calculation.PriceTotalCalculator(calcOrder, calcItems);
+                calcOrder = Calculation.PriceTotalCalculator(calcItems);
                 order.Pricetotal = calcOrder.Pricetotal;
 
                 //assigning new total price

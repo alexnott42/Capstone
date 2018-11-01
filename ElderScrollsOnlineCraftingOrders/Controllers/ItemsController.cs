@@ -63,6 +63,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
 
         //create new item continued
         [HttpPost]
+        //remove int and test it 
         public ActionResult CreateNewItem(ItemsPO form, int OrderID)
         {
             ActionResult response;
@@ -74,6 +75,7 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
                 {
                     //taking user input and mapping it to the database
                     ItemsDO newItem = Mapper.ItemsPOtoItemsDO(form);
+                    //test if this is necessary
                     newItem.OrderID = OrderID;
                     _ItemsDAO.CreateNewItemEntry(newItem);
                     //setting response view
@@ -141,13 +143,13 @@ namespace ElderScrollsOnlineCraftingOrders.Controllers
 
                 try
                 {
-                    {
+                    
                         //storing data to database
                         ItemsDO ItemDO = Mapper.ItemsPOtoItemsDO(form);
                         _ItemsDAO.UpdateItemEntryInformation(ItemDO);
                         //setting response page
                         response = RedirectToAction("ViewOrderByID", "Orders", new { form.OrderID });
-                    }
+                    
                 }
                 //logging errors and redirecting
                 catch (SqlException sqlEx)

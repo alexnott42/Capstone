@@ -10,7 +10,7 @@ namespace BLL
     //finding price total
     public class Calculation
     {
-        public static OrdersBO PriceTotalCalculator(OrdersBO calcOrder, List<ItemsBO> calcItems)
+        public static OrdersBO PriceTotalCalculator(List<ItemsBO> calcItems)
         {
             int? totalPrice = 0;
             OrdersBO Order = new OrdersBO();

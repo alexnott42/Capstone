@@ -266,7 +266,6 @@
     <Content Include="Views\Items\CreateNewItem.cshtml" />
     <Content Include="Views\Items\UpdateItem.cshtml" />
     <Content Include="Views\Orders\ConfirmAssign.cshtml" />
-    <Content Include="Views\Orders\Unassign.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
